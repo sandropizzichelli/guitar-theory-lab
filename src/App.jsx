@@ -1,4 +1,5 @@
 import { getToolBySlug } from "../config/tools";
+import { PlatformFooter } from "./components/layout/PlatformFooter.jsx";
 import { PlatformNav } from "./components/navigation/PlatformNav.jsx";
 import { ToolShell } from "./components/tools/ToolShell.jsx";
 import { useCurrentPath } from "./lib/router.jsx";
@@ -8,6 +9,7 @@ import { HomePage } from "./pages/HomePage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { NotFoundPage } from "./pages/NotFoundPage.jsx";
 import { PricingPage } from "./pages/PricingPage.jsx";
+import { RoadmapPage } from "./pages/RoadmapPage.jsx";
 import { ToolsPage } from "./pages/ToolsPage.jsx";
 
 function RouteRenderer({ path }) {
@@ -17,6 +19,7 @@ function RouteRenderer({ path }) {
   if (path === "/login") return <LoginPage />;
   if (path === "/dashboard") return <DashboardPage />;
   if (path === "/about") return <AboutPage />;
+  if (path === "/roadmap") return <RoadmapPage />;
 
   const toolMatch = path.match(/^\/tools\/([^/]+)$/);
   if (toolMatch) {
@@ -34,6 +37,7 @@ export default function App() {
     <div className="platform-root">
       <PlatformNav path={path} />
       <RouteRenderer path={path} />
+      <PlatformFooter />
     </div>
   );
 }

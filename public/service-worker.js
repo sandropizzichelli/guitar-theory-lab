@@ -1,5 +1,5 @@
-const CACHE_NAME = "guitar-theory-lab-v0.1.0";
-const APP_SHELL = ["/", "/manifest.webmanifest", "/icons/icon.svg"];
+const CACHE_NAME = "guitar-theory-lab-v0.1.1";
+const APP_SHELL = ["/", "/manifest.webmanifest", "/icons/icon.svg", "/og.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));

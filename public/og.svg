@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f6f4ee"/>
+  <defs>
+    <pattern id="grid" width="72" height="72" patternUnits="userSpaceOnUse">
+      <path d="M72 0H0v72" fill="none" stroke="#7fa79d" stroke-opacity=".13" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="244" cy="252" r="122" fill="none" stroke="#7fa79d" stroke-width="14" stroke-dasharray="164 58"/>
+  <g stroke="#1b6d63" stroke-width="5" stroke-linecap="round" opacity=".86">
+    <path d="M214 88v88"/>
+    <path d="M229 88v88"/>
+    <path d="M244 88v88"/>
+    <path d="M259 88v88"/>
+    <path d="M274 88v88"/>
+    <path d="M214 328v88"/>
+    <path d="M229 328v88"/>
+    <path d="M244 328v88"/>
+    <path d="M259 328v88"/>
+    <path d="M274 328v88"/>
+  </g>
+  <text x="244" y="287" text-anchor="middle" fill="#071412" font-family="Georgia, 'Times New Roman', serif" font-size="104" font-weight="700" letter-spacing="-9">GTL</text>
+  <text x="430" y="220" fill="#071412" font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="700">Guitar Theory Lab</text>
+  <text x="434" y="287" fill="#1b6d63" font-family="Arial, sans-serif" font-size="21" font-weight="700" letter-spacing="7">ADVANCED MUSICAL EXPLORATION</text>
+  <text x="434" y="352" fill="#2f3d38" font-family="Arial, sans-serif" font-size="31">Tools for theory, harmony, voice leading,</text>
+  <text x="434" y="397" fill="#2f3d38" font-family="Arial, sans-serif" font-size="31">set theory, and improvisational practice.</text>
+</svg>

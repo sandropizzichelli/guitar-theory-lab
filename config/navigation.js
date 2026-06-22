@@ -1,7 +1,7 @@
 export const navigationItems = [
-  { label: "Home", route: "/" },
   { label: "Tools", route: "/tools" },
+  { label: "About", route: "/about" },
+  { label: "Roadmap", route: "/roadmap" },
   { label: "Pricing", route: "/pricing" },
-  { label: "Dashboard", route: "/dashboard" },
-  { label: "About", route: "/about" }
+  { label: "Dashboard", route: "/dashboard", state: "soon" }
 ];

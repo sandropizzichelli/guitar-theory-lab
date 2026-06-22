@@ -1,9 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#f5f7f2"/>
-  <circle cx="256" cy="256" r="178" fill="#1f766d"/>
-  <path d="M168 300c48-98 126-132 216-102-68 5-112 40-136 104l-30 78h-90l40-80Z" fill="#fff"/>
-  <path d="M166 170h180v54H166z" fill="#d9e8e4"/>
-  <circle cx="180" cy="170" r="22" fill="#fff"/>
-  <circle cx="246" cy="170" r="22" fill="#fff"/>
-  <circle cx="312" cy="170" r="22" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">GTL monogram</title>
+  <rect width="512" height="512" rx="92" fill="#f6f4ee"/>
+  <circle cx="256" cy="256" r="152" fill="none" stroke="#7fa79d" stroke-width="18" stroke-dasharray="205 74"/>
+  <g stroke="#1b6d63" stroke-width="7" stroke-linecap="round" opacity="0.86">
+    <path d="M218 54v112"/>
+    <path d="M237 54v112"/>
+    <path d="M256 54v112"/>
+    <path d="M275 54v112"/>
+    <path d="M294 54v112"/>
+    <path d="M218 346v112"/>
+    <path d="M237 346v112"/>
+    <path d="M256 346v112"/>
+    <path d="M275 346v112"/>
+    <path d="M294 346v112"/>
+  </g>
+  <text x="256" y="302" text-anchor="middle" fill="#071412" font-family="Georgia, 'Times New Roman', serif" font-size="132" font-weight="700" letter-spacing="-12">GTL</text>
 </svg>

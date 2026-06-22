@@ -2,29 +2,45 @@ import { useMemo, useState } from "react";
 import { tools } from "../../config/tools";
 import { PageShell } from "../components/layout/PageShell.jsx";
 import { ToolGrid } from "../components/tools/ToolGrid.jsx";
+import { usePageMeta } from "../lib/meta.js";
 
 export function ToolsPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
-  const [status, setStatus] = useState("all");
-  const categories = ["all", ...new Set(tools.map((tool) => tool.category))];
-  const statuses = ["all", ...new Set(tools.map((tool) => tool.status))];
+  const categories = [
+    "all",
+    "Set Theory",
+    "Harmony",
+    "Fretboard",
+    "Voice Leading",
+    "Improvisation",
+    "Analysis"
+  ];
+
+  usePageMeta({
+    title: "Tools",
+    description: "Browse current and future Guitar Theory Lab tools for set theory, harmony, fretboard study, and voice leading.",
+    path: "/tools"
+  });
 
   const filteredTools = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     return tools.filter((tool) => {
-      const searchableText = [tool.title, tool.description, tool.category, ...tool.tags]
+      const searchableText = [tool.title, tool.description, tool.category, ...tool.tags, ...(tool.usefulFor ?? [])]
         .join(" ")
         .toLowerCase();
       const matchesQuery = !normalizedQuery || searchableText.includes(normalizedQuery);
       const matchesCategory = category === "all" || tool.category === category;
-      const matchesStatus = status === "all" || tool.status === status;
-      return matchesQuery && matchesCategory && matchesStatus;
+      return matchesQuery && matchesCategory;
     });
-  }, [category, query, status]);
+  }, [category, query]);
 
   return (
-    <PageShell eyebrow="Tools" title="Un registry centrale per tutti gli strumenti presenti e futuri.">
+    <PageShell
+      eyebrow="Tools"
+      title="Available tools"
+      subtitle="A modular registry for current and future GTL instruments."
+    >
       <section className="platform-filter-bar">
         <label>
           Search
@@ -42,16 +58,17 @@ export function ToolsPage() {
             ))}
           </select>
         </label>
-        <label>
-          Status
-          <select value={status} onChange={(event) => setStatus(event.target.value)}>
-            {statuses.map((item) => (
-              <option value={item} key={item}>{item === "all" ? "All statuses" : item}</option>
-            ))}
-          </select>
-        </label>
       </section>
-      <ToolGrid items={filteredTools} />
+      <section className="platform-section">
+        <div className="platform-section-heading">
+          <div>
+            <p className="platform-eyebrow">Available now</p>
+            <h2>{filteredTools.length} active modules</h2>
+          </div>
+          <p>Filters are intentionally light for now, but the catalog is ready to grow.</p>
+        </div>
+        <ToolGrid items={filteredTools} variant="detailed" />
+      </section>
     </PageShell>
   );
 }

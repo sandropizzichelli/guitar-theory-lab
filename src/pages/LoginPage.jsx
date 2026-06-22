@@ -1,14 +1,24 @@
 import { PageShell } from "../components/layout/PageShell.jsx";
+import { usePageMeta } from "../lib/meta.js";
+import { PlatformLink } from "../lib/router.jsx";
 
 export function LoginPage() {
+  usePageMeta({
+    title: "Login",
+    description: "Accounts are not available yet. All current Guitar Theory Lab tools can be used without signing in.",
+    path: "/login"
+  });
+
   return (
-    <PageShell eyebrow="Login" title="Accesso utenti predisposto per Supabase.">
+    <PageShell eyebrow="Login" title="Accounts are not available yet">
       <section className="platform-placeholder-card">
         <p>
-          Qui andra il flusso Supabase Auth. Le variabili ambiente sono gia previste in
-          `.env.example`, ma il provider non e collegato in questa fase.
+          All current tools can be used without signing in. Accounts may be added later for saved
+          workspaces, exports, and personal settings.
         </p>
-        <button type="button" disabled>Sign in with Supabase</button>
+        <PlatformLink className="platform-button platform-button--secondary" to="/tools">
+          Go to tools
+        </PlatformLink>
       </section>
     </PageShell>
   );

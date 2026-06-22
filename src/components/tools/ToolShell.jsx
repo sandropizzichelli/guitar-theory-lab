@@ -1,22 +1,22 @@
-import { lazy, Suspense, useEffect, useMemo } from "react";
-import { siteConfig } from "../../../config/site";
+import { lazy, Suspense, useMemo } from "react";
 import { canAccessTool } from "../../lib/auth.js";
+import { usePageMeta } from "../../lib/meta.js";
 import { PageShell } from "../layout/PageShell.jsx";
 import { ProBadge, StatusBadge } from "./ToolBadges.jsx";
 
 export function ToolShell({ tool }) {
   const ToolComponent = useMemo(() => lazy(tool.component), [tool]);
 
-  useEffect(() => {
-    document.title = `${tool.title} | ${siteConfig.name}`;
-    const description = document.querySelector("meta[name='description']");
-    description?.setAttribute("content", tool.description);
-  }, [tool]);
+  usePageMeta({
+    title: tool.title,
+    description: tool.description,
+    path: tool.route
+  });
 
   if (!canAccessTool(null, tool)) {
     return (
-      <PageShell eyebrow="Accesso" title="Tool non disponibile">
-        <p>Questo strumento non e disponibile con il profilo attuale.</p>
+      <PageShell eyebrow="Access" title="Tool unavailable">
+        <p>This tool is not available with the current access level.</p>
       </PageShell>
     );
   }
@@ -43,7 +43,7 @@ export function ToolShell({ tool }) {
       </section>
 
       <section className="platform-tool-host">
-        <Suspense fallback={<div className="platform-loading">Caricamento tool...</div>}>
+        <Suspense fallback={<div className="platform-loading">Loading tool...</div>}>
           <ToolComponent />
         </Suspense>
       </section>

@@ -17,10 +17,12 @@ export const tools = [
     title: "Set-class Explorer",
     shortTitle: "Set-class",
     description:
-      "Explore pitch-class set classes, prime forms, interval vectors, transformations, subsets and supersets on the guitar fretboard.",
+      "Explore pitch-class sets, prime forms, interval vectors, transformations, subsets, and supersets.",
     longDescription:
       "A modular set-theory workbench for guitar: tricords, tetrachords, pentachords, hexachords, Forte names, complements and playable fretboard realizations.",
     category: "Set Theory",
+    usefulFor: ["Post-tonal analysis", "Composition", "Improvisation"],
+    keyFeatures: ["Prime forms", "Interval vectors", "Subsets and supersets", "Fretboard views"],
     status: "beta",
     version: "0.1.0",
     route: "/tools/set-class-explorer",
@@ -38,10 +40,12 @@ export const tools = [
     title: "Harmonic Intersections",
     shortTitle: "Intersections",
     description:
-      "Explore intersections between harmonic materials, common tones, scales, chords, modes and intervallic structures.",
+      "Find common tones and intersections between scales, chords, modes, and intervallic structures.",
     longDescription:
       "Compare two harmonic materials and inspect common tones, roots, degrees and fretboard visibility across scales, arpeggios and pentatonic structures.",
     category: "Harmony",
+    usefulFor: ["Harmony", "Substitution", "Modal thinking"],
+    keyFeatures: ["Common tones", "Scale comparison", "Chord-scale intersections", "Fretboard mapping"],
     status: "beta",
     version: "0.1.0",
     route: "/tools/harmonic-intersections",
@@ -59,10 +63,12 @@ export const tools = [
     title: "Goodrick Voice Leading Visualization",
     shortTitle: "Goodrick Voice Leading",
     description:
-      "Visualize voice-leading paths, string-set movements and harmonic connections on the guitar fretboard.",
+      "Visualize voice-leading paths and string-set movements on the guitar fretboard.",
     longDescription:
       "A Goodrick-inspired laboratory for diatonic triads and seventh chords, cycles, rotations, string sets, close voicings and practical spread/drop voicings.",
     category: "Voice Leading",
+    usefulFor: ["Guitar harmony", "Chord movement", "Linear connection"],
+    keyFeatures: ["Diatonic cycles", "String sets", "Triads and seventh chords", "Fretboard visualization"],
     status: "beta",
     version: "0.1.0",
     route: "/tools/goodrick-voice-leading-visualization",

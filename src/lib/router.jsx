@@ -28,11 +28,13 @@ export function useCurrentPath() {
   return path;
 }
 
-export function PlatformLink({ to, children, className }) {
+export function PlatformLink({ to, children, className, ariaLabel, title }) {
   return (
     <a
+      aria-label={ariaLabel}
       className={className}
       href={to}
+      title={title}
       onClick={(event) => {
         event.preventDefault();
         navigateTo(to);
