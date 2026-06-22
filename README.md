@@ -1,62 +1,136 @@
-# Guitar Software Series
+# Guitar Theory Lab
 
-Cartella madre per i visualizer di chitarra. I progetti restano separati, ma da qui puoi avviare, testare e compilare tutto senza entrare ogni volta nelle sottocartelle.
+Guitar Theory Lab is a modular web platform for advanced guitar-theory tools: set theory, harmonic intersections, voice leading, fretboard visualization and improvisational practice.
 
-## Progetti
+The current platform contains the first three modules:
 
-| Progetto | Cartella | Porta dev |
-| --- | --- | --- |
-| Goodrick Voice Leading Visualizer | `Goodrick Voice Leading Visualizer` | `http://127.0.0.1:5173/` |
-| Harmonic Intersections | `Harmonic Intersections` | `http://127.0.0.1:5174/` |
-| Set Visualizer | `Set Visualizer` | `http://127.0.0.1:5175/` |
+- Set-class Explorer
+- Harmonic Intersections
+- Goodrick Voice Leading Visualization
 
-## Comandi dalla cartella madre
+The original tools are preserved in their existing folders and are integrated through lightweight adapters while the platform architecture is introduced safely.
+
+## Local development
 
 ```bash
 cd "/Users/silvialumaca/Desktop/Guitar Software Series"
+npm install
+npm run dev
 ```
 
-Avvia il visualizer Goodrick:
+LAN development, useful from iPad on the same network:
 
 ```bash
-npm run goodrick
+npm run dev:lan
 ```
 
-Se la porta `5173` risulta occupata, il visualizer Goodrick e gia acceso: apri o ricarica `http://127.0.0.1:5173/`.
-
-Se lavori da iPad sulla stessa rete Wi-Fi del Mac, usa il comando LAN:
-
-```bash
-npm run goodrick:lan
-```
-
-Poi apri l'indirizzo locale del Mac, per esempio:
+Open:
 
 ```text
-http://192.168.1.55:5173/
+http://127.0.0.1:5173/
 ```
 
-`127.0.0.1` funziona solo sul dispositivo dove gira il server. Da iPad punterebbe all'iPad, non al Mac.
+or from another device on the LAN:
 
-Test e build del progetto Goodrick:
+```text
+http://<mac-lan-ip>:5173/
+```
+
+## Build
 
 ```bash
-npm run goodrick:test
-npm run goodrick:build
+npm run build
 ```
 
-Avvia gli altri progetti:
+The legacy tools can still be tested and built independently:
 
 ```bash
-npm run harmonic
-npm run set
+npm run test:legacy
+npm run build:legacy
 ```
 
-Test o build di tutta la serie:
+Full verification:
 
 ```bash
 npm run test:all
 npm run build:all
 ```
 
-Nota: le dipendenze restano installate dentro ogni singolo progetto. Questa cartella contiene solo comandi di coordinamento.
+## Environment
+
+Copy `.env.example` to `.env` and configure:
+
+```bash
+SITE_NAME="Guitar Theory Lab"
+NEXT_PUBLIC_SITE_URL="https://your-domain.example"
+NEXT_PUBLIC_APP_DESCRIPTION="Advanced online tools for guitar theory, harmonic exploration, voice leading, set theory and improvisational practice."
+```
+
+Supabase and Stripe variables are present as placeholders for future auth, saved items and Pro plans.
+
+## Docker
+
+```bash
+docker compose up -d
+```
+
+The container serves the production build on:
+
+```text
+http://127.0.0.1:8080/
+```
+
+Use Nginx or Caddy in front of the container for the final domain and HTTPS.
+
+## Tool architecture
+
+Tools are registered in `/config/tools.ts`.
+
+Each tool has:
+
+- id
+- slug
+- title
+- description
+- category
+- status
+- version
+- route
+- Free/Pro metadata
+- tags
+- component adapter
+
+The `/tools` page and each `/tools/<slug>` route are generated from the registry.
+
+## Legacy tools
+
+The original projects remain available:
+
+```bash
+npm run goodrick
+npm run harmonic
+npm run set
+```
+
+These scripts are retained as rollback and comparison paths while the platform absorbs the tools module by module.
+
+## Rollback
+
+The initial working state is protected by:
+
+- Git commit: `backup: current working version`
+- Branch before migration: `main`
+- Migration branch: `feature/modular-platform`
+- Zip backup: `backup-before-modular-platform.zip`
+
+To inspect the original committed state:
+
+```bash
+git switch main
+```
+
+To return to migration work:
+
+```bash
+git switch feature/modular-platform
+```

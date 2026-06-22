@@ -1,0 +1,9 @@
+services:
+  guitar-theory-lab:
+    build: .
+    container_name: guitar-theory-lab
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    env_file:
+      - .env

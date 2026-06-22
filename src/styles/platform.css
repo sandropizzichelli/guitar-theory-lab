@@ -1,0 +1,341 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,650;750&family=Manrope:wght@400;600;700;800&display=swap");
+
+:root {
+  color-scheme: light;
+  --platform-bg: #f5f7f2;
+  --platform-surface: rgba(255, 255, 252, 0.94);
+  --platform-surface-strong: #ffffff;
+  --platform-border: rgba(44, 61, 55, 0.16);
+  --platform-text: #314039;
+  --platform-ink: #101915;
+  --platform-muted: #69766f;
+  --platform-accent: #1f766d;
+  --platform-accent-soft: rgba(31, 118, 109, 0.16);
+  --platform-shadow: 0 24px 62px rgba(26, 40, 34, 0.1);
+  --platform-sans: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+  --platform-heading: "Fraunces", Georgia, serif;
+  font: 16px/1.5 var(--platform-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(31, 118, 109, 0.16), transparent 34%),
+    radial-gradient(circle at 90% 10%, rgba(182, 101, 45, 0.12), transparent 28%),
+    linear-gradient(180deg, #fbfcf8 0%, var(--platform-bg) 48%, #e9eee7 100%);
+  color: var(--platform-text);
+  font-family: var(--platform-sans);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.platform-root {
+  width: min(1680px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 18px 0 48px;
+}
+
+.platform-nav {
+  position: sticky;
+  top: 12px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+  padding: 10px;
+  border: 1px solid var(--platform-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 252, 0.9);
+  box-shadow: 0 16px 36px rgba(26, 40, 34, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+.platform-brand {
+  color: var(--platform-ink);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.platform-nav nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.platform-nav nav a,
+.platform-button,
+.platform-tool-actions button,
+.platform-pricing-card button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 14px;
+  color: var(--platform-ink);
+  background: var(--platform-surface-strong);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.platform-nav nav a.active,
+.platform-button,
+.platform-button--ghost:hover {
+  border-color: rgba(31, 118, 109, 0.28);
+  background: var(--platform-accent-soft);
+  color: #145a54;
+}
+
+.platform-button--ghost {
+  background: transparent;
+}
+
+.platform-button--secondary {
+  background: var(--platform-surface-strong);
+  border-color: var(--platform-border);
+}
+
+.platform-button--small {
+  margin-top: auto;
+  width: max-content;
+}
+
+.platform-page,
+.platform-tool-shell {
+  display: grid;
+  gap: 22px;
+}
+
+.platform-page-hero,
+.platform-tool-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 34px;
+  border: 1px solid var(--platform-border);
+  border-radius: 10px;
+  background: var(--platform-surface);
+  box-shadow: var(--platform-shadow);
+}
+
+.platform-page h1,
+.platform-tool-header h1,
+.platform-section h2 {
+  margin: 0;
+  color: var(--platform-ink);
+  font-family: var(--platform-heading);
+  letter-spacing: 0;
+  line-height: 0.98;
+}
+
+.platform-page h1,
+.platform-tool-header h1 {
+  max-width: 980px;
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
+}
+
+.platform-eyebrow {
+  margin: 0 0 10px;
+  color: var(--platform-accent);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.platform-section,
+.platform-placeholder-card,
+.platform-filter-bar,
+.platform-tool-actions,
+.platform-tool-host {
+  border: 1px solid var(--platform-border);
+  border-radius: 10px;
+  background: var(--platform-surface);
+  box-shadow: var(--platform-shadow);
+}
+
+.platform-section,
+.platform-placeholder-card {
+  padding: 24px;
+}
+
+.platform-section--intro {
+  max-width: 980px;
+  font-size: 1.08rem;
+}
+
+.platform-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.platform-tool-grid,
+.platform-pricing-grid,
+.platform-roadmap-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.platform-tool-card,
+.platform-pricing-card,
+.platform-roadmap-strip article {
+  display: grid;
+  gap: 14px;
+  min-height: 260px;
+  padding: 18px;
+  border: 1px solid var(--platform-border);
+  border-radius: 10px;
+  background: var(--platform-surface-strong);
+}
+
+.platform-tool-card h3,
+.platform-pricing-card h2,
+.platform-roadmap-strip h3 {
+  margin: 0;
+  color: var(--platform-ink);
+  font-size: 1.2rem;
+}
+
+.platform-tool-card p,
+.platform-pricing-card p,
+.platform-roadmap-strip p,
+.platform-placeholder-card p {
+  margin: 0;
+  color: var(--platform-muted);
+}
+
+.platform-tool-card__top,
+.platform-tool-meta,
+.platform-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.platform-badge,
+.platform-pill,
+.platform-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  border-radius: 999px;
+  padding: 0 10px;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.platform-badge {
+  background: var(--platform-accent-soft);
+  color: #145a54;
+  text-transform: uppercase;
+}
+
+.platform-badge--experimental {
+  background: rgba(138, 43, 226, 0.14);
+  color: #6a1fb4;
+}
+
+.platform-badge--deprecated {
+  background: rgba(150, 70, 70, 0.14);
+  color: #923d3d;
+}
+
+.platform-pill,
+.platform-tags span {
+  border: 1px solid var(--platform-border);
+  background: #fff;
+  color: var(--platform-muted);
+}
+
+.platform-filter-bar {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(180px, 240px) minmax(180px, 240px);
+  gap: 14px;
+  padding: 18px;
+}
+
+.platform-filter-bar label {
+  display: grid;
+  gap: 7px;
+  color: var(--platform-muted);
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.platform-filter-bar input,
+.platform-filter-bar select {
+  min-height: 42px;
+  border: 1px solid var(--platform-border);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--platform-ink);
+  background: #fff;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.platform-tool-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px;
+}
+
+.platform-tool-actions button:disabled,
+.platform-pricing-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+.platform-tool-host {
+  overflow: hidden;
+  padding: 0;
+}
+
+.platform-price {
+  color: var(--platform-ink) !important;
+  font-size: 2.2rem;
+  font-weight: 900;
+}
+
+@media (max-width: 900px) {
+  .platform-nav,
+  .platform-page-hero,
+  .platform-tool-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .platform-filter-bar {
+    grid-template-columns: 1fr;
+  }
+}
