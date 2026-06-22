@@ -107,6 +107,17 @@ Cloudflare Pages and GitHub clones need a self-contained repository. The origina
 
 The domain has been purchased and the app needs production-ready static hosting settings before connecting a GitHub repository to Cloudflare Pages.
 
+## 2026-06-22, phase 8
+
+### Changes made
+
+- Removed nested Git repository links for Set Visualizer and Harmonic Intersections from the root repository index.
+- Added those standalone local folders to root `.gitignore`.
+
+### Why
+
+GitHub and Cloudflare Pages should receive a clean, self-contained platform repository. The deployable copies live in `/src/legacy-tools`, while the original standalone folders remain local for comparison and rollback.
+
 ### Why
 
 The platform must become a modular, expandable product rather than three isolated tools.

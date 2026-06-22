@@ -12,6 +12,8 @@ All three existing tools are React applications built with Vite.
 
 The platform root was not a Git repository before migration. Set Visualizer and Harmonic Intersections were already independent Git repositories. Goodrick Voice Leading Visualizer was not independently versioned.
 
+During deployment preparation, Set Visualizer and Harmonic Intersections were removed from the root repository index as nested Git links. Their deployable source snapshots now live under `/src/legacy-tools`.
+
 ## Current folder structure
 
 - `/Set Visualizer`: set-class explorer application
