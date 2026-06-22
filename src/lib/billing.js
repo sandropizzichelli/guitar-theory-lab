@@ -1,6 +1,12 @@
 export const billingProvider = {
   name: "stripe",
-  status: "placeholder"
+  status: "placeholder",
+  requiredEnv: [
+    "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "NEXT_PUBLIC_STRIPE_PRICE_ID_MONTHLY",
+    "NEXT_PUBLIC_STRIPE_PRICE_ID_YEARLY"
+  ]
 };
 
 export async function createCheckoutSession() {

@@ -21,12 +21,14 @@
 - Login page
 - User profile model
 - Dashboard protection
+- Initial schema contract
 
 ## Phase 4: Saved items
 
 - Generic saved item schema
 - Tool-specific serializers
 - User library
+- RLS policies
 
 ## Phase 5: Export
 

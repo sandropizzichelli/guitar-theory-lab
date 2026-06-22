@@ -47,6 +47,20 @@ The platform shell must remain maintainable as more tools are added. Lazy tool l
 - Confirm the home and `/tools` pages do not load legacy tool CSS unexpectedly.
 - Confirm direct reload works on each `/tools/<slug>` route.
 
+## 2026-06-22, phase 3
+
+### Changes made
+
+- Added feature/tier registry in `/config/features.js`.
+- Expanded auth placeholders with tier helpers and dashboard access guard.
+- Added saved-item draft helpers in `/src/lib/savedItems.js`.
+- Added Supabase schema for `profiles` and generic `saved_items`.
+- Added auth/data/billing documentation.
+
+### Why
+
+The platform needs clear contracts for future login, saved materials and Pro access before a real backend is connected.
+
 ### Why
 
 The platform must become a modular, expandable product rather than three isolated tools.

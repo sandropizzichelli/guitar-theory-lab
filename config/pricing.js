@@ -1,6 +1,7 @@
 export const pricingPlans = [
   {
     id: "free",
+    tier: "free",
     title: "Free",
     price: "0",
     description: "Uso base degli strumenti, visualizzazioni e calcoli principali.",
@@ -8,6 +9,7 @@ export const pricingPlans = [
   },
   {
     id: "pro",
+    tier: "pro",
     title: "Pro",
     price: "TBD",
     description: "Salvataggi, export, librerie personali e funzioni avanzate future.",
@@ -15,6 +17,7 @@ export const pricingPlans = [
   },
   {
     id: "teacher",
+    tier: "teacher",
     title: "Teacher",
     price: "TBD",
     description: "Materiali didattici, librerie per lezioni e funzioni Pro.",
@@ -22,6 +25,7 @@ export const pricingPlans = [
   },
   {
     id: "institution",
+    tier: "institution",
     title: "Institution",
     price: "TBD",
     description: "Licenze per scuole, conservatori, universita e centri di ricerca.",

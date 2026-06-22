@@ -68,6 +68,11 @@ NEXT_PUBLIC_APP_DESCRIPTION="Advanced online tools for guitar theory, harmonic e
 
 Supabase and Stripe variables are present as placeholders for future auth, saved items and Pro plans.
 
+See also:
+
+- `/docs/AUTH_DATA_AND_BILLING.md`
+- `/supabase/schema.sql`
+
 ## Docker
 
 ```bash
