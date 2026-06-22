@@ -20,10 +20,7 @@ export function HomePage() {
       title="Advanced tools for guitar theory, harmony, and improvisation."
       subtitle="Explore set classes, harmonic intersections, and voice-leading processes through interactive visual tools built for advanced musicians, teachers, and researchers."
       actions={
-        <>
-          <PlatformLink className="platform-button" to="/tools">Explore tools</PlatformLink>
-          <PlatformLink className="platform-button platform-button--secondary" to="/roadmap">View roadmap</PlatformLink>
-        </>
+        <PlatformLink className="platform-button" to="/tools">Explore tools</PlatformLink>
       }
     >
       <section className="platform-signal-grid" aria-label="GTL principles">
@@ -96,13 +93,11 @@ export function HomePage() {
             Future modules will expand the platform toward scale networks, transformational models,
             fretboard set operations, and improvisational process tools.
           </p>
-          <PlatformLink className="platform-button platform-button--small" to="/roadmap">View roadmap</PlatformLink>
         </article>
         <article>
           <p className="platform-eyebrow">Beta</p>
           <h3>Free while the first tools evolve</h3>
           <p>All current modules can be used without signing in.</p>
-          <PlatformLink className="platform-button platform-button--small platform-button--secondary" to="/pricing">See pricing</PlatformLink>
         </article>
       </section>
     </PageShell>

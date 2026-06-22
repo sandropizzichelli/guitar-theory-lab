@@ -79,11 +79,11 @@ select:focus-visible {
   top: 12px;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(270px, 1fr) auto auto;
+  grid-template-columns: minmax(270px, 1fr) auto;
   align-items: center;
   gap: 18px;
   margin-bottom: 22px;
-  padding: 12px;
+  padding: 10px 14px;
   border: 1px solid var(--gtl-border);
   border-radius: 8px;
   background: rgba(255, 255, 251, 0.91);
@@ -176,8 +176,7 @@ select:focus-visible {
 }
 
 .platform-nav nav a,
-.platform-button,
-.platform-tool-actions button {
+.platform-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -195,29 +194,27 @@ select:focus-visible {
 .platform-nav nav a {
   gap: 7px;
   color: var(--gtl-muted);
+  background: transparent;
 }
 
 .platform-nav nav a.active,
-.platform-nav nav a:hover,
-.platform-button,
-.platform-button--ghost:hover {
+.platform-nav nav a:hover {
+  border-color: transparent;
+  background: transparent;
+  color: #10564f;
+}
+
+.platform-nav nav a.active {
+  box-shadow: inset 0 -2px 0 var(--gtl-accent-2);
+}
+
+.platform-button {
   border-color: var(--gtl-border-strong);
   background: var(--gtl-accent-soft);
   color: #10564f;
 }
 
-.platform-nav__soon {
-  border-radius: 999px;
-  padding: 1px 6px;
-  background: rgba(27, 109, 99, 0.1);
-  color: var(--gtl-accent);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.platform-button:hover,
-.platform-tool-actions button:not(:disabled):hover {
+.platform-button:hover {
   transform: translateY(-1px);
 }
 
@@ -336,7 +333,6 @@ select:focus-visible {
 .platform-section,
 .platform-placeholder-card,
 .platform-filter-bar,
-.platform-tool-actions,
 .platform-tool-host,
 .platform-signal-grid,
 .platform-footer {
@@ -497,8 +493,7 @@ select:focus-visible {
 }
 
 .platform-tool-card:hover,
-.platform-pricing-card:hover,
-.platform-roadmap-strip article:hover {
+.platform-pricing-card:hover {
   border-color: var(--gtl-border-strong);
   box-shadow: var(--gtl-shadow-hover);
   transform: translateY(-2px);
@@ -608,6 +603,21 @@ select:focus-visible {
   color: var(--gtl-muted);
 }
 
+.platform-card-action {
+  align-self: end;
+  margin-top: auto;
+  color: var(--gtl-accent);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.platform-card-action::after {
+  content: " ->";
+  letter-spacing: 0;
+}
+
 .platform-filter-bar {
   display: grid;
   grid-template-columns: minmax(240px, 1fr) minmax(180px, 260px);
@@ -634,18 +644,6 @@ select:focus-visible {
   background: #fff;
   font-weight: 700;
   text-transform: none;
-}
-
-.platform-tool-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 12px;
-}
-
-.platform-tool-actions button:disabled {
-  cursor: not-allowed;
-  opacity: 0.52;
 }
 
 .platform-tool-host {
@@ -825,7 +823,7 @@ select:focus-visible {
 
   .platform-nav nav {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .platform-page h1,

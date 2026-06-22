@@ -36,12 +36,6 @@ export function ToolShell({ tool }) {
         </div>
       </section>
 
-      <section className="platform-tool-actions" aria-label="Future tool actions">
-        <button type="button" disabled>Save</button>
-        <button type="button" disabled>Export</button>
-        <button type="button" disabled>Share</button>
-      </section>
-
       <section className="platform-tool-host">
         <Suspense fallback={<div className="platform-loading">Loading tool...</div>}>
           <ToolComponent />

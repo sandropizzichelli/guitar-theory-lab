@@ -13,17 +13,12 @@ export function PlatformNav({ path }) {
           <PlatformLink
             className={path === item.route ? "active" : ""}
             key={item.route}
-            title={item.state === "soon" ? "Coming soon" : undefined}
             to={item.route}
           >
             {item.label}
-            {item.state === "soon" && <span className="platform-nav__soon">Soon</span>}
           </PlatformLink>
         ))}
       </nav>
-      <PlatformLink className="platform-button platform-button--ghost" to="/login">
-        Login
-      </PlatformLink>
     </header>
   );
 }

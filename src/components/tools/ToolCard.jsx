@@ -29,8 +29,8 @@ export function ToolCard({ tool, variant = "default" }) {
           <span key={tag}>{tag}</span>
         ))}
       </div>
-      <span className="platform-button platform-button--small">
-        Open tool
+      <span className="platform-card-action">
+        Open module
       </span>
     </PlatformLink>
   );

@@ -4,9 +4,9 @@ import { BrandMark } from "../brand/BrandMark.jsx";
 
 const footerLinks = [
   { label: "Tools", route: "/tools" },
-  { label: "About", route: "/about" },
   { label: "Roadmap", route: "/roadmap" },
-  { label: "Contact", route: "/about" }
+  { label: "Pricing", route: "/pricing" },
+  { label: "About", route: "/about" }
 ];
 
 export function PlatformFooter() {
