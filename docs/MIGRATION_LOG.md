@@ -83,6 +83,30 @@ The Docker path must be portable and should not fail just because a local `.env`
 
 The platform and the Goodrick standalone app were both trying to use `5173`, causing `Port 5173 is already in use` when both were open.
 
+## 2026-06-22, phase 6
+
+### Changes made
+
+- Copied the current tool source folders into `/src/legacy-tools`.
+- Updated platform adapters to import from `/src/legacy-tools` instead of the standalone project folders.
+
+### Why
+
+Cloudflare Pages and GitHub clones need a self-contained repository. The original Set Visualizer and Harmonic Intersections folders are nested Git repositories in the local workspace, so relying on them would make remote builds fragile.
+
+## 2026-06-22, phase 7
+
+### Changes made
+
+- Set public metadata to `https://guitartheorylab.com`.
+- Added Cloudflare Pages SPA redirects.
+- Added Cloudflare Pages headers.
+- Added Cloudflare Pages deployment documentation.
+
+### Why
+
+The domain has been purchased and the app needs production-ready static hosting settings before connecting a GitHub repository to Cloudflare Pages.
+
 ### Why
 
 The platform must become a modular, expandable product rather than three isolated tools.

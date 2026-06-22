@@ -77,7 +77,7 @@ Access helpers currently live in `/src/lib/auth.js`:
 
 ## Current migration stage
 
-The first implementation uses adapter modules under `/src/tools/*` that import the existing working tools from their legacy folders. This protects the tools while the platform structure is introduced.
+The current implementation uses adapter modules under `/src/tools/*` that import deployable source snapshots from `/src/legacy-tools/*`. The original standalone projects are still preserved in their own folders for development and rollback.
 
 Why `/src/tools` rather than a root `/tools` source directory: Vite serves source files directly in development. A physical root `/tools/<slug>` directory conflicts with the public SPA route `/tools/<slug>`. The public route remains `/tools/<slug>`; only the source folder is Vite-specific.
 

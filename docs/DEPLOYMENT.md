@@ -79,6 +79,12 @@ server {
 
 Use Certbot or another ACME client for HTTPS.
 
+## Cloudflare Pages
+
+For the first public release, Cloudflare Pages is the fastest path because this is a static Vite build and the domain is already on Cloudflare.
+
+See `/docs/CLOUDFLARE_PAGES.md`.
+
 ## Backups
 
 - Keep Git commits before each risky migration.

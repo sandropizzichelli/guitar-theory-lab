@@ -8,7 +8,7 @@ The current platform contains the first three modules:
 - Harmonic Intersections
 - Goodrick Voice Leading Visualization
 
-The original tools are preserved in their existing folders and are integrated through lightweight adapters while the platform architecture is introduced safely.
+The original tools are preserved in their existing folders. The platform imports deployable source snapshots from `/src/legacy-tools` so GitHub and Cloudflare Pages builds are self-contained.
 
 ## Local development
 
@@ -80,6 +80,7 @@ See also:
 
 - `/docs/AUTH_DATA_AND_BILLING.md`
 - `/supabase/schema.sql`
+- `/docs/CLOUDFLARE_PAGES.md`
 
 ## Docker
 

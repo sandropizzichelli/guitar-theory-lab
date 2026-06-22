@@ -1,7 +1,7 @@
-import "../../../Harmonic Intersections/src/styles/variables.css";
-import "../../../Harmonic Intersections/src/styles/layout.css";
-import "../../../Harmonic Intersections/src/styles/fretboard.css";
-import { MainExplorerPage } from "../../../Harmonic Intersections/src/pages/MainExplorerPage";
+import "../../legacy-tools/harmonic-intersections/styles/variables.css";
+import "../../legacy-tools/harmonic-intersections/styles/layout.css";
+import "../../legacy-tools/harmonic-intersections/styles/fretboard.css";
+import { MainExplorerPage } from "../../legacy-tools/harmonic-intersections/pages/MainExplorerPage";
 
 export default function HarmonicIntersectionsTool() {
   return <MainExplorerPage />;
