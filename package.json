@@ -1,0 +1,21 @@
+{
+  "name": "guitar-software-series",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "goodrick": "npm --prefix \"Goodrick Voice Leading Visualizer\" run dev -- --host 127.0.0.1 --port 5173 --strictPort",
+    "goodrick:lan": "npm --prefix \"Goodrick Voice Leading Visualizer\" run dev -- --host 0.0.0.0 --port 5173 --strictPort",
+    "goodrick:build": "npm --prefix \"Goodrick Voice Leading Visualizer\" run build",
+    "goodrick:test": "npm --prefix \"Goodrick Voice Leading Visualizer\" run test",
+    "harmonic": "npm --prefix \"Harmonic Intersections\" run dev -- --host 127.0.0.1 --port 5174 --strictPort",
+    "harmonic:lan": "npm --prefix \"Harmonic Intersections\" run dev -- --host 0.0.0.0 --port 5174 --strictPort",
+    "harmonic:build": "npm --prefix \"Harmonic Intersections\" run build",
+    "harmonic:test": "npm --prefix \"Harmonic Intersections\" run test",
+    "set": "npm --prefix \"Set Visualizer\" run dev -- --host 127.0.0.1 --port 5175 --strictPort",
+    "set:lan": "npm --prefix \"Set Visualizer\" run dev -- --host 0.0.0.0 --port 5175 --strictPort",
+    "set:build": "npm --prefix \"Set Visualizer\" run build",
+    "set:test": "npm --prefix \"Set Visualizer\" run test",
+    "build:all": "npm run goodrick:build && npm run harmonic:build && npm run set:build",
+    "test:all": "npm run goodrick:test && npm run harmonic:test && npm run set:test"
+  }
+}
