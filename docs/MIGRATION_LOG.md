@@ -61,6 +61,17 @@ The platform shell must remain maintainable as more tools are added. Lazy tool l
 
 The platform needs clear contracts for future login, saved materials and Pro access before a real backend is connected.
 
+## 2026-06-22, phase 4
+
+### Changes made
+
+- Updated Docker build args so `docker compose up -d` can start without a committed `.env` file.
+- Kept domain and app metadata configurable at build time.
+
+### Why
+
+The Docker path must be portable and should not fail just because a local `.env` has not been created yet.
+
 ### Why
 
 The platform must become a modular, expandable product rather than three isolated tools.

@@ -10,7 +10,7 @@ npm run preview
 
 ## Docker
 
-Create `.env` from `.env.example`, then run:
+Run:
 
 ```bash
 docker compose up -d
@@ -22,10 +22,18 @@ The app is served on:
 http://127.0.0.1:8080/
 ```
 
+Optional build-time metadata:
+
+```bash
+SITE_NAME="Guitar Theory Lab" \
+NEXT_PUBLIC_SITE_URL="https://your-domain.example" \
+docker compose up -d --build
+```
+
 ## VPS deployment
 
 1. Copy the repository to the VPS.
-2. Create `.env`.
+2. Optionally create `.env` or export build-time variables for the public domain.
 3. Run `docker compose up -d --build`.
 4. Point the public domain DNS record to the VPS IP.
 5. Put Caddy or Nginx in front of port `8080`.

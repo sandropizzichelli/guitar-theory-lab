@@ -87,6 +87,12 @@ http://127.0.0.1:8080/
 
 Use Nginx or Caddy in front of the container for the final domain and HTTPS.
 
+For a production domain, rebuild with:
+
+```bash
+NEXT_PUBLIC_SITE_URL="https://your-domain.example" docker compose up -d --build
+```
+
 ## Tool architecture
 
 Tools are registered in `/config/tools.ts`.
