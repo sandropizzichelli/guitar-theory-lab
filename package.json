@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
-    "dev:lan": "vite --host 0.0.0.0 --port 5173 --strictPort",
+    "dev": "vite --host 127.0.0.1 --port 5180 --strictPort",
+    "dev:lan": "vite --host 0.0.0.0 --port 5180 --strictPort",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "goodrick": "npm --prefix \"Goodrick Voice Leading Visualizer\" run dev -- --host 127.0.0.1 --port 5173 --strictPort",

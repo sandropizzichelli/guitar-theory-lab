@@ -72,6 +72,17 @@ The platform needs clear contracts for future login, saved materials and Pro acc
 
 The Docker path must be portable and should not fail just because a local `.env` has not been created yet.
 
+## 2026-06-22, phase 5
+
+### Changes made
+
+- Moved the platform development server from port `5173` to `5180`.
+- Kept legacy standalone ports unchanged: Goodrick `5173`, Harmonic `5174`, Set Visualizer `5175`.
+
+### Why
+
+The platform and the Goodrick standalone app were both trying to use `5173`, causing `Port 5173 is already in use` when both were open.
+
 ### Why
 
 The platform must become a modular, expandable product rather than three isolated tools.

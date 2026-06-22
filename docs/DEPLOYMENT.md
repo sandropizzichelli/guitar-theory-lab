@@ -8,6 +8,18 @@ npm run build
 npm run preview
 ```
 
+Development server:
+
+```bash
+npm run dev
+```
+
+Local development URL:
+
+```text
+http://127.0.0.1:5180/
+```
+
 ## Docker
 
 Run:

@@ -27,14 +27,22 @@ npm run dev:lan
 Open:
 
 ```text
-http://127.0.0.1:5173/
+http://127.0.0.1:5180/
 ```
 
 or from another device on the LAN:
 
 ```text
-http://<mac-lan-ip>:5173/
+http://<mac-lan-ip>:5180/
 ```
+
+The legacy standalone tools keep their old ports:
+
+- Goodrick Voice Leading Visualizer: `5173`
+- Harmonic Intersections: `5174`
+- Set Visualizer: `5175`
+
+This lets you run the platform and a standalone legacy tool at the same time.
 
 ## Build
 
