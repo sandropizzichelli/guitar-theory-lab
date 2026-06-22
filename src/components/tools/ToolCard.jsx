@@ -1,4 +1,5 @@
 import { PlatformLink } from "../../lib/router.jsx";
+import { ToolDiagram } from "./ToolDiagram.jsx";
 import { ProBadge, StatusBadge } from "./ToolBadges.jsx";
 
 export function ToolCard({ tool, variant = "default" }) {
@@ -12,6 +13,7 @@ export function ToolCard({ tool, variant = "default" }) {
         <StatusBadge status={tool.status} />
         <ProBadge isPro={tool.isPro} />
       </div>
+      <ToolDiagram icon={tool.icon} />
       <h3>{tool.title}</h3>
       <p>{tool.description}</p>
       {variant === "detailed" && (
@@ -29,9 +31,7 @@ export function ToolCard({ tool, variant = "default" }) {
           <span key={tag}>{tag}</span>
         ))}
       </div>
-      <span className="platform-card-action">
-        Open module
-      </span>
+      <span className="platform-card-action">Open tool</span>
     </PlatformLink>
   );
 }
