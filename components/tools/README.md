@@ -8,4 +8,4 @@ Future extraction point for:
 - ToolHeader
 - ToolStatusBadge
 
-The first implementation is kept in `/src/App.jsx` while the legacy tool adapters are verified.
+Current implementation lives in `/src/components/tools`.

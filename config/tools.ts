@@ -1,7 +1,3 @@
-import SetClassExplorerTool from "../src/tools/set-class-explorer";
-import HarmonicIntersectionsTool from "../src/tools/harmonic-intersections";
-import GoodrickVoiceLeadingVisualizationTool from "../src/tools/goodrick-voice-leading-visualization";
-
 export const TOOL_STATUSES = ["experimental", "alpha", "beta", "stable", "deprecated"];
 
 export const TOOL_CATEGORIES = [
@@ -32,7 +28,7 @@ export const tools = [
     isPublic: true,
     isPro: false,
     tags: ["set theory", "set class", "pitch-class sets", "prime form", "interval vector", "fretboard"],
-    component: SetClassExplorerTool,
+    component: () => import("../src/tools/set-class-explorer"),
     createdAt: "2026-04-16",
     updatedAt: "2026-06-22"
   },
@@ -53,7 +49,7 @@ export const tools = [
     isPublic: true,
     isPro: false,
     tags: ["harmony", "intersections", "common tones", "scales", "chords", "modes", "improvisation"],
-    component: HarmonicIntersectionsTool,
+    component: () => import("../src/tools/harmonic-intersections"),
     createdAt: "2026-06-02",
     updatedAt: "2026-06-22"
   },
@@ -74,7 +70,7 @@ export const tools = [
     isPublic: true,
     isPro: false,
     tags: ["voice leading", "Goodrick", "guitar", "harmony", "fretboard", "string sets"],
-    component: GoodrickVoiceLeadingVisualizationTool,
+    component: () => import("../src/tools/goodrick-voice-leading-visualization"),
     createdAt: "2026-06-21",
     updatedAt: "2026-06-22"
   }

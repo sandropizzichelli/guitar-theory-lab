@@ -43,7 +43,11 @@ The platform reads this registry to generate:
 
 3. Add a `README.md` describing the tool.
 
-4. Register the tool in `/config/tools.ts`.
+4. Register the tool in `/config/tools.ts` with a lazy component loader:
+
+```js
+component: () => import("../src/tools/my-new-tool")
+```
 
 5. Confirm that `/tools` shows the new card and `/tools/my-new-tool` opens the module.
 

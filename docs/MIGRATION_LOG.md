@@ -29,6 +29,24 @@
 - Added `.env.example` for site, Supabase and Stripe variables.
 - Added documentation for architecture, deployment, roadmap and monetization.
 
+## 2026-06-22, phase 2
+
+### Changes made
+
+- Extracted platform navigation, page shell and tool UI components out of `/src/App.jsx`.
+- Added dedicated page modules under `/src/pages`.
+- Changed tool registry component entries to lazy import functions.
+- Added Suspense loading state inside `ToolShell`.
+
+### Why
+
+The platform shell must remain maintainable as more tools are added. Lazy tool loading also reduces global CSS collision risk because legacy tool code and styles are loaded only when a tool route is opened.
+
+### Manual checks required
+
+- Confirm the home and `/tools` pages do not load legacy tool CSS unexpectedly.
+- Confirm direct reload works on each `/tools/<slug>` route.
+
 ### Why
 
 The platform must become a modular, expandable product rather than three isolated tools.

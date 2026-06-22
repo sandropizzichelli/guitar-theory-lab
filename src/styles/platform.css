@@ -321,6 +321,14 @@ select {
   padding: 0;
 }
 
+.platform-loading {
+  display: grid;
+  min-height: 280px;
+  place-items: center;
+  color: var(--platform-muted);
+  font-weight: 900;
+}
+
 .platform-price {
   color: var(--platform-ink) !important;
   font-size: 2.2rem;

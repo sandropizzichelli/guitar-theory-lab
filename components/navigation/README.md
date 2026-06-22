@@ -1,5 +1,5 @@
 # Navigation components
 
-Shared navigation components should live here.
+Source implementation currently lives in `/src/components/navigation`.
 
-Navigation data is currently configured in `/config/navigation.js`.
+Navigation data is configured in `/config/navigation.js`.
