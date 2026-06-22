@@ -1,18 +1,33 @@
-export function registerServiceWorker() {
-  if (!("serviceWorker" in navigator)) return;
-  if (import.meta.env.DEV) return;
+async function clearBrowserCaches() {
+  if (!("caches" in window)) return;
+  const keys = await caches.keys();
+  await Promise.all(keys.map((key) => caches.delete(key)));
+}
 
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      registrations.forEach((registration) => registration.unregister());
-    }).catch(() => {
-      // Service worker cleanup is progressive; the app should still work without it.
-    });
+function reloadWithoutServiceWorker() {
+  const url = new URL(window.location.href);
+  if (url.searchParams.has("sw-reset")) return;
+  url.searchParams.set("sw-reset", Date.now().toString());
+  window.location.replace(url.toString());
+}
 
-    if ("caches" in window) {
-      caches.keys()
-        .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
-        .catch(() => {});
+export async function prepareBrowserRuntime() {
+  if (import.meta.env.DEV) return true;
+  if (!("serviceWorker" in navigator)) return true;
+
+  try {
+    const wasControlled = Boolean(navigator.serviceWorker.controller);
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations.map((registration) => registration.unregister()));
+    await clearBrowserCaches();
+
+    if (wasControlled) {
+      reloadWithoutServiceWorker();
+      return false;
     }
-  });
+  } catch {
+    // Cache cleanup should never prevent the application from loading.
+  }
+
+  return true;
 }
