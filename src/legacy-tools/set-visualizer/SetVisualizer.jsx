@@ -22,11 +22,18 @@ import {
   setSearchParam,
 } from "./urlState";
 
-const PAGE_OPTIONS = ["tricordi", "tetracordi", "pentacordi", "esacordi"];
+const PAGE_OPTIONS = ["trichords", "tetrachords", "pentachords", "hexachords"];
+const LEGACY_PAGE_OPTIONS = {
+  tricordi: "trichords",
+  tetracordi: "tetrachords",
+  pentacordi: "pentachords",
+  esacordi: "hexachords",
+};
 
 function getInitialPage() {
   const params = getCurrentSearchParams();
-  return readEnumParam(params, "page", PAGE_OPTIONS, "tricordi");
+  const page = params.get("page");
+  return LEGACY_PAGE_OPTIONS[page] || readEnumParam(params, "page", PAGE_OPTIONS, "trichords");
 }
 
 function TetrachordPage() {
@@ -89,22 +96,22 @@ function PageSwitcher({ page, setPage }) {
         </div>
 
         <div className="page-switcher__actions">
-          <PillButton active={page === "tricordi"} onClick={() => setPage("tricordi")}>
+          <PillButton active={page === "trichords"} onClick={() => setPage("trichords")}>
             Trichords
           </PillButton>
           <PillButton
-            active={page === "tetracordi"}
-            onClick={() => setPage("tetracordi")}
+            active={page === "tetrachords"}
+            onClick={() => setPage("tetrachords")}
           >
             Tetrachords
           </PillButton>
           <PillButton
-            active={page === "pentacordi"}
-            onClick={() => setPage("pentacordi")}
+            active={page === "pentachords"}
+            onClick={() => setPage("pentachords")}
           >
             Pentachords
           </PillButton>
-          <PillButton active={page === "esacordi"} onClick={() => setPage("esacordi")}>
+          <PillButton active={page === "hexachords"} onClick={() => setPage("hexachords")}>
             Hexachords
           </PillButton>
         </div>
@@ -125,10 +132,10 @@ export default function SetVisualizer() {
   return (
     <>
       <PageSwitcher page={page} setPage={setPage} />
-      {page === "tricordi" && <TricordPage />}
-      {page === "tetracordi" && <TetrachordPage />}
-      {page === "pentacordi" && <PentachordPage />}
-      {page === "esacordi" && <HexachordPage />}
+      {page === "trichords" && <TricordPage />}
+      {page === "tetrachords" && <TetrachordPage />}
+      {page === "pentachords" && <PentachordPage />}
+      {page === "hexachords" && <HexachordPage />}
     </>
   );
 }

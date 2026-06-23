@@ -8,9 +8,9 @@ The start position can be chosen by tonic placement: for example, on strings 1-2
 
 Cycles are grouped as complementary Goodrick motions:
 
-- `Seconde / Settime`
-- `Terze / Seste`
-- `Quarte / Quinte`
+- `Seconds / Sevenths`
+- `Thirds / Sixths`
+- `Fourths / Fifths`
 
 The direction selector chooses which side of the pair is active: descending gives seconds, thirds, fourths; ascending gives sevenths, sixths, fifths.
 
@@ -24,7 +24,7 @@ Voice-leading follows the functional rotations shown in Goodrick's almanac:
 
 The main fretboard view is a Cycle Map:
 
-- **Glifi** mode shows one colored shape per chord in the selected cycle, reducing dot clutter.
+- **Glyphs** mode shows one colored shape per chord in the selected cycle, reducing dot clutter.
 - **Token** mode shows every occupied fret/string cell, aggregating overlaps into stacked tokens.
 - Clicking a degree in the Cycle Map focuses that chord while keeping the rest of the cycle visible.
 

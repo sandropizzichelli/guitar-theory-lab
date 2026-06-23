@@ -47,12 +47,12 @@ describe("diatonic material", () => {
 
   it("keeps Goodrick cycle motions separated", () => {
     expect(CYCLES.map((cycle) => cycle.label)).toEqual([
-      "Seconde",
-      "Terze",
-      "Quarte",
-      "Quinte",
-      "Seste",
-      "Settime"
+      "Seconds",
+      "Thirds",
+      "Fourths",
+      "Fifths",
+      "Sixths",
+      "Sevenths"
     ]);
     expect(nextDegree(0, "seconds")).toBe(1);
     expect(nextDegree(0, "thirds")).toBe(2);

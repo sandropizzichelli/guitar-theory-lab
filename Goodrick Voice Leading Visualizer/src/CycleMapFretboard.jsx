@@ -13,10 +13,10 @@ const MARKERS = [
 ];
 
 const VIEW_MODES = [
-  { id: "overview", label: "Panoramica" },
-  { id: "chord", label: "Accordo" },
-  { id: "transition", label: "Transizione" },
-  { id: "all", label: "Tutti" }
+  { id: "overview", label: "Overview" },
+  { id: "chord", label: "Chord" },
+  { id: "transition", label: "Transition" },
+  { id: "all", label: "All" }
 ];
 
 function cellKey(stringNumber, fret) {
@@ -140,7 +140,7 @@ function CycleDotCluster({
         const isRoot = entry.tone.toneLabel === "R";
         const isActive = entry.order === activeOrder;
         const label = dotContent(entry, displayMode, cycleViewMode, stackSize);
-        const title = `${entry.order + 1}. ${entry.chord.roman} ${entry.chord.chordName} | ${entryLabel(entry, displayMode)} | corda ${entry.stringNumber}, tasto ${entry.fret}`;
+        const title = `${entry.order + 1}. ${entry.chord.roman} ${entry.chord.chordName} | ${entryLabel(entry, displayMode)} | string ${entry.stringNumber}, fret ${entry.fret}`;
 
         return (
           <button
@@ -174,7 +174,7 @@ function CycleLegend({ cycleVoicings, activeOrder, onActiveOrderChange }) {
   const items = orderedCycleItems(cycleVoicings);
 
   return (
-    <div className="cycle-legend" aria-label="Passi del ciclo">
+    <div className="cycle-legend" aria-label="Cycle steps">
       {items.map((item) => {
         const isActive = activeOrder === item.order;
         const label = `${item.order + 1}. ${item.chord.roman} ${item.chord.chordName}`;
@@ -204,7 +204,7 @@ function CycleLegend({ cycleVoicings, activeOrder, onActiveOrderChange }) {
 
 function CycleModeSwitch({ value, onChange }) {
   return (
-    <div className="cycle-view-switch" aria-label="Modalita cycle map">
+    <div className="cycle-view-switch" aria-label="Cycle map mode">
       {VIEW_MODES.map((mode) => (
         <button
           className={value === mode.id ? "active" : ""}

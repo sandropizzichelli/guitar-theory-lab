@@ -123,7 +123,7 @@ export default function App() {
     allStartVoicings.forEach((voicing) => {
       const group = groups.get(voicing.inversion) ?? {
         inversion: voicing.inversion,
-        label: chordType.inversionLabels[voicing.inversion] ?? `Rivolto ${voicing.inversion}`
+        label: chordType.inversionLabels[voicing.inversion] ?? `Inversion ${voicing.inversion}`
       };
       groups.set(voicing.inversion, group);
     });
@@ -164,10 +164,10 @@ export default function App() {
     <main className="app-shell">
       <section className="control-grid">
         <div className="set-panel controls-panel">
-          <p className="section-title">Materiale</p>
+          <p className="section-title">Material</p>
           <div className="field-grid field-grid--single">
             <label className="field">
-              <span>Tonica</span>
+              <span>Tonic</span>
               <select value={root} onChange={(event) => setRoot(Number(event.target.value))}>
                 {NOTE_OPTIONS.map((option) => (
                   <option value={option.pitchClass} key={option.pitchClass}>{option.label}</option>
@@ -176,7 +176,7 @@ export default function App() {
             </label>
 
             <label className="field">
-              <span>Modo</span>
+              <span>Mode</span>
               <select value={scaleId} onChange={(event) => setScaleId(event.target.value)}>
                 {SCALE_FAMILIES.map((family) => (
                   <optgroup label={family.label} key={family.id}>
@@ -203,7 +203,7 @@ export default function App() {
 
           <div className="field-grid">
             <label className="field">
-              <span>Accordo start</span>
+              <span>Start chord</span>
               <select value={currentDegree} onChange={(event) => setCurrentDegree(Number(event.target.value))}>
                 {chords.map((chord) => (
                   <option value={chord.degree} key={chord.id}>{chord.roman} | {chord.chordName}</option>
@@ -212,7 +212,7 @@ export default function App() {
             </label>
 
             <label className="field">
-              <span>Ciclo</span>
+              <span>Cycle</span>
               <select value={cycleId} onChange={(event) => setCycleId(event.target.value)}>
                 {CYCLES.map((option) => (
                   <option value={option.id} key={option.id}>{option.label}</option>
@@ -236,7 +236,7 @@ export default function App() {
         </div>
 
         <div className="set-panel controls-panel">
-          <p className="section-title">Chitarra</p>
+          <p className="section-title">Guitar</p>
           <div className="field">
             <span>Voicing</span>
             <div className="segmented-control">
@@ -259,7 +259,7 @@ export default function App() {
 
           {dropTypeOptions.length ? (
             <label className="field">
-              <span>Tipo drop</span>
+              <span>Drop type</span>
               <select value={activeDropType ?? ""} onChange={(event) => setDropType(event.target.value)}>
                 {dropTypeOptions.map((option) => (
                   <option value={option.id} key={option.id}>{option.label}</option>
@@ -279,7 +279,7 @@ export default function App() {
 
           <div className="field-grid">
             <label className="field">
-              <span>Rivolto start</span>
+              <span>Starting inversion</span>
               <select
                 disabled={!rootPlacementOptions.length}
                 value={activeStartInversion ?? ""}
@@ -291,7 +291,7 @@ export default function App() {
                   <option value={option.inversion} key={option.inversion}>
                     {option.label}
                   </option>
-                )) : <option>Nessun rivolto disponibile</option>}
+                )) : <option>No inversion available</option>}
               </select>
             </label>
           </div>
@@ -302,7 +302,7 @@ export default function App() {
               onChange={(event) => setAllowOpenStrings(event.target.checked)}
               type="checkbox"
             />
-            <span>Corde vuote</span>
+            <span>Open strings</span>
           </label>
         </div>
 
@@ -310,7 +310,7 @@ export default function App() {
           <p className="section-title">Display</p>
           <div className="segmented-control">
             <button className={displayMode === "notes" ? "active" : ""} onClick={() => setDisplayMode("notes")}>Note</button>
-            <button className={displayMode === "degrees" ? "active" : ""} onClick={() => setDisplayMode("degrees")}>Gradi</button>
+            <button className={displayMode === "degrees" ? "active" : ""} onClick={() => setDisplayMode("degrees")}>Degrees</button>
           </div>
 
           <div className="scale-summary">

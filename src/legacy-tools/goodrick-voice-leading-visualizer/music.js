@@ -6,9 +6,9 @@ export const NOTE_OPTIONS = NOTE_NAMES.map((label, pitchClass) => ({
 }));
 
 export const SCALE_FAMILIES = [
-  { id: "major", label: "Modi della scala maggiore" },
-  { id: "melodicMinor", label: "Modi della minore melodica" },
-  { id: "harmonicMinor", label: "Modi della minore armonica" }
+  { id: "major", label: "Major scale modes" },
+  { id: "melodicMinor", label: "Melodic minor modes" },
+  { id: "harmonicMinor", label: "Harmonic minor modes" }
 ];
 
 export const SCALE_OPTIONS = [
@@ -38,29 +38,29 @@ export const SCALE_OPTIONS = [
 export const CHORD_TYPES = [
   {
     id: "triads",
-    label: "Triadi",
+    label: "Triads",
     offsets: [0, 2, 4],
     toneLabels: ["R", "3", "5"],
-    inversionLabels: ["Stato fondamentale", "Primo rivolto", "Secondo rivolto"]
+    inversionLabels: ["Root position", "First inversion", "Second inversion"]
   },
   {
     id: "sevenths",
-    label: "Quadriadi",
+    label: "Seventh chords",
     offsets: [0, 2, 4, 6],
     toneLabels: ["R", "3", "5", "7"],
-    inversionLabels: ["Stato fondamentale", "Primo rivolto", "Secondo rivolto", "Terzo rivolto"]
+    inversionLabels: ["Root position", "First inversion", "Second inversion", "Third inversion"]
   }
 ];
 
 export const CYCLE_DIRECTIONS = [
-  { id: "ascending", label: "Ascendente" },
-  { id: "descending", label: "Discendente" }
+  { id: "ascending", label: "Ascending" },
+  { id: "descending", label: "Descending" }
 ];
 
 export const CYCLES = [
   {
     id: "seconds",
-    label: "Seconde",
+    label: "Seconds",
     shortLabel: "2e",
     step: 1,
     family: "seconds-sevenths",
@@ -68,7 +68,7 @@ export const CYCLES = [
   },
   {
     id: "thirds",
-    label: "Terze",
+    label: "Thirds",
     shortLabel: "3e",
     step: 2,
     family: "thirds-sixths",
@@ -76,7 +76,7 @@ export const CYCLES = [
   },
   {
     id: "fourths",
-    label: "Quarte",
+    label: "Fourths",
     shortLabel: "4e",
     step: 3,
     family: "fourths-fifths",
@@ -84,7 +84,7 @@ export const CYCLES = [
   },
   {
     id: "fifths",
-    label: "Quinte",
+    label: "Fifths",
     shortLabel: "5e",
     step: 4,
     family: "fourths-fifths",
@@ -92,7 +92,7 @@ export const CYCLES = [
   },
   {
     id: "sixths",
-    label: "Seste",
+    label: "Sixths",
     shortLabel: "6e",
     step: 5,
     family: "thirds-sixths",
@@ -100,7 +100,7 @@ export const CYCLES = [
   },
   {
     id: "sevenths",
-    label: "Settime",
+    label: "Sevenths",
     shortLabel: "7e",
     step: 6,
     family: "seconds-sevenths",
@@ -111,21 +111,21 @@ export const CYCLES = [
 const LEGACY_CYCLES = {
   "seconds-sevenths": {
     id: "seconds-sevenths",
-    label: "Seconde / Settime",
+    label: "Seconds / Sevenths",
     shortLabel: "2e / 7e",
     family: "seconds-sevenths",
     steps: { ascending: 6, descending: 1 }
   },
   "thirds-sixths": {
     id: "thirds-sixths",
-    label: "Terze / Seste",
+    label: "Thirds / Sixths",
     shortLabel: "3e / 6e",
     family: "thirds-sixths",
     steps: { ascending: 5, descending: 2 }
   },
   "fourths-fifths": {
     id: "fourths-fifths",
-    label: "Quarte / Quinte",
+    label: "Fourths / Fifths",
     shortLabel: "4e / 5e",
     family: "fourths-fifths",
     steps: { ascending: 4, descending: 3 }
