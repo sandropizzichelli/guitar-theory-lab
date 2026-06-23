@@ -32,15 +32,15 @@ function getInitialPage() {
 function TetrachordPage() {
   return (
     <GenericSetPage
-      title="Visualizzatore tetracordi su chitarra"
-      description="Pagina separata dai tricordi. Qui lavori solo con i set a 4 note di Allen Forte."
-      keyLabel="Tetracordo Forte"
+      title="Guitar tetrachord visualizer"
+      description="Work directly with Allen Forte four-note set classes and playable guitar realizations."
+      keyLabel="Forte tetrachord"
       keys={TETRACHORD_KEYS}
       dataMap={FORTE_4_8_DATA}
       findVoicingFn={findTetrachordVoicings}
-      noteName="tetracordo"
-      complementName="Complementare"
-      degreeButtonLabel="Gradi"
+      noteName="tetrachord"
+      complementName="Complement"
+      degreeButtonLabel="Degrees"
       noteCount={4}
     />
   );
@@ -49,15 +49,15 @@ function TetrachordPage() {
 function PentachordPage() {
   return (
     <GenericSetPage
-      title="Visualizzatore pentacordi su chitarra"
-      description="Pagina separata dai tricordi e dai tetracordi. Qui lavori solo con i set a 5 note di Allen Forte."
-      keyLabel="Pentacordo Forte"
+      title="Guitar pentachord visualizer"
+      description="Work directly with Allen Forte five-note set classes and playable guitar realizations."
+      keyLabel="Forte pentachord"
       keys={PENTACHORD_KEYS}
       dataMap={FORTE_5_7_DATA}
       findVoicingFn={findPentachordVoicings}
-      noteName="pentacordo"
-      complementName="Complementare"
-      degreeButtonLabel="Gradi"
+      noteName="pentachord"
+      complementName="Complement"
+      degreeButtonLabel="Degrees"
       noteCount={5}
     />
   );
@@ -66,15 +66,15 @@ function PentachordPage() {
 function HexachordPage() {
   return (
     <GenericSetPage
-      title="Visualizzatore esacordi su chitarra"
-      description="Pagina separata dai tricordi, tetracordi e pentacordi. Qui lavori solo con i set a 6 note di Allen Forte."
-      keyLabel="Esacordo Forte"
+      title="Guitar hexachord visualizer"
+      description="Work directly with Allen Forte six-note set classes and playable guitar realizations."
+      keyLabel="Forte hexachord"
       keys={HEXACHORD_KEYS}
       dataMap={FORTE_6_DATA}
       findVoicingFn={findHexachordVoicings}
-      noteName="esacordo"
-      complementName="Complementare"
-      degreeButtonLabel="Gradi"
+      noteName="hexachord"
+      complementName="Complement"
+      degreeButtonLabel="Degrees"
       noteCount={6}
     />
   );
@@ -90,22 +90,22 @@ function PageSwitcher({ page, setPage }) {
 
         <div className="page-switcher__actions">
           <PillButton active={page === "tricordi"} onClick={() => setPage("tricordi")}>
-            Tricordi
+            Trichords
           </PillButton>
           <PillButton
             active={page === "tetracordi"}
             onClick={() => setPage("tetracordi")}
           >
-            Tetracordi
+            Tetrachords
           </PillButton>
           <PillButton
             active={page === "pentacordi"}
             onClick={() => setPage("pentacordi")}
           >
-            Pentacordi
+            Pentachords
           </PillButton>
           <PillButton active={page === "esacordi"} onClick={() => setPage("esacordi")}>
-            Esacordi
+            Hexachords
           </PillButton>
         </div>
       </div>

@@ -19,7 +19,7 @@ export default function VoicingCard({
     >
       <div className="voicing-card__header">
         <div>
-          <div className="voicing-card__eyebrow">Forma {index + 1}</div>
+          <div className="voicing-card__eyebrow">Form {index + 1}</div>
           <div className="voicing-card__notes">{numericForm.join(" • ")}</div>
         </div>
       </div>

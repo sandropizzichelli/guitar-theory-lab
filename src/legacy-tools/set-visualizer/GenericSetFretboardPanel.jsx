@@ -40,7 +40,7 @@ function IntervalLegend({
   selectedIntervalClasses,
   onToggleIntervalClass,
   onClearIntervalClassFilter,
-  notePrefix = "Riferimento 0",
+  notePrefix = "Reference 0",
 }) {
   if (!legend?.length) return null;
 
@@ -57,7 +57,7 @@ function IntervalLegend({
               onClick={onClearIntervalClassFilter}
               className="interval-filter-reset"
             >
-              Mostra tutto
+              Show all
             </button>
           )}
           {vector && <span className="class-badge">{formatIntervalVector(vector)}</span>}
@@ -97,8 +97,8 @@ function IntervalLegend({
       </p>
       <ActiveIntervalLegend selectedIntervalClasses={selectedIntervalClasses} />
       <p className="helper-text helper-text--small">
-        Clicca un `ic` per isolare sul manico solo le note coinvolte in quella
-        famiglia intervallare.
+        Click an `ic` to isolate only the notes involved in that interval-class
+        family on the fretboard.
       </p>
     </div>
   );
@@ -110,7 +110,7 @@ function OccurrenceRelationLegend({ analysisMode, summary }) {
   return (
     <div className="analysis-card analysis-card--compact">
       <div className="picker-head">
-        <div className="section-title">Lettura sul manico</div>
+        <div className="section-title">Fretboard reading</div>
         <span className="class-badge">{summary.typeLabel}</span>
       </div>
 
@@ -118,11 +118,11 @@ function OccurrenceRelationLegend({ analysisMode, summary }) {
         <div className="occurrence-fretboard-legend__chip">
           <span className="occurrence-fretboard-legend__swatch occurrence-fretboard-legend__swatch--core" />
           <div>
-            <strong>Nucleo</strong>
+            <strong>Core</strong>
             <span>
               {analysisMode === "subsets"
-                ? "note presenti nell'occorrenza"
-                : "note del set madre conservate"}
+                ? "notes present in the occurrence"
+                : "retained notes from the parent set"}
             </span>
           </div>
         </div>
@@ -131,16 +131,16 @@ function OccurrenceRelationLegend({ analysisMode, summary }) {
           <div className="occurrence-fretboard-legend__chip">
             <span className="occurrence-fretboard-legend__swatch occurrence-fretboard-legend__swatch--missing" />
             <div>
-              <strong>Gradi mancanti</strong>
-              <span>{summary.missingPcs.map((pc) => PC_TO_NAME[pc]).join(" · ") || "nessuno"}</span>
+              <strong>Missing degrees</strong>
+              <span>{summary.missingPcs.map((pc) => PC_TO_NAME[pc]).join(" · ") || "none"}</span>
             </div>
           </div>
         ) : (
           <div className="occurrence-fretboard-legend__chip">
             <span className="occurrence-fretboard-legend__swatch occurrence-fretboard-legend__swatch--added" />
             <div>
-              <strong>Note aggiunte</strong>
-              <span>{summary.addedPcs.map((pc) => PC_TO_NAME[pc]).join(" · ") || "nessuna"}</span>
+              <strong>Added notes</strong>
+              <span>{summary.addedPcs.map((pc) => PC_TO_NAME[pc]).join(" · ") || "none"}</span>
             </div>
           </div>
         )}
@@ -241,9 +241,9 @@ export default function GenericSetFretboardPanel({
       <div className="panel-header">
         <div className="panel-header__copy">
           <div className="eyebrow">
-            {hideFretboardVisual ? "Lettura del set" : "Spazio sul manico"}
+            {hideFretboardVisual ? "Set reading" : "Fretboard space"}
           </div>
-          <h2>{hideFretboardVisual ? "Analisi" : "Manico"}</h2>
+          <h2>{hideFretboardVisual ? "Analysis" : "Fretboard"}</h2>
         </div>
         {!showComplement && activeSet && (
           <span className="class-badge">{activeSet.transformLabel}</span>
@@ -256,26 +256,26 @@ export default function GenericSetFretboardPanel({
             <p className="helper-text">
               {hideFretboardVisual
                 ? showingPrimaryForm
-                  ? "Il manico attivo ora e nel box alto. Qui sotto trovi i riferimenti teorici e intervallari della forma primaria."
-                  : `Il manico attivo ora e nel box alto. Qui sotto trovi i riferimenti utili per leggere il ${noteName} corrente.`
+                  ? "The active fretboard is now in the upper box. Below you will find the theoretical and intervallic references for the prime form."
+                  : `The active fretboard is now in the upper box. Below you will find useful references for reading the current ${noteName}.`
                 : showingPrimaryForm
-                  ? "Il manico mostra la prime form come diteggiatura compatta reale: ogni nota viene collocata nella posizione piu vicina sul manico, anche cambiando corda quando questo rende la forma piu raccolta. Se attivi la spunta, vedi tutte le forme risultanti."
-                  : `Le caselle attenuate appartengono al ${noteName} trasformato. Le caselle evidenziate mostrano la forma selezionata, oppure tutte le forme se l'opzione e attiva.`}
+                  ? "The fretboard shows the prime form as a compact playable fingering: each note is placed in the closest available position, changing strings when that produces a tighter shape. Enable the checkbox to see all resulting forms."
+                  : `Dimmed cells belong to the transformed ${noteName}. Highlighted cells show the selected form, or all forms when that option is active.`}
             </p>
 
             {activeSet && !hideFretboardVisual && (
               <div className="analysis-card analysis-card--compact">
                 <div className="panel-stack">
                   <div className="info-note">
-                    Prime form del {noteName}: [{activeSet.primeForm.join(",")}] |
-                    trasformata ordinata: [{activeSet.transformedPrimeForm.join(",")}]
+                    Prime form of the {noteName}: [{activeSet.primeForm.join(",")}] |
+                    ordered transform: [{activeSet.transformedPrimeForm.join(",")}]
                   </div>
                   <div className="info-note">
-                    Nome Forte del {noteName}: {activeSet.forteName}
+                    Forte name of the {noteName}: {activeSet.forteName}
                     {browseMode === "iv" && (
                       <>
                         {" | "}
-                        famiglia IV: {formatIntervalVector(selectedIntervalVector)} ({intervalVectorFamilyClasses.length} classi)
+                        IV family: {formatIntervalVector(selectedIntervalVector)} ({intervalVectorFamilyClasses.length} classes)
                       </>
                     )}
                   </div>
@@ -287,8 +287,8 @@ export default function GenericSetFretboardPanel({
               <IntervalLegend
                 title={
                   showingPrimaryForm
-                    ? "Mappa intervallare della forma primaria"
-                    : "Mappa intervallare"
+                    ? "Prime-form interval map"
+                    : "Interval map"
                 }
                 legend={showingPrimaryForm ? primaryFormIntervalLegend : activeSet.intervalLegend}
                 breakdown={activeSet.intervalClassBreakdown}
@@ -301,21 +301,21 @@ export default function GenericSetFretboardPanel({
 
             {selectedIntervalClasses.length > 0 && !showAll && (
               <div className="info-note info-note--accent">
-                Le linee sul manico collegano le note della{" "}
-                {showingPrimaryForm ? "forma primaria" : "forma selezionata"} che
-                producono gli intervalli `ic{selectedIntervalClasses.join(", ic")}`.
+                The fretboard lines connect the notes of the{" "}
+                {showingPrimaryForm ? "prime form" : "selected form"} that
+                produce the `ic{selectedIntervalClasses.join(", ic")}` intervals.
               </div>
             )}
 
             {!hideFretboardVisual && (
               <FretboardStage
-                title="Vista sul manico"
+                title="Fretboard view"
                 badge={
                   showingPrimaryForm
-                    ? "Forma primaria"
+                    ? "Prime form"
                     : showAll
-                      ? "Tutte le forme"
-                      : "Forma selezionata"
+                      ? "All forms"
+                      : "Selected form"
                 }
               >
                 <Fretboard
@@ -342,24 +342,24 @@ export default function GenericSetFretboardPanel({
             <p className="helper-text">
               {hideFretboardVisual
                 ? showingPrimaryForm
-                  ? "Il manico attivo e nel box alto. Qui sotto trovi il profilo teorico della prime form selezionata."
-                  : "Il manico attivo e nel box alto. Qui sotto trovi la lettura strutturale dell&apos;occorrenza concreta scelta."
+                  ? "The active fretboard is in the upper box. Below you will find the theoretical profile of the selected prime form."
+                  : "The active fretboard is in the upper box. Below you will find the structural reading of the selected concrete occurrence."
                 : showingPrimaryForm
-                  ? "Seleziona una classe a destra. Il manico mostra la prime form come diteggiatura compatta reale, oppure tutte le sue forme se attivi la spunta."
-                  : "Seleziona una classe a destra. Il manico mostra l&apos;occorrenza concreta scelta e, quando possibile, i suoi voicing o rivolti."}
+                  ? "Select a class on the right. The fretboard shows the prime form as a compact playable fingering, or all its forms when the checkbox is active."
+                  : "Select a class on the right. The fretboard shows the chosen concrete occurrence and, when possible, its voicings or inversions."}
             </p>
 
             {selectedAnalysisClass && !hideFretboardVisual && (
               <div className="analysis-card analysis-card--compact">
                 <div className="panel-stack">
                   <div className="info-note">
-                    Classe selezionata: {selectedAnalysisClass.forteName || "n.d."} | PF
+                    Selected class: {selectedAnalysisClass.forteName || "n/a"} | PF
                     [{selectedAnalysisClass.primeForm.join(",")}] | IV {formatIntervalVector(selectedAnalysisClass.iv)}
                   </div>
 
                   {selectedAnalysisMember && (
                     <div className="info-note">
-                      Occorrenza concreta: [{selectedAnalysisMember.join(",")}]
+                      Concrete occurrence: [{selectedAnalysisMember.join(",")}]
                     </div>
                   )}
                 </div>
@@ -370,8 +370,8 @@ export default function GenericSetFretboardPanel({
               <IntervalLegend
                 title={
                   showingPrimaryForm
-                    ? "Profilo intervallare della forma primaria"
-                    : "Profilo intervallare dell'occorrenza"
+                    ? "Prime-form interval profile"
+                    : "Occurrence interval profile"
                 }
                 legend={
                   showingPrimaryForm
@@ -383,7 +383,7 @@ export default function GenericSetFretboardPanel({
                 selectedIntervalClasses={selectedIntervalClasses}
                 onToggleIntervalClass={onToggleIntervalClass}
                 onClearIntervalClassFilter={onClearIntervalClassFilter}
-                notePrefix="Riferimento 0 dell'occorrenza"
+                notePrefix="Occurrence reference 0"
               />
             )}
 
@@ -394,22 +394,22 @@ export default function GenericSetFretboardPanel({
 
             {selectedAnalysisMember && !canRenderAnalysisVoicings && (
               <div className="info-note">
-                Cardinalita {selectedAnalysisMember.length}: sul manico vengono mostrate
-                le pitch classes dell&apos;occorrenza, non un voicing simultaneo.
+                Cardinality {selectedAnalysisMember.length}: the fretboard shows the
+                occurrence pitch classes, not a simultaneous voicing.
               </div>
             )}
 
             {!hideFretboardVisual && (
               <FretboardStage
-                title="Vista sul manico"
+                title="Fretboard view"
                 badge={
                     showingPrimaryForm
                       ? analysisShowAllVoicings
-                        ? "Prime form sovrapposte"
+                        ? "Layered prime forms"
                         : "Prime form"
                     : analysisShowAllVoicings
-                      ? "Posizioni sovrapposte"
-                      : "Occorrenza selezionata"
+                      ? "Layered positions"
+                      : "Selected occurrence"
                 }
               >
                 <Fretboard
@@ -470,12 +470,12 @@ export default function GenericSetFretboardPanel({
         <div className="panel-stack panel-stack--spacious">
           <p className="helper-text">
             {hideFretboardVisual
-              ? `Il manico attivo nel box alto mostra il complementare della trasformazione attiva del ${noteName}.`
-              : `Le caselle evidenziate mostrano il complementare della trasformazione attiva del ${noteName}.`}
+              ? `The active fretboard in the upper box shows the complement of the active ${noteName} transformation.`
+              : `Highlighted cells show the complement of the active ${noteName} transformation.`}
           </p>
 
           {!hideFretboardVisual && (
-            <FretboardStage title="Vista sul manico" badge="Complementare">
+            <FretboardStage title="Fretboard view" badge="Complement">
               <Fretboard
                 voicing={null}
                 allTargetPcs={complementData ? complementData.pcs : []}

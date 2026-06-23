@@ -44,15 +44,15 @@ export default function TricordPage() {
 
   return (
     <GenericSetPage
-      title="Visualizzatore tricordi su chitarra"
-      description="Pagina uniformata alle altre: seleziona direttamente un tricordo di Allen Forte e visualizzane le forme sul manico."
-      keyLabel="Tricordo Forte"
+      title="Guitar trichord visualizer"
+      description="Select an Allen Forte trichord directly and inspect its playable forms on the fretboard."
+      keyLabel="Forte trichord"
       keys={keys}
       dataMap={dataMap}
       findVoicingFn={findVoicings}
-      noteName="tricordo"
-      complementName="Complementare"
-      degreeButtonLabel="Gradi"
+      noteName="trichord"
+      complementName="Complement"
+      degreeButtonLabel="Degrees"
       noteCount={3}
     />
   );

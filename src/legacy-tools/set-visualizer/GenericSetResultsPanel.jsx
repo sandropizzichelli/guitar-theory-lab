@@ -68,11 +68,11 @@ export default function GenericSetResultsPanel({
           <>
             <div className="panel-header">
               <div className="panel-header__copy">
-                <div className="eyebrow">Analisi comparata</div>
-                <h2>Dettaglio classe</h2>
+                <div className="eyebrow">Comparative analysis</div>
+                <h2>Class detail</h2>
               </div>
               {selectedAnalysisClass && (
-                <ClassBadge>{selectedAnalysisClass.forteName || "n.d."}</ClassBadge>
+                <ClassBadge>{selectedAnalysisClass.forteName || "n/a"}</ClassBadge>
               )}
             </div>
 
@@ -80,21 +80,21 @@ export default function GenericSetResultsPanel({
               <div className="analysis-card">
                 <div className="panel-stack">
                   <div className="picker-head">
-                    <div className="section-title">Dettaglio classe</div>
-                    <ClassBadge>{selectedAnalysisClass.forteName || "n.d."}</ClassBadge>
+                    <div className="section-title">Class detail</div>
+                    <ClassBadge>{selectedAnalysisClass.forteName || "n/a"}</ClassBadge>
                   </div>
 
                   <div className="detail-grid">
                     <DetailChip
-                      label="Classe"
-                      value={selectedAnalysisClass.forteName || "n.d."}
+                      label="Class"
+                      value={selectedAnalysisClass.forteName || "n/a"}
                     />
                     <DetailChip
                       label="Prime form"
                       value={`[${selectedAnalysisClass.primeForm.join(",")}]`}
                     />
                     <DetailChip
-                      label="Istanze"
+                      label="Instances"
                       value={String(selectedAnalysisClass.concreteCount)}
                     />
                   </div>
@@ -102,25 +102,25 @@ export default function GenericSetResultsPanel({
                   {selectedAnalysisMember && selectedOccurrenceSummary && (
                     <div className="panel-stack">
                       <div className="picker-head">
-                        <div className="section-title">Profilo dell'occorrenza</div>
+                        <div className="section-title">Occurrence profile</div>
                         <ClassBadge>{selectedOccurrenceSummary.typeLabel}</ClassBadge>
                       </div>
 
                       <div className="detail-grid">
                         <DetailChip
-                          label="Relazione alla classe"
+                          label="Class relation"
                           value={selectedOccurrenceSummary.classTransform}
                         />
                         {analysisMode === "subsets" ? (
                           <>
                             <DetailChip
-                              label="Gradi presenti"
+                              label="Present degrees"
                               value={formatDegreeList(
                                 selectedOccurrenceSummary.retainedDegrees
                               )}
                             />
                             <DetailChip
-                              label="Gradi mancanti"
+                              label="Missing degrees"
                               value={formatDegreeList(
                                 selectedOccurrenceSummary.missingDegrees
                               )}
@@ -129,13 +129,13 @@ export default function GenericSetResultsPanel({
                         ) : (
                           <>
                             <DetailChip
-                              label="Nucleo originale"
+                              label="Original core"
                               value={formatDegreeList(
                                 selectedOccurrenceSummary.retainedDegrees
                               )}
                             />
                             <DetailChip
-                              label="Note aggiunte"
+                              label="Added notes"
                               value={formatPitchClassList(
                                 selectedOccurrenceSummary.addedPcs
                               )}
@@ -145,7 +145,7 @@ export default function GenericSetResultsPanel({
                       </div>
 
                       <p className="helper-text helper-text--small">
-                        Occorrenza concreta: [{selectedAnalysisMember.join(",")}]
+                        Concrete occurrence: [{selectedAnalysisMember.join(",")}]
                       </p>
                     </div>
                   )}
@@ -176,31 +176,31 @@ export default function GenericSetResultsPanel({
                                 onAnalysisShowAllVoicingsChange(event.target.checked)
                               }
                             />
-                            Mostra tutte le forme di questa occorrenza sul manico
+                            Show all forms for this occurrence on the fretboard
                           </label>
                         </div>
                       )}
 
                       {showingPrimaryForm ? (
                         <p className="helper-text helper-text--small">
-                          {analysisPrimaryFormVoicings.length} posizioni utili della
-                          forma primaria disponibili per questa classe.
+                          {analysisPrimaryFormVoicings.length} useful prime-form
+                          positions available for this class.
                         </p>
                       ) : analysisShowAllMembers ? (
                         <p className="helper-text helper-text--small">
-                          {analysisMembers.length} istanze concrete della classe sono
-                          mostrate sul manico con un voicing rappresentativo per ciascuna.
+                          {analysisMembers.length} concrete instances of the class are
+                          shown on the fretboard with one representative voicing each.
                         </p>
                       ) : (
                         <div className="panel-stack">
                           <div className="picker-head">
-                            <div className="section-title">Forme / rivolti</div>
+                            <div className="section-title">Forms / inversions</div>
                             <ClassBadge>{analysisFilteredVoicings.length}</ClassBadge>
                           </div>
 
                           <p className="helper-text helper-text--small">
-                            {analysisFilteredVoicings.length} forme trovate per questa
-                            occorrenza concreta.
+                            {analysisFilteredVoicings.length} forms found for this
+                            concrete occurrence.
                           </p>
 
                           <div className="results-scroll results-scroll--compact">
@@ -225,7 +225,7 @@ export default function GenericSetResultsPanel({
 
                             {analysisFilteredVoicings.length === 0 && (
                               <p className="empty-note">
-                                Nessun voicing disponibile con i filtri correnti.
+                                No voicings available with the current filters.
                               </p>
                             )}
                           </div>
@@ -234,8 +234,8 @@ export default function GenericSetResultsPanel({
                     </>
                   ) : (
                     <p className="empty-note">
-                      Per questa occorrenza non vengono mostrati voicing simultanei.
-                      Sul manico vedi comunque l&apos;insieme delle pitch classes.
+                      No simultaneous voicings are shown for this occurrence.
+                      The fretboard still shows the full pitch-class collection.
                     </p>
                   )}
                 </div>
@@ -247,25 +247,25 @@ export default function GenericSetResultsPanel({
         <>
           <div className="panel-header">
             <div className="panel-header__copy">
-              <div className="eyebrow">Analisi complementare</div>
-              <h2>Dettagli analitici</h2>
+              <div className="eyebrow">Complement analysis</div>
+              <h2>Analytical details</h2>
             </div>
           </div>
 
           {activeSet && complementData && (
             <div className="data-list">
               <div>
-                <strong>{noteName.charAt(0).toUpperCase() + noteName.slice(1)} di partenza:</strong>{" "}
+                <strong>Source {noteName}:</strong>{" "}
                 {activeSet.forteName}
               </div>
               <div>
-                <strong>Trasformazione attiva:</strong> {activeSet.transformLabel}
+                <strong>Active transformation:</strong> {activeSet.transformLabel}
               </div>
               <div>
                 <strong>Prime form:</strong> ({activeSet.pf})
               </div>
               <div>
-                <strong>Vettore intervallare:</strong> {formatIntervalVector(activeSet.iv)}
+                <strong>Interval vector:</strong> {formatIntervalVector(activeSet.iv)}
               </div>
 
               <div className="complement-card">
@@ -276,7 +276,7 @@ export default function GenericSetResultsPanel({
                   <strong>Prime form:</strong> ({complementData.pf})
                 </div>
                 <div>
-                  <strong>Vettore intervallare:</strong> {formatIntervalVector(complementData.iv)}
+                  <strong>Interval vector:</strong> {formatIntervalVector(complementData.iv)}
                 </div>
                 <div>
                   <strong>Pitch classes:</strong>{" "}

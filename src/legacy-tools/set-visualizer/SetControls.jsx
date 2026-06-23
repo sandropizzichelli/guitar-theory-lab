@@ -19,10 +19,10 @@ export function SectionTitle({ children }) {
 export function BassButtons({ options = [], value, onChange }) {
   return (
     <div className="control-card__stack">
-      <SectionTitle>Rivolti / basso</SectionTitle>
+      <SectionTitle>Inversions / bass</SectionTitle>
       <div className="button-row">
         <PillButton active={value === "all"} onClick={() => onChange("all")}>
-          Tutti
+          All
         </PillButton>
         {options.map((option) => (
           <PillButton
@@ -30,7 +30,7 @@ export function BassButtons({ options = [], value, onChange }) {
             active={value === option}
             onClick={() => onChange(option)}
           >
-            {option} in basso
+            {option} in bass
           </PillButton>
         ))}
       </div>
@@ -41,10 +41,10 @@ export function BassButtons({ options = [], value, onChange }) {
 export function TransformButtons({ mode, setMode, amount, setAmount }) {
   return (
     <div className="control-card__stack">
-      <SectionTitle>Inversioni / trasformazioni Tn-TnI</SectionTitle>
+      <SectionTitle>Inversions / Tn-TnI transformations</SectionTitle>
       <div className="button-row">
         <PillButton active={mode === "base"} onClick={() => setMode("base")}>
-          Originale
+          Original
         </PillButton>
         <PillButton active={mode === "tn"} onClick={() => setMode("tn")}>
           Tn

@@ -134,26 +134,26 @@ export default function GenericSetControlsPanel({
     >
       <div className="control-card control-card--wide">
         <div className="control-card__stack">
-          <SectionTitle>Chiave di accesso</SectionTitle>
+          <SectionTitle>Access key</SectionTitle>
           <div className="segmented-row">
             <PillButton
               active={browseMode === "forte"}
               onClick={() => onBrowseModeChange("forte")}
             >
-              Per set-class
+              By set class
             </PillButton>
             <PillButton
               active={browseMode === "iv"}
               onClick={() => onBrowseModeChange("iv")}
             >
-              Per interval vector
+              By interval vector
             </PillButton>
             {genusOptions.length > 0 && (
               <PillButton
                 active={browseMode === "genus"}
                 onClick={() => onBrowseModeChange("genus")}
               >
-                Per generi
+                By genera
               </PillButton>
             )}
           </div>
@@ -195,7 +195,7 @@ export default function GenericSetControlsPanel({
           <div className="control-card control-card--wide">
             <div className="control-card__stack">
               <div>
-                <label className="control-label">Classe compatibile</label>
+                <label className="control-label">Matching class</label>
                 <select
                   value={selectedForte}
                   onChange={(event) => onSelectedForteChange(event.target.value)}
@@ -210,8 +210,8 @@ export default function GenericSetControlsPanel({
               </div>
 
               <p className="helper-text">
-                {intervalVectorMatches.length} classi condividono{" "}
-                {formatIntervalVector(selectedIntervalVector)} in questa cardinalita.
+                {intervalVectorMatches.length} classes share{" "}
+                {formatIntervalVector(selectedIntervalVector)} at this cardinality.
               </p>
             </div>
           </div>
@@ -219,7 +219,7 @@ export default function GenericSetControlsPanel({
       ) : (
         <>
           <div className="control-card control-card--wide">
-            <label className="control-label">Genere</label>
+            <label className="control-label">Genus</label>
             <select
               value={selectedGenusId || ""}
               onChange={(event) => onSelectedGenusChange(event.target.value)}
@@ -236,7 +236,7 @@ export default function GenericSetControlsPanel({
           <div className="control-card control-card--wide">
             <div className="control-card__stack">
               <div>
-                <label className="control-label">Classe compatibile</label>
+                <label className="control-label">Matching class</label>
                 <select
                   value={selectedForte}
                   onChange={(event) => onSelectedForteChange(event.target.value)}
@@ -251,8 +251,8 @@ export default function GenericSetControlsPanel({
               </div>
 
               <p className="helper-text">
-                {genusMatches.length} classi appartengono a questo genus in questa
-                cardinalita.
+                {genusMatches.length} classes belong to this genus at this
+                cardinality.
               </p>
             </div>
           </div>
@@ -269,7 +269,7 @@ export default function GenericSetControlsPanel({
     >
       <details className="control-section-disclosure" open>
         <summary className="control-section-disclosure__summary">
-          <span>Lettura</span>
+          <span>Reading</span>
         </summary>
 
         <div className="control-section__grid control-section__grid--nested">
@@ -280,13 +280,13 @@ export default function GenericSetControlsPanel({
                   active={!showComplement}
                   onClick={() => onShowComplementChange(false)}
                 >
-                  Mostra {noteName}
+                  Show {noteName}
                 </PillButton>
                 <PillButton
                   active={showComplement}
                   onClick={() => onShowComplementChange(true)}
                 >
-                  Mostra complementare
+                  Show complement
                 </PillButton>
               </div>
             </div>
@@ -312,13 +312,13 @@ export default function GenericSetControlsPanel({
                     active={displayMode === "intervals"}
                     onClick={() => onDisplayModeChange("intervals")}
                   >
-                    Intervalli
+                    Intervals
                   </PillButton>
                 </div>
                 {browseMode === "iv" && (
                   <p className="helper-text">
-                    In modalita intervallare il manico colora e nomina ogni pitch class
-                    secondo la sua distanza dal riferimento 0 della classe attiva.
+                    In interval mode, the fretboard colors and labels each pitch class
+                    by its distance from reference 0 of the active class.
                   </p>
                 )}
               </div>
@@ -379,7 +379,7 @@ export default function GenericSetControlsPanel({
             {shouldShowHeroAnalysisControls && (
               <div className="hero-analysis-controls">
                 <div className="picker-head">
-                  <label className="section-title">Occorrenza concreta</label>
+                  <label className="section-title">Concrete occurrence</label>
                   <span className="class-badge">
                     {activeSelectedAnalysisMemberIndex + 1} / {analysisMembers.length}
                   </span>
@@ -408,7 +408,7 @@ export default function GenericSetControlsPanel({
                   >
                     {analysisMembers.map((member, index) => (
                       <option key={`hero-occurrence-${index}`} value={index}>
-                        Occorrenza {index + 1} · [{member.join(",")}]
+                        Occurrence {index + 1} · [{member.join(",")}]
                       </option>
                     ))}
                   </select>
@@ -437,7 +437,7 @@ export default function GenericSetControlsPanel({
                           onAnalysisShowAllMembersChange(event.target.checked)
                         }
                       />
-                      Mostra tutte le istanze della classe sul manico
+                      Show all class instances on the fretboard
                     </label>
                   </div>
                 )}
@@ -448,7 +448,7 @@ export default function GenericSetControlsPanel({
               <Fretboard {...heroFretboardState.props} />
             ) : (
               <p className="helper-text">
-                Seleziona una classe o un&apos;occorrenza per visualizzare il manico qui in alto.
+                Select a class or occurrence to display the fretboard above.
               </p>
             )}
 
@@ -462,7 +462,7 @@ export default function GenericSetControlsPanel({
                       onClick={onClearIntervalClassFilter}
                       className="interval-filter-reset"
                     >
-                      Mostra tutto
+                      Show all
                     </button>
                   )}
                 </div>
@@ -489,7 +489,7 @@ export default function GenericSetControlsPanel({
                 {shouldShowHeroIntervalFamily && (
                   <details className="disclosure-card hero-interval-family" open>
                     <summary className="disclosure-card__summary">
-                      <span>{`Famiglia IV · ${intervalVectorFamilyClasses.length}`}</span>
+                      <span>{`IV family · ${intervalVectorFamilyClasses.length}`}</span>
                     </summary>
 
                     <div className="disclosure-card__body">
@@ -521,7 +521,7 @@ export default function GenericSetControlsPanel({
                 <div className="hero-embedded-controls__grid">
                   <div className="control-card control-card--wide">
                     <div className="control-card__stack">
-                      <SectionTitle>Analisi</SectionTitle>
+                      <SectionTitle>Analysis</SectionTitle>
                       <div className="segmented-row">
                         <PillButton
                           active={analysisMode === "subsets"}
@@ -539,7 +539,7 @@ export default function GenericSetControlsPanel({
 
                       {analysisMode === "subsets" && subsetCardinalityOptions.length > 0 && (
                         <div>
-                          <label className="control-label">Tipo di subset</label>
+                          <label className="control-label">Subset type</label>
                           <select
                             value={subsetTargetCardinality}
                             onChange={(event) =>
@@ -559,7 +559,7 @@ export default function GenericSetControlsPanel({
                       {analysisMode === "supersets" &&
                         supersetCardinalityOptions.length > 0 && (
                           <div>
-                            <label className="control-label">Tipo di superset</label>
+                            <label className="control-label">Superset type</label>
                             <select
                               value={supersetTargetCardinality}
                               onChange={(event) =>
@@ -599,7 +599,7 @@ export default function GenericSetControlsPanel({
                 {heroCatalogState?.eyebrow ? (
                   <div className="eyebrow">{heroCatalogState.eyebrow}</div>
                 ) : null}
-                <h2>{heroCatalogState?.title || "Catalogo"}</h2>
+                <h2>{heroCatalogState?.title || "Catalog"}</h2>
               </div>
               {heroCatalogState?.count != null && (
                 <span className="class-badge">{heroCatalogState.count}</span>
@@ -614,7 +614,7 @@ export default function GenericSetControlsPanel({
               </div>
             ) : (
               <p className="helper-text helper-text--small">
-                {heroCatalogState?.emptyNote || "Nessun risultato disponibile."}
+                {heroCatalogState?.emptyNote || "No results available."}
               </p>
             )}
           </aside>
@@ -630,7 +630,7 @@ export default function GenericSetControlsPanel({
           >
             <details className="control-section-disclosure" open>
               <summary className="control-section-disclosure__summary">
-                <span>Controlli del manico</span>
+                <span>Fretboard controls</span>
               </summary>
 
               <div className="control-section__grid control-section__grid--nested">
@@ -641,7 +641,7 @@ export default function GenericSetControlsPanel({
                         active={fretboardViewMode === "prime"}
                         onClick={() => onFretboardViewModeChange("prime")}
                       >
-                        Forma primaria
+                        Prime form
                       </PillButton>
                       <PillButton
                         active={fretboardViewMode === "voicing"}
@@ -663,7 +663,7 @@ export default function GenericSetControlsPanel({
                             checked={showAll}
                             onChange={(event) => onShowAllChange(event.target.checked)}
                           />
-                          Mostra tutte le forme sul manico
+                          Show all forms on the fretboard
                         </label>
                       </div>
                     </div>
@@ -672,10 +672,10 @@ export default function GenericSetControlsPanel({
                   <>
                     <div className="control-card">
                       <div className="control-card__stack">
-                        <SectionTitle>Allargamento tasti</SectionTitle>
+                        <SectionTitle>Fret span</SectionTitle>
                         <div className="range-caption">
                           <span />
-                          <strong className="range-value">{maxSpan} tasti</strong>
+                          <strong className="range-value">{maxSpan} frets</strong>
                         </div>
                         <input
                           type="range"
@@ -691,13 +691,13 @@ export default function GenericSetControlsPanel({
 
                     <div className="control-card">
                       <div className="control-card__stack">
-                        <SectionTitle>Tipo di voicing</SectionTitle>
+                        <SectionTitle>Voicing type</SectionTitle>
                         <div className="button-row">
                           <PillButton
                             active={voicingLayoutFilter === "all"}
                             onClick={() => onVoicingLayoutFilterChange("all")}
                           >
-                            Tutti
+                            All
                           </PillButton>
                           <PillButton
                             active={voicingLayoutFilter === "close"}
@@ -739,7 +739,7 @@ export default function GenericSetControlsPanel({
                             checked={showAll}
                             onChange={(event) => onShowAllChange(event.target.checked)}
                           />
-                          Mostra tutte le forme sul manico
+                          Show all forms on the fretboard
                         </label>
 
                         <label className="toggle-row">
@@ -750,7 +750,7 @@ export default function GenericSetControlsPanel({
                               onExcludeOpenStringsChange(event.target.checked)
                             }
                           />
-                          Escludi corde vuote
+                          Exclude open strings
                         </label>
                       </div>
                     </div>
@@ -759,7 +759,7 @@ export default function GenericSetControlsPanel({
                       <div className="control-card__stack">
                         <details className="disclosure-card">
                           <summary className="disclosure-card__summary">
-                            Gruppo corde: {groupFilter === "all" ? "tutti" : groupFilter}
+                            String group: {groupFilter === "all" ? "all" : groupFilter}
                           </summary>
                           <div className="disclosure-card__body">
                             <div className="button-row">
@@ -767,7 +767,7 @@ export default function GenericSetControlsPanel({
                                 active={groupFilter === "all"}
                                 onClick={() => onGroupFilterChange("all")}
                               >
-                                Tutti
+                                All
                               </PillButton>
                               {availableGroupPatterns.map((pattern) => (
                                 <PillButton
@@ -780,8 +780,8 @@ export default function GenericSetControlsPanel({
                               ))}
                             </div>
                             <p className="helper-text helper-text--small">
-                              Questo filtro resta disponibile per studiare un gruppo corde
-                              specifico dentro i close o spread voicing.
+                              This filter remains available for studying a specific string
+                              group inside close or spread voicings.
                             </p>
                           </div>
                         </details>
@@ -792,10 +792,10 @@ export default function GenericSetControlsPanel({
                   <>
                     <div className="control-card">
                       <div className="control-card__stack">
-                        <SectionTitle>Allargamento tasti</SectionTitle>
+                        <SectionTitle>Fret span</SectionTitle>
                         <div className="range-caption">
                           <span />
-                          <strong className="range-value">{maxSpan} tasti</strong>
+                          <strong className="range-value">{maxSpan} frets</strong>
                         </div>
                         <input
                           type="range"
@@ -819,7 +819,7 @@ export default function GenericSetControlsPanel({
                               onExcludeOpenStringsChange(event.target.checked)
                             }
                           />
-                          Escludi corde vuote
+                          Exclude open strings
                         </label>
                       </div>
                     </div>

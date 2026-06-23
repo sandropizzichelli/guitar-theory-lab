@@ -459,7 +459,7 @@ const FORTE_GENERA_SOURCE = [
   },
   {
     id: "2",
-    name: "Per toni interi",
+    name: "Whole-tone",
     generators: ["3-8"],
     members: {
       4: [5, 12, 15, 16, 21, 24, 25, 27, 29],

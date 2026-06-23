@@ -7,19 +7,19 @@ import {
 
 export function getCardinalityLabel(n) {
   const labels = {
-    3: "Tricordi",
-    4: "Tetracordi",
-    5: "Pentacordi",
-    6: "Esacordi",
-    7: "Eptacordi",
-    8: "Ottacordi",
-    9: "Enneacordi",
-    10: "Decacordi",
-    11: "Undecacordi",
-    12: "Dodecacordi",
+    3: "Trichords",
+    4: "Tetrachords",
+    5: "Pentachords",
+    6: "Hexachords",
+    7: "Heptachords",
+    8: "Octachords",
+    9: "Nonachords",
+    10: "Decachords",
+    11: "Undecachords",
+    12: "Dodecachords",
   };
 
-  return labels[n] || `Cardinalità ${n}`;
+  return labels[n] || `Cardinality ${n}`;
 }
 
 export const INTERVAL_STYLES = [
@@ -38,11 +38,11 @@ export const INTERVAL_STYLES = [
 ];
 
 export function getClassKey(item) {
-  return `${item.forteName || "n.d."}|${item.primeForm.join("-")}`;
+  return `${item.forteName || "n/a"}|${item.primeForm.join("-")}`;
 }
 
 export function formatIntervalVector(intervalVector) {
-  if (!intervalVector) return "n.d.";
+  if (!intervalVector) return "n/a";
   return `⟨${intervalVector.split("").join(",")}⟩`;
 }
 
@@ -125,7 +125,7 @@ export function describeOccurrenceTransform(primeFormArray, occurrence) {
   const normalizedOccurrence = normalizePcs(occurrence || []);
 
   if (!primeForm.length || primeForm.length !== normalizedOccurrence.length) {
-    return "n.d.";
+    return "n/a";
   }
 
   const matches = [];
@@ -144,15 +144,15 @@ export function describeOccurrenceTransform(primeFormArray, occurrence) {
     }
   }
 
-  return [...new Set(matches)].join(" / ") || "n.d.";
+  return [...new Set(matches)].join(" / ") || "n/a";
 }
 
 export function formatDegreeList(degrees) {
-  return degrees.length ? degrees.join("-") : "nessuno";
+  return degrees.length ? degrees.join("-") : "none";
 }
 
 export function formatPitchClassList(pcs) {
-  return pcs.length ? pcs.map((pc) => PC_TO_NAME[pc]).join(" · ") : "nessuna";
+  return pcs.length ? pcs.map((pc) => PC_TO_NAME[pc]).join(" · ") : "none";
 }
 
 export function getDegreesForPcs(pcs, degreeMap) {
@@ -221,10 +221,10 @@ export function buildOccurrenceSummary(
     typeLabel:
       analysisMode === "subsets"
         ? isCircularSegment(retainedOrderIndices, activeSet.pcs.length)
-          ? "segmento contiguo"
-          : "selezione discontinua"
+          ? "contiguous segment"
+          : "discontinuous selection"
         : addedPcs.length === 1
-          ? "espansione di 1 nota"
-          : `espansione di ${addedPcs.length} note`,
+          ? "1-note expansion"
+          : `${addedPcs.length}-note expansion`,
   };
 }

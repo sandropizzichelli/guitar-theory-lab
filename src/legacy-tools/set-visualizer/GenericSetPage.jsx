@@ -82,8 +82,8 @@ function getVoicingFinderByCardinality(cardinality) {
 
 function getDisplayModeLabel(displayMode) {
   if (displayMode === "notes") return "Note";
-  if (displayMode === "degrees") return "Gradi";
-  return "Intervalli";
+  if (displayMode === "degrees") return "Degrees";
+  return "Intervals";
 }
 
 export default function GenericSetPage({
@@ -1081,7 +1081,7 @@ export default function GenericSetPage({
   const heroFretboardState = useMemo(() => {
     if (showComplement) {
       return {
-        badge: "Complementare",
+        badge: "Complement",
         props: {
           voicing: null,
           allTargetPcs: complementData ? complementData.pcs : [],
@@ -1101,11 +1101,11 @@ export default function GenericSetPage({
       return {
         badge: showingPrimaryForm
           ? showAll
-            ? "Forme sovrapposte"
-            : "Forma primaria"
+            ? "Layered forms"
+            : "Prime form"
           : showAll
-            ? "Tutte le forme"
-            : "Forma selezionata",
+            ? "All forms"
+            : "Selected form",
         props: {
           voicing: showingPrimaryForm ? primaryFormVoicing : selectedVoicing,
           allTargetPcs: showingPrimaryForm
@@ -1132,14 +1132,14 @@ export default function GenericSetPage({
 
     return {
       badge: shouldShowAllMembers
-        ? "Istanze sovrapposte"
+        ? "Layered instances"
         : showingPrimaryForm
         ? analysisShowAllVoicings
-          ? "Prime form sovrapposte"
+          ? "Layered prime forms"
           : "Prime form"
         : analysisShowAllVoicings
-          ? "Posizioni sovrapposte"
-          : "Occorrenza selezionata",
+          ? "Layered positions"
+          : "Selected occurrence",
       props: {
         voicing: shouldShowAllMembers
           ? null
@@ -1230,32 +1230,32 @@ export default function GenericSetPage({
 
   const heroSummaryState = useMemo(() => {
     const badge = showComplement
-      ? "Complementare"
-      : activeSet?.transformLabel === "Originale"
+      ? "Complement"
+      : activeSet?.transformLabel === "Original"
         ? null
         : activeSet?.transformLabel || null;
 
     if (showComplement) {
       return {
-        title: "Sintesi attiva",
+        title: "Active summary",
         badge,
         items: complementData
           ? [
-              { label: "Classe", value: complementData.forte },
+              { label: "Class", value: complementData.forte },
               { label: "Prime form", value: `[${complementData.pf}]` },
               { label: "IV", value: formatIntervalVector(complementData.iv) },
             ]
           : [],
         note:
           activeSet && complementData
-            ? `Complementare del ${activeSet.forteName}`
+            ? `Complement of ${activeSet.forteName}`
             : null,
       };
     }
 
     if (!activeSet) {
       return {
-        title: "Sintesi attiva",
+        title: "Active summary",
         badge,
         items: [],
         note: null,
@@ -1264,20 +1264,20 @@ export default function GenericSetPage({
 
     if (!analysisMode) {
       return {
-        title: "Sintesi attiva",
+        title: "Active summary",
         badge,
         items: [
-          { label: "Classe", value: activeSet.forteName },
+          { label: "Class", value: activeSet.forteName },
           { label: "Prime form", value: `[${activeSet.primeForm.join(",")}]` },
           { label: "IV", value: formatIntervalVector(activeSet.iv) },
         ],
         note: [
-          fretboardViewMode === "prime" ? "Forma primaria" : "Voicing",
+          fretboardViewMode === "prime" ? "Prime form" : "Voicing",
           getDisplayModeLabel(displayMode),
           browseMode === "iv"
-            ? `${intervalVectorFamilyClasses.length} classi nella famiglia IV`
+            ? `${intervalVectorFamilyClasses.length} classes in the IV family`
             : browseMode === "genus" && selectedGenus
-              ? `${selectedGenus.label} · ${genusMatches.length} classi`
+              ? `${selectedGenus.label} · ${genusMatches.length} classes`
             : null,
         ]
           .filter(Boolean)
@@ -1286,33 +1286,33 @@ export default function GenericSetPage({
     }
 
     return {
-      title: analysisMode === "subsets" ? "Sintesi subset" : "Sintesi superset",
+      title: analysisMode === "subsets" ? "Subset summary" : "Superset summary",
       badge,
       items: [
-        { label: "Classe madre", value: activeSet.forteName },
+        { label: "Parent class", value: activeSet.forteName },
         {
-          label: "Classe attiva",
-          value: selectedAnalysisClass?.forteName || "n.d.",
+          label: "Active class",
+          value: selectedAnalysisClass?.forteName || "n/a",
         },
         {
           label: "Prime form",
           value: selectedAnalysisClass
             ? `[${selectedAnalysisClass.primeForm.join(",")}]`
-            : "n.d.",
+            : "n/a",
         },
         {
-          label: "Relazione",
-          value: analysisOccurrenceSummary?.classTransform || "n.d.",
+          label: "Relation",
+          value: analysisOccurrenceSummary?.classTransform || "n/a",
         },
       ],
         note: selectedAnalysisMember
         ? analysisShowAllMembers
-          ? `${analysisMembers.length} istanze della classe sul manico con un voicing rappresentativo per ciascuna`
+          ? `${analysisMembers.length} class instances on the fretboard with one representative voicing each`
           : analysisMode === "subsets"
-          ? `Occorrenza [${selectedAnalysisMember.join(",")}] · Gradi presenti ${formatDegreeList(
+          ? `Occurrence [${selectedAnalysisMember.join(",")}] · Present degrees ${formatDegreeList(
               analysisOccurrenceSummary?.retainedDegrees || []
             )}`
-          : `Occorrenza [${selectedAnalysisMember.join(",")}] · Note aggiunte ${formatPitchClassList(
+          : `Occurrence [${selectedAnalysisMember.join(",")}] · Added notes ${formatPitchClassList(
               analysisOccurrenceSummary?.addedPcs || []
             )}`
         : null,
@@ -1337,20 +1337,20 @@ export default function GenericSetPage({
 
   const heroCatalogState = showComplement
     ? {
-        eyebrow: "Vista complementare",
-        title: "Catalogo sospeso",
+        eyebrow: "Complement view",
+        title: "Catalog paused",
         count: null,
         items: [],
-        emptyNote: "Il catalogo delle forme torna disponibile nella vista del set.",
+        emptyNote: "The form catalog becomes available again in set view.",
       }
     : !analysisMode
       ? {
           eyebrow: null,
-          title: "Forme trovate",
+          title: "Found forms",
           count: filteredVoicings.length,
           items: filteredVoicings.map((voicing, index) => ({
             key: `voicing-${selectedForte}-${index}`,
-            title: `Forma ${index + 1}`,
+            title: `Form ${index + 1}`,
             subtitle: voicing.positions
               .map((position) =>
                 String(activeSet?.degreeMap?.get(position.pc) ?? position.pc)
@@ -1361,22 +1361,22 @@ export default function GenericSetPage({
             active: index === activeSelectedVoicingIndex,
             onClick: () => handleSelectVoicing(index),
           })),
-          emptyNote: "Nessuna forma disponibile con i filtri correnti.",
+          emptyNote: "No forms available with the current filters.",
         }
       : {
-          eyebrow: analysisMode === "subsets" ? "Catalogo subset" : "Catalogo superset",
-          title: "Classi trovate",
+          eyebrow: analysisMode === "subsets" ? "Subset catalog" : "Superset catalog",
+          title: "Found classes",
           count: analysisClasses.length,
           items: analysisClasses.map((item) => ({
             key: `analysis-${analysisMode}-${getClassKey(item)}`,
-            title: item.forteName || "n.d.",
+            title: item.forteName || "n/a",
             subtitle: `PF [${item.primeForm.join(",")}]`,
-            meta: `${item.concreteCount} istanze`,
+            meta: `${item.concreteCount} instances`,
             auxiliary: formatIntervalVector(item.iv),
             active: getClassKey(item) === getClassKey(selectedAnalysisClass || item),
             onClick: () => handleSelectAnalysisClass(getClassKey(item)),
           })),
-          emptyNote: "Nessuna classe trovata per i filtri attivi.",
+          emptyNote: "No classes found for the active filters.",
         };
 
   useEffect(() => {

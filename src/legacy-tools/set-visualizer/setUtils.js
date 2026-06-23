@@ -173,10 +173,10 @@ export function transformPcs(pcs, mode, n) {
 }
 
 export function getTransformLabel(mode, n) {
-  if (mode === "base") return "Originale";
+  if (mode === "base") return "Original";
   if (mode === "tn") return `T${n}`;
   if (mode === "tni") return `T${n}I`;
-  return "Originale";
+  return "Original";
 }
 
 export function transformOrderedPrimeForm(pf, mode, n) {
@@ -222,7 +222,7 @@ export function complementFromPcs(pcs) {
   return {
     pcs: normalizePcs(comp),
     pf: pfArrayToString(compPf),
-    forte: compForte || "n.d.",
+    forte: compForte || "n/a",
     iv: compForte ? getCombinedForteReference()[compForte]?.iv || "" : "",
   };
 }
