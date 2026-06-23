@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildDiatonicChords,
   buildCycleVoicingChain,
+  buildInversionOptions,
   buildMovements,
   CYCLES,
   expectedFunctionalToneLabels,
@@ -10,6 +11,7 @@ import {
   findVoiceLeadingVoicings,
   functionalVoiceLeadingMismatch,
   generateScale,
+  getChordType,
   getStringSet,
   nextDegree,
   rankTargetVoicings,
@@ -139,6 +141,46 @@ describe("guitar voicings", () => {
       .sort((a, b) => a - b);
 
     expect(rootStrings).toEqual([1, 2, 3]);
+  });
+
+  it("lists every theoretical starting inversion in the selector", () => {
+    expect(buildInversionOptions(getChordType("triads")).map((option) => option.label)).toEqual([
+      "Root position",
+      "First inversion",
+      "Second inversion"
+    ]);
+    expect(buildInversionOptions(getChordType("sevenths")).map((option) => option.label)).toEqual([
+      "Root position",
+      "First inversion",
+      "Second inversion",
+      "Third inversion"
+    ]);
+  });
+
+  it("finds all close-position starting inversions inside the displayed fretboard", () => {
+    const cIonian = generateScale(0, "ionian");
+    const cases = [
+      ["triads", buildDiatonicChords(cIonian, "triads")[0], [0, 1, 2]],
+      ["sevenths", buildDiatonicChords(cIonian, "sevenths")[0], [0, 1, 2, 3]]
+    ];
+
+    cases.forEach(([chordTypeId, chord, expectedInversions]) => {
+      STRING_SETS[chordTypeId]
+        .filter((item) => item.voicing === "close")
+        .forEach((stringSet) => {
+          const voicings = findVoiceLeadingVoicings({
+            chord,
+            stringSet: getStringSet(chordTypeId, stringSet.id),
+            fretWindow: { start: 0, end: 12 },
+            maxSpan: 12,
+            allowOpenStrings: true
+          });
+          const inversions = [...new Set(voicings.map((voicing) => voicing.inversion))]
+            .sort((a, b) => a - b);
+
+          expect(inversions).toEqual(expectedInversions);
+        });
+    });
   });
 
   it("uses Goodrick spread tone orders for triads and seventh-chord drops", () => {

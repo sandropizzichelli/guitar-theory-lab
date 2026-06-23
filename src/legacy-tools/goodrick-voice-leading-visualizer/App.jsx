@@ -3,6 +3,7 @@ import CycleMapFretboard from "./CycleMapFretboard";
 import {
   buildDiatonicChords,
   buildCycleVoicingChain,
+  buildInversionOptions,
   CHORD_TYPES,
   CYCLES,
   generateScale,
@@ -19,7 +20,7 @@ import {
 
 const DEFAULT_FRET_WINDOW = { start: 0, end: 12 };
 const MAX_FRET = 12;
-const MAX_VOICING_SPAN = 10;
+const MAX_VOICING_SPAN = MAX_FRET;
 
 function NoteChips({ notes, tone = "neutral" }) {
   return (
@@ -117,20 +118,7 @@ export default function App() {
     () => findVoiceLeadingVoicings({ chord: currentChord, ...voiceLeadingConfig }),
     [currentChord, stringSet, allowOpenStrings]
   );
-  const rootPlacementOptions = useMemo(() => {
-    const groups = new Map();
-
-    allStartVoicings.forEach((voicing) => {
-      const group = groups.get(voicing.inversion) ?? {
-        inversion: voicing.inversion,
-        label: chordType.inversionLabels[voicing.inversion] ?? `Inversion ${voicing.inversion}`
-      };
-      groups.set(voicing.inversion, group);
-    });
-
-    return [...groups.values()]
-      .sort((a, b) => a.inversion - b.inversion);
-  }, [allStartVoicings, chordType]);
+  const rootPlacementOptions = useMemo(() => buildInversionOptions(chordType), [chordType]);
   const activeStartInversion = rootPlacementOptions.some((option) => option.inversion === startInversion)
     ? startInversion
     : rootPlacementOptions[0]?.inversion ?? null;

@@ -228,6 +228,13 @@ export function getChordType(chordTypeId) {
   return chordType;
 }
 
+export function buildInversionOptions(chordType) {
+  return chordType.inversionLabels.map((label, inversion) => ({
+    inversion,
+    label: label ?? `Inversion ${inversion + 1}`
+  }));
+}
+
 export function getCycle(cycleId) {
   const cycle = CYCLES.find((item) => item.id === cycleId) ?? LEGACY_CYCLES[cycleId];
   if (!cycle) throw new Error(`Unknown cycle: ${cycleId}`);
