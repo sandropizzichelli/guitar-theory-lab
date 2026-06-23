@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { AppHeader } from "../components/AppHeader";
 import { DisplayModeSelector, type DisplayMode } from "../components/DisplayModeSelector";
 import { Fretboard, type PitchClassVisualState } from "../components/Fretboard";
 import { FretboardLegend } from "../components/FretboardLegend";
@@ -240,7 +239,6 @@ export function MainExplorerPage() {
 
   return (
     <main className="app-shell">
-      <AppHeader />
       <div className="top-grid">
         <SystemSelector
           title="System A"

@@ -162,17 +162,6 @@ export default function App() {
 
   return (
     <main className="app-shell">
-      <header className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">Guitar Software Series</p>
-          <h1>Goodrick Voice Leading Visualizer</h1>
-          <p>
-            Visualizzatore autonomo per triadi e quadriadi diatoniche su string set reali:
-            scegli ciclo e rivolto iniziale, poi guarda come ruotano le voci.
-          </p>
-        </div>
-      </header>
-
       <section className="control-grid">
         <div className="set-panel controls-panel">
           <p className="section-title">Materiale</p>
