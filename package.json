@@ -22,8 +22,9 @@
     "set:test": "npm --prefix \"Set Visualizer\" run test",
     "build:legacy": "npm run goodrick:build && npm run harmonic:build && npm run set:build",
     "test:legacy": "npm run goodrick:test && npm run harmonic:test && npm run set:test",
+    "e2e": "playwright test",
     "build:all": "npm run build && npm run build:legacy",
-    "test:all": "npm run test:legacy"
+    "test:all": "npm run test:legacy && npm run e2e"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^6.0.2",
@@ -32,6 +33,7 @@
     "vite": "^8.0.16"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "typescript": "^5.8.3"
   }
 }

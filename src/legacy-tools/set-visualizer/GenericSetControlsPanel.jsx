@@ -164,6 +164,7 @@ export default function GenericSetControlsPanel({
         <div className="control-card control-card--wide">
           <label className="control-label">{keyLabel}</label>
           <select
+            aria-label={keyLabel}
             value={selectedForte}
             onChange={(event) => onSelectedForteChange(event.target.value)}
             className="control-select"
@@ -180,6 +181,7 @@ export default function GenericSetControlsPanel({
           <div className="control-card control-card--wide">
             <label className="control-label">Interval vector</label>
             <select
+              aria-label="Interval vector"
               value={selectedIntervalVector}
               onChange={(event) => onSelectedIntervalVectorChange(event.target.value)}
               className="control-select"
@@ -197,6 +199,7 @@ export default function GenericSetControlsPanel({
               <div>
                 <label className="control-label">Matching class</label>
                 <select
+                  aria-label="Matching class"
                   value={selectedForte}
                   onChange={(event) => onSelectedForteChange(event.target.value)}
                   className="control-select"
@@ -221,6 +224,7 @@ export default function GenericSetControlsPanel({
           <div className="control-card control-card--wide">
             <label className="control-label">Genus</label>
             <select
+              aria-label="Genus"
               value={selectedGenusId || ""}
               onChange={(event) => onSelectedGenusChange(event.target.value)}
               className="control-select"
@@ -238,6 +242,7 @@ export default function GenericSetControlsPanel({
               <div>
                 <label className="control-label">Matching class</label>
                 <select
+                  aria-label="Matching class"
                   value={selectedForte}
                   onChange={(event) => onSelectedForteChange(event.target.value)}
                   className="control-select"
@@ -400,6 +405,7 @@ export default function GenericSetControlsPanel({
                   </button>
 
                   <select
+                    aria-label="Concrete occurrence"
                     value={activeSelectedAnalysisMemberIndex}
                     onChange={(event) =>
                       onAnalysisMemberIndexChange(Number(event.target.value))
@@ -541,6 +547,7 @@ export default function GenericSetControlsPanel({
                         <div>
                           <label className="control-label">Subset type</label>
                           <select
+                            aria-label="Subset type"
                             value={subsetTargetCardinality}
                             onChange={(event) =>
                               onSubsetTargetCardinalityChange(Number(event.target.value))
@@ -561,6 +568,7 @@ export default function GenericSetControlsPanel({
                           <div>
                             <label className="control-label">Superset type</label>
                             <select
+                              aria-label="Superset type"
                               value={supersetTargetCardinality}
                               onChange={(event) =>
                                 onSupersetTargetCardinalityChange(Number(event.target.value))
