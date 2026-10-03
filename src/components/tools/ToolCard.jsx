@@ -9,10 +9,10 @@ export function ToolCard({ tool, variant = "default" }) {
       className={`platform-tool-card platform-tool-card--${variant}`}
       to={tool.route}
     >
-      <div className="platform-tool-card__top">
+      {variant !== "home" && <div className="platform-tool-card__top">
         <StatusBadge status={tool.status} />
         <ProBadge isPro={tool.isPro} />
-      </div>
+      </div>}
       <ToolDiagram icon={tool.icon} />
       <h3>{tool.title}</h3>
       <p>{tool.description}</p>
@@ -26,11 +26,11 @@ export function ToolCard({ tool, variant = "default" }) {
           </ul>
         </div>
       )}
-      <div className="platform-tags">
+      {variant !== "home" && <div className="platform-tags">
         {(tool.usefulFor ?? tool.tags.slice(0, 3)).map((tag) => (
           <span key={tag}>{tag}</span>
         ))}
-      </div>
+      </div>}
       <span className="platform-card-action">Open tool</span>
     </PlatformLink>
   );

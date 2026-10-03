@@ -8,7 +8,7 @@ export function PageShell({ eyebrow, title, subtitle, children, actions, variant
           <span />
         </div>
         <div>
-          <p className="platform-eyebrow">{eyebrow}</p>
+          {eyebrow && <p className="platform-eyebrow">{eyebrow}</p>}
           <h1>{title}</h1>
           {subtitle && <p className="platform-hero-subtitle">{subtitle}</p>}
         </div>

@@ -823,40 +823,15 @@ select:focus-visible {
 }
 
 .platform-footer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 26px;
-  margin-top: 22px;
-  padding: 24px;
+  margin-top: 16px;
+  padding: 12px 20px;
 }
 
 .platform-footer p {
-  max-width: 620px;
-  margin: 14px 0 0;
+  margin: 0;
   color: var(--gtl-muted);
-}
-
-.platform-footer__credit {
-  color: var(--gtl-accent) !important;
-  font-weight: 800;
-}
-
-.platform-footer nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 14px;
-}
-
-.platform-footer nav a {
-  color: var(--gtl-muted);
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.platform-footer nav a:hover {
-  color: var(--gtl-accent);
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 @media (max-width: 1080px) {
@@ -937,10 +912,6 @@ select:focus-visible {
   .platform-hero-grid {
     display: none;
   }
-
-  .platform-footer nav {
-    justify-content: flex-start;
-  }
 }
 
 @media (max-width: 520px) {
@@ -956,5 +927,85 @@ select:focus-visible {
   .platform-page h1,
   .platform-tool-header h1 {
     font-size: clamp(1.9rem, 10.4vw, 2.55rem);
+  }
+}
+
+/* Homepage: a short introduction followed by direct access to each tool. */
+.platform-page--home {
+  gap: 30px;
+}
+
+.platform-page--home .platform-page-hero {
+  min-height: 190px;
+  padding: clamp(26px, 3vw, 42px);
+  align-items: center;
+}
+
+.platform-page--home h1 {
+  font-size: clamp(2.1rem, 3.8vw, 3.65rem);
+}
+
+.platform-page--home .platform-hero-subtitle {
+  max-width: 650px;
+  margin-top: 14px;
+}
+
+.platform-home-tools {
+  padding: 0 8px;
+}
+
+.platform-home-tools h2 {
+  margin: 0;
+  color: var(--gtl-ink);
+  font-family: var(--gtl-heading);
+  font-size: 1.65rem;
+}
+
+.platform-home-tools .platform-tool-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.platform-tool-card--home {
+  grid-template-rows: 96px minmax(3em, auto) 1fr auto;
+  gap: 16px;
+  padding: 24px;
+}
+
+.platform-tool-card--home h3 {
+  line-height: 1.5;
+}
+
+.platform-tool-card--home .platform-card-action {
+  padding-top: 8px;
+}
+
+@media (max-width: 780px) {
+  .platform-page--home {
+    gap: 24px;
+  }
+
+  .platform-page--home .platform-page-hero {
+    min-height: auto;
+  }
+
+  .platform-home-tools .platform-section-heading {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .platform-home-tools .platform-tool-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .platform-tool-card--home {
+    grid-template-rows: 96px auto auto auto;
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .platform-home-access {
+    font-size: 0.85rem;
   }
 }
