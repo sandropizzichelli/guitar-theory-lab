@@ -149,7 +149,7 @@ export default function App() {
   );
 
   return (
-    <main className="app-shell">
+    <div className="goodrick-explorer app-shell">
       <section className="control-grid">
         <div className="set-panel controls-panel">
           <p className="section-title">Material</p>
@@ -320,6 +320,6 @@ export default function App() {
         onViewModeChange={setCycleViewMode}
         fretCount={MAX_FRET}
       />
-    </main>
+    </div>
   );
 }

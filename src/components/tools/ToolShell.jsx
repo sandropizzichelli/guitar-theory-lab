@@ -23,15 +23,16 @@ export function ToolShell({ tool }) {
 
   const isSetExplorer = tool.id === "set-class-explorer";
   const isHarmonic = tool.id === "harmonic-intersections";
-  const compactHeader = isSetExplorer || isHarmonic;
+  const isGoodrick = tool.id === "goodrick-voice-leading-visualization";
+  const compactHeader = isSetExplorer || isHarmonic || isGoodrick;
 
   return (
-    <main className={`platform-tool-shell${isSetExplorer ? " platform-tool-shell--sets" : isHarmonic ? " platform-tool-shell--harmonic" : ""}`}>
+    <main className={`platform-tool-shell${isSetExplorer ? " platform-tool-shell--sets" : isHarmonic ? " platform-tool-shell--harmonic" : isGoodrick ? " platform-tool-shell--goodrick" : ""}`}>
       <section className="platform-tool-header">
         <div>
           {!compactHeader && <p className="platform-eyebrow">{tool.category}</p>}
           <h1>{tool.title}</h1>
-          <p>{isSetExplorer ? "Explore pitch-class sets, interval vectors, and playable guitar forms." : isHarmonic ? "Compare scales, arpeggios, and pentatonics on the guitar fretboard." : tool.description}</p>
+          <p>{isSetExplorer ? "Explore pitch-class sets, interval vectors, and playable guitar forms." : isHarmonic ? "Compare scales, arpeggios, and pentatonics on the guitar fretboard." : isGoodrick ? "Explore chord cycles, inversions, and voice-leading paths on guitar." : tool.description}</p>
         </div>
         {!compactHeader && <div className="platform-tool-meta">
           <StatusBadge status={tool.status} />

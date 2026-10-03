@@ -1,4 +1,5 @@
-:root {
+.goodrick-explorer {
+
   color-scheme: light;
   --bg: #f5f7f2;
   --surface: rgba(255, 255, 252, 0.92);
@@ -39,43 +40,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+
+
 
 * {
   box-sizing: border-box;
-}
-
-body {
-  min-width: 320px;
-  min-height: 100vh;
-  margin: 0;
-  background:
-    radial-gradient(circle at 12% 0%, rgba(31, 118, 109, 0.16), transparent 34%),
-    radial-gradient(circle at 90% 10%, rgba(182, 101, 45, 0.12), transparent 28%),
-    linear-gradient(180deg, #fbfcf8 0%, var(--bg) 48%, #e9eee7 100%);
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(31, 118, 109, 0.035) 0,
-      rgba(31, 118, 109, 0.035) 1px,
-      transparent 1px,
-      transparent 88px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(16, 25, 21, 0.035) 0,
-      rgba(16, 25, 21, 0.035) 1px,
-      transparent 1px,
-      transparent 88px
-    );
-  mask-image: radial-gradient(circle at center, black 25%, transparent 88%);
 }
 
 button,
@@ -840,3 +809,66 @@ input {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+}
+
+/* Integrated platform presentation: retain all musical color coding. */
+.platform-tool-shell--goodrick { gap: 14px; grid-template-columns: minmax(0, 1fr); }
+.platform-tool-shell--goodrick .platform-tool-header { min-height: auto; padding: 22px 28px; }
+.platform-tool-shell--goodrick .platform-tool-header h1 { font-size: clamp(1.85rem, 3vw, 2.6rem); }
+.platform-tool-shell--goodrick .platform-tool-header p { margin-top: 8px; font-size: 1rem; }
+.platform-tool-shell--goodrick .platform-tool-host { min-width: 0; border: 0; box-shadow: none; background: transparent; overflow: visible; }
+.goodrick-explorer {
+  --surface: var(--gtl-surface);
+  --surface-strong: var(--gtl-surface-strong);
+  --border: var(--gtl-border);
+  --border-strong: var(--gtl-border-strong);
+  --text: var(--gtl-text);
+  --text-strong: var(--gtl-ink);
+  --muted: var(--gtl-muted);
+  --accent: var(--gtl-accent);
+  --accent-strong: #10564f;
+  --accent-soft: var(--gtl-accent-soft);
+  width: min(1100px, 100%);
+  margin-inline: auto;
+  padding: 0 8px 16px;
+  min-width: 0;
+  background: transparent;
+  font: 15px/1.5 var(--gtl-sans);
+}
+.goodrick-explorer .control-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 28px; }
+.goodrick-explorer .set-panel { border: 0; background: transparent; box-shadow: none; padding: 0; }
+.goodrick-explorer :is(.controls-panel, .compact-panel) { gap: 10px; align-content: start; }
+.goodrick-explorer .section-title { margin: 0; letter-spacing: 0.06em; }
+.goodrick-explorer .field-grid--single { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.goodrick-explorer .field { min-width: 0; gap: 5px; }
+.goodrick-explorer .field select { min-width: 0; max-width: 100%; min-height: 40px; border-radius: 7px; font-size: 0.85rem; padding: 8px 10px; }
+.goodrick-explorer .segmented-control { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.goodrick-explorer :is(.segmented-control button, .cycle-strip button) { min-height: 40px; border-radius: 7px; padding: 6px 10px; font-size: 0.85rem; }
+.goodrick-explorer :is(.segmented-control button.active, .cycle-strip button.active, .cycle-view-switch button.active) { background: var(--gtl-accent); border-color: var(--gtl-accent); color: #fffefa; box-shadow: none; }
+.goodrick-explorer :is(button, select):focus-visible { outline: 3px solid var(--gtl-accent-2); outline-offset: 3px; }
+.goodrick-explorer .cycle-strip { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+.goodrick-explorer .cycle-strip button { padding: 5px; font-size: 0.8rem; }
+.goodrick-explorer .cycle-strip button span { font-size: 0.65rem; overflow-wrap: anywhere; }
+.goodrick-explorer .compact-panel { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.goodrick-explorer .compact-panel .segmented-control { width: 200px; }
+.goodrick-explorer .scale-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; }
+.goodrick-explorer .note-chip { min-height: 26px; padding: 2px 8px; border-radius: 7px; font-size: 0.85rem; }
+.goodrick-explorer .cycle-map-panel { margin-top: 22px; }
+.goodrick-explorer .cycle-map-title { font-family: var(--gtl-heading); font-size: 1.6rem; text-transform: none; letter-spacing: 0; color: var(--gtl-ink); }
+.goodrick-explorer .cycle-map-header { gap: 14px; flex-wrap: wrap; }
+.goodrick-explorer .cycle-view-switch { border: 0; padding: 0; background: transparent; gap: 6px; }
+.goodrick-explorer .cycle-view-switch button { min-height: 40px; border: 1px solid var(--gtl-border); background: var(--gtl-surface-strong); border-radius: 7px; }
+.goodrick-explorer .cycle-legend-item { border-radius: 7px; }
+.goodrick-explorer .cycle-legend-item--active { background: var(--gtl-accent-soft); border-color: var(--gtl-accent); box-shadow: inset 3px 0 0 var(--gtl-accent); }
+.goodrick-explorer .cycle-status { border: 0; padding: 6px 0; background: transparent; }
+.goodrick-explorer .fretboard-scroll { max-width: 100%; min-width: 0; }
+.goodrick-explorer .cycle-map-board { width: max-content; }
+@media (max-width: 600px) {
+  .platform-tool-shell--goodrick .platform-tool-header { padding: 18px; }
+  .goodrick-explorer .control-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .goodrick-explorer .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .goodrick-explorer .cycle-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .goodrick-explorer .cycle-legend { flex-wrap: wrap; overflow: visible; }
+  .goodrick-explorer .cycle-map-header { flex-direction: column; align-items: stretch; }
+}
+.goodrick-explorer .cycle-strip button.active span { color: inherit; }
