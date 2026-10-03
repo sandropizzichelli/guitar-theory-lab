@@ -1,0 +1,51 @@
+GUITAR THEORY LAB — DA DOVE RIPARTIRE
+Aggiornato il 3 ottobre 2026
+
+PROGETTO PRINCIPALE
+Aprire in Codex il progetto Guitar Theory Lab, fissato nella barra laterale.
+Cartella: /Users/silvialumaca/Desktop/Guitar Software Series
+Sito: https://guitartheorylab.com/
+GitHub: https://github.com/sandropizzichelli/guitar-theory-lab
+L'utente ha confermato che il sito corrisponde all'ultima versione sviluppata.
+
+FILE DA MODIFICARE
+src contiene la piattaforma.
+src/legacy-tools contiene i tre strumenti utilizzati dal sito.
+config/tools.ts registra i tool e permette di aggiungerne altri.
+Le cartelle Set Visualizer, Harmonic Intersections e Goodrick Voice Leading Visualizer sono le versioni autonome originali: conservarle come riferimento. Non modificare contemporaneamente la copia autonoma e quella integrata senza un motivo esplicito.
+
+AVVIO LOCALE
+Dalla cartella principale: npm run dev
+Aprire http://127.0.0.1:5180/
+Per arrestare il server: Ctrl+C.
+
+VERIFICHE
+npm run build — prepara il sito pubblicabile.
+npm run test:legacy — verifica la logica dei tre strumenti autonomi.
+npm run e2e — verifica nel browser la piattaforma integrata.
+
+PUBBLICAZIONE
+La documentazione Cloudflare è in docs/CLOUDFLARE_PAGES.md.
+Build: npm run build. Cartella pubblicabile: dist.
+Prima di pubblicare modifiche, verificare nell'account Cloudflare il progetto e il branch effettivamente collegati. Non assumere che ogni branch venga pubblicato.
+Il branch di lavoro locale è main e segue origin/main. Il vecchio main iniziale è conservato come archive/pre-modular-platform (9864ed5).
+
+STORICO E BACKUP
+I vecchi progetti Codex sono raccolti nella sezione Guitar Theory Lab — storico.
+New project 3 è un collegamento alla cartella Harmonic Intersections: non spostare la cartella senza aggiornare il collegamento.
+Backup completo dei sorgenti e cronologie, con modifiche locali:
+/Users/silvialumaca/Documents/Codex/2026-10-03/vor/outputs/Guitar-Theory-Lab/Guitar-Theory-Lab-sorgenti-2026-10-03.tar.gz
+Mappa dettagliata nello stesso percorso: Mappa-del-progetto.txt.
+
+VERIFICA DEL 3 OTTOBRE 2026
+Build della piattaforma riuscita.
+54 test degli strumenti autonomi superati.
+Tre verifiche nel browser sulla piattaforma integrata superate: apertura e interazione con ciascun tool.
+
+COLLEGAMENTO DI PUBBLICAZIONE VERIFICATO
+Repository GitHub: sandropizzichelli/guitar-theory-lab; branch predefinito main.
+GitHub riporta un controllo Cloudflare Pages concluso con successo sul commit 73359c477da2f95f4ac2cfd5244e2050f6a74450.
+Progetto Cloudflare: guitar-theory-lab.
+Dettagli del deploy verificato:
+https://dash.cloudflare.com/?to=/08e07ecde5b14febeb88c8442e50c6be/pages/view/guitar-theory-lab/8fb604e8-83fc-4e6f-96df-1bae524bd6a9
+Il branch di produzione configurato nel pannello Cloudflare non è stato letto direttamente; verificare quel valore prima della prossima pubblicazione.

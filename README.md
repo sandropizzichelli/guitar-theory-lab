@@ -139,18 +139,18 @@ These scripts are retained as rollback and comparison paths while the platform a
 The initial working state is protected by:
 
 - Git commit: `backup: current working version`
-- Branch before migration: `main`
-- Migration branch: `feature/modular-platform`
+- Original pre-migration backup branch: `archive/pre-modular-platform`
+- Current working branch: `main` (migration complete; renamed locally on 2026-10-03)
 - Zip backup: `backup-before-modular-platform.zip`
 
 To inspect the original committed state:
 
 ```bash
-git switch main
+git switch archive/pre-modular-platform
 ```
 
-To return to migration work:
+To return to current platform work:
 
 ```bash
-git switch feature/modular-platform
+git switch main
 ```
