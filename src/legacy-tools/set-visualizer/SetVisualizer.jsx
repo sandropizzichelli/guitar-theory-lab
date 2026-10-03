@@ -91,10 +91,6 @@ function PageSwitcher({ page, setPage }) {
   return (
     <div className="page-switcher">
       <div className="page-switcher__panel">
-        <div className="page-switcher__copy">
-          <div className="eyebrow">Set-class explorer</div>
-        </div>
-
         <div className="page-switcher__actions">
           <PillButton active={page === "trichords"} onClick={() => setPage("trichords")}>
             Trichords
@@ -130,12 +126,12 @@ export default function SetVisualizer() {
   }, [page]);
 
   return (
-    <>
+    <div className="set-explorer">
       <PageSwitcher page={page} setPage={setPage} />
       {page === "trichords" && <TricordPage />}
       {page === "tetrachords" && <TetrachordPage />}
       {page === "pentachords" && <PentachordPage />}
       {page === "hexachords" && <HexachordPage />}
-    </>
+    </div>
   );
 }

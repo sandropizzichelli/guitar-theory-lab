@@ -21,19 +21,21 @@ export function ToolShell({ tool }) {
     );
   }
 
+  const isSetExplorer = tool.id === "set-class-explorer";
+
   return (
-    <main className="platform-tool-shell">
+    <main className={`platform-tool-shell${isSetExplorer ? " platform-tool-shell--sets" : ""}`}>
       <section className="platform-tool-header">
         <div>
-          <p className="platform-eyebrow">{tool.category}</p>
+          {!isSetExplorer && <p className="platform-eyebrow">{tool.category}</p>}
           <h1>{tool.title}</h1>
-          <p>{tool.description}</p>
+          <p>{isSetExplorer ? "Explore pitch-class sets, interval vectors, and playable guitar forms." : tool.description}</p>
         </div>
-        <div className="platform-tool-meta">
+        {!isSetExplorer && <div className="platform-tool-meta">
           <StatusBadge status={tool.status} />
           <ProBadge isPro={tool.isPro} />
           <span>v{tool.version}</span>
-        </div>
+        </div>}
       </section>
 
       <section className="platform-tool-host">

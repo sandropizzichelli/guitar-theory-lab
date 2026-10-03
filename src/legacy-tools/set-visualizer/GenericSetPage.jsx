@@ -80,12 +80,6 @@ function getVoicingFinderByCardinality(cardinality) {
   return null;
 }
 
-function getDisplayModeLabel(displayMode) {
-  if (displayMode === "notes") return "Note";
-  if (displayMode === "degrees") return "Degrees";
-  return "Intervals";
-}
-
 export default function GenericSetPage({
   keyLabel,
   keys,
@@ -1243,7 +1237,7 @@ export default function GenericSetPage({
           ? [
               { label: "Class", value: complementData.forte },
               { label: "Prime form", value: `[${complementData.pf}]` },
-              { label: "IV", value: formatIntervalVector(complementData.iv) },
+              { label: "Interval vector", value: formatIntervalVector(complementData.iv) },
             ]
           : [],
         note:
@@ -1269,11 +1263,10 @@ export default function GenericSetPage({
         items: [
           { label: "Class", value: activeSet.forteName },
           { label: "Prime form", value: `[${activeSet.primeForm.join(",")}]` },
-          { label: "IV", value: formatIntervalVector(activeSet.iv) },
+          { label: "Interval vector", value: formatIntervalVector(activeSet.iv) },
         ],
         note: [
-          fretboardViewMode === "prime" ? "Prime form" : "Voicing",
-          getDisplayModeLabel(displayMode),
+          fretboardViewMode === "prime" ? null : "Voicing",
           browseMode === "iv"
             ? `${intervalVectorFamilyClasses.length} classes in the IV family`
             : browseMode === "genus" && selectedGenus

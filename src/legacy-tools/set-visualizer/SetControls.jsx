@@ -5,6 +5,7 @@ export function PillButton({ active, onClick, children }) {
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={Boolean(active)}
       className={active ? "pill-button pill-button--active" : "pill-button"}
     >
       {children}
@@ -41,7 +42,7 @@ export function BassButtons({ options = [], value, onChange }) {
 export function TransformButtons({ mode, setMode, amount, setAmount }) {
   return (
     <div className="control-card__stack">
-      <SectionTitle>Inversions / Tn-TnI transformations</SectionTitle>
+      <SectionTitle>Transformations · Tn / TnI</SectionTitle>
       <div className="button-row">
         <PillButton active={mode === "base"} onClick={() => setMode("base")}>
           Original

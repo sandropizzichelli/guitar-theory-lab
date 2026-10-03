@@ -130,11 +130,11 @@ export default function GenericSetControlsPanel({
     <ControlSection
       eyebrow={null}
       title={null}
-      className="control-section--top"
+      className="control-section--top control-section--selection"
     >
       <div className="control-card control-card--wide">
         <div className="control-card__stack">
-          <SectionTitle>Access key</SectionTitle>
+          <SectionTitle>Browse by</SectionTitle>
           <div className="segmented-row">
             <PillButton
               active={browseMode === "forte"}
@@ -334,301 +334,7 @@ export default function GenericSetControlsPanel({
     </ControlSection>
   );
 
-  return (
-    <div className="set-panel set-panel--hero">
-      {selectionSection}
-      {readingSection}
-
-      <div className={shouldShowHeroCatalog ? "set-hero" : "set-hero set-hero--full"}>
-        <div className="set-hero__main">
-          <div className="hero-fretboard-card">
-            {(heroFretboardState?.badge || heroSummaryState?.badge) && (
-              <div className="hero-fretboard-card__head hero-fretboard-card__head--spread">
-                {heroFretboardState?.badge ? (
-                  <span className="class-badge">{heroFretboardState.badge}</span>
-                ) : (
-                  <span />
-                )}
-                {heroSummaryState?.badge && (
-                  <span className="class-badge">{heroSummaryState.badge}</span>
-                )}
-              </div>
-            )}
-
-            {heroSummaryState?.items?.length ? (
-              <div className="hero-fretboard-card__summary">
-                <div className="hero-summary-grid hero-summary-grid--hero">
-                  {heroSummaryState.items.map((item) => (
-                    <div
-                      key={`${item.label}-${item.value}`}
-                      className="hero-summary-item hero-summary-item--hero"
-                    >
-                      <span>{item.label}</span>
-                      <strong>{item.value}</strong>
-                    </div>
-                  ))}
-                </div>
-
-                {heroSummaryState?.note && (
-                  <p className="hero-summary-note hero-summary-note--hero">
-                    {heroSummaryState.note}
-                  </p>
-                )}
-              </div>
-            ) : heroSummaryState?.note ? (
-              <p className="hero-summary-note hero-summary-note--hero">
-                {heroSummaryState.note}
-              </p>
-            ) : null}
-
-            {shouldShowHeroAnalysisControls && (
-              <div className="hero-analysis-controls">
-                <div className="picker-head">
-                  <label className="section-title">Concrete occurrence</label>
-                  <span className="class-badge">
-                    {activeSelectedAnalysisMemberIndex + 1} / {analysisMembers.length}
-                  </span>
-                </div>
-
-                <div className="picker-row">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      onAnalysisMemberIndexChange(
-                        Math.max(0, activeSelectedAnalysisMemberIndex - 1)
-                      )
-                    }
-                    disabled={activeSelectedAnalysisMemberIndex === 0}
-                    className="nav-button"
-                  >
-                    ←
-                  </button>
-
-                  <select
-                    aria-label="Concrete occurrence"
-                    value={activeSelectedAnalysisMemberIndex}
-                    onChange={(event) =>
-                      onAnalysisMemberIndexChange(Number(event.target.value))
-                    }
-                    className="control-select"
-                  >
-                    {analysisMembers.map((member, index) => (
-                      <option key={`hero-occurrence-${index}`} value={index}>
-                        Occurrence {index + 1} · [{member.join(",")}]
-                      </option>
-                    ))}
-                  </select>
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      onAnalysisMemberIndexChange(
-                        Math.min(analysisMembers.length - 1, activeSelectedAnalysisMemberIndex + 1)
-                      )
-                    }
-                    disabled={activeSelectedAnalysisMemberIndex === analysisMembers.length - 1}
-                    className="nav-button"
-                  >
-                    →
-                  </button>
-                </div>
-
-                {!showingPrimaryForm && (
-                  <div className="toggle-stack">
-                    <label className="toggle-row">
-                      <input
-                        type="checkbox"
-                        checked={analysisShowAllMembers}
-                        onChange={(event) =>
-                          onAnalysisShowAllMembersChange(event.target.checked)
-                        }
-                      />
-                      Show all class instances on the fretboard
-                    </label>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {heroFretboardState?.props ? (
-              <Fretboard {...heroFretboardState.props} />
-            ) : (
-              <p className="helper-text">
-                Select a class or occurrence to display the fretboard above.
-              </p>
-            )}
-
-            {shouldShowHeroIntervalFilters && (
-              <div className="hero-interval-filters">
-                <div className="picker-head">
-                  <div className="section-title">Ic</div>
-                  {selectedIntervalClasses.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={onClearIntervalClassFilter}
-                      className="interval-filter-reset"
-                    >
-                      Show all
-                    </button>
-                  )}
-                </div>
-
-                <div className="interval-breakdown interval-breakdown--compact">
-                  {activeSet.intervalClassBreakdown.map((item) => (
-                    <button
-                      key={`hero-ic-${item.ic}`}
-                      type="button"
-                      onClick={() => onToggleIntervalClass(item.ic)}
-                      disabled={item.count === 0}
-                      className={
-                        selectedIntervalClasses.includes(item.ic)
-                          ? "interval-breakdown__chip interval-breakdown__chip--active"
-                          : "interval-breakdown__chip"
-                      }
-                    >
-                      <span>{`ic${item.ic}`}</span>
-                      <strong>{item.count}</strong>
-                    </button>
-                  ))}
-                </div>
-
-                {shouldShowHeroIntervalFamily && (
-                  <details className="disclosure-card hero-interval-family" open>
-                    <summary className="disclosure-card__summary">
-                      <span>{`IV family · ${intervalVectorFamilyClasses.length}`}</span>
-                    </summary>
-
-                    <div className="disclosure-card__body">
-                      <div className="hero-interval-family__grid">
-                        {intervalVectorFamilyClasses.map((item) => (
-                          <button
-                            key={`hero-family-${item.forteName}`}
-                            type="button"
-                            onClick={() => onSelectFamilyClass(item.forteName)}
-                            className={
-                              item.forteName === activeSet?.forteName
-                                ? "hero-interval-family__card hero-interval-family__card--active"
-                                : "hero-interval-family__card"
-                            }
-                          >
-                            <strong>{item.forteName}</strong>
-                            <span>{`PF [${item.primeForm.join(",")}]`}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </details>
-                )}
-              </div>
-            )}
-
-            {!showComplement && (
-              <div className="hero-embedded-controls">
-                <div className="hero-embedded-controls__grid">
-                  <div className="control-card control-card--wide">
-                    <div className="control-card__stack">
-                      <SectionTitle>Analysis</SectionTitle>
-                      <div className="segmented-row">
-                        <PillButton
-                          active={analysisMode === "subsets"}
-                          onClick={() => onAnalysisModeChange("subsets")}
-                        >
-                          Subset-class
-                        </PillButton>
-                        <PillButton
-                          active={analysisMode === "supersets"}
-                          onClick={() => onAnalysisModeChange("supersets")}
-                        >
-                          Superset-class
-                        </PillButton>
-                      </div>
-
-                      {analysisMode === "subsets" && subsetCardinalityOptions.length > 0 && (
-                        <div>
-                          <label className="control-label">Subset type</label>
-                          <select
-                            aria-label="Subset type"
-                            value={subsetTargetCardinality}
-                            onChange={(event) =>
-                              onSubsetTargetCardinalityChange(Number(event.target.value))
-                            }
-                            className="control-select"
-                          >
-                            {subsetCardinalityOptions.map((cardinality) => (
-                              <option key={cardinality} value={cardinality}>
-                                {getCardinalityLabel(cardinality)}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      )}
-
-                      {analysisMode === "supersets" &&
-                        supersetCardinalityOptions.length > 0 && (
-                          <div>
-                            <label className="control-label">Superset type</label>
-                            <select
-                              aria-label="Superset type"
-                              value={supersetTargetCardinality}
-                              onChange={(event) =>
-                                onSupersetTargetCardinalityChange(Number(event.target.value))
-                              }
-                              className="control-select"
-                            >
-                              {supersetCardinalityOptions.map((cardinality) => (
-                                <option key={cardinality} value={cardinality}>
-                                  {getCardinalityLabel(cardinality)}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        )}
-                    </div>
-                  </div>
-
-                  <div className="control-card control-card--wide">
-                    <TransformButtons
-                      mode={transformMode}
-                      setMode={onTransformModeChange}
-                      amount={transformAmount}
-                      setAmount={onTransformAmountChange}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {shouldShowHeroCatalog && (
-          <aside className="hero-summary-card hero-summary-card--catalog">
-            <div className="panel-header panel-header--compact">
-              <div className="panel-header__copy">
-                {heroCatalogState?.eyebrow ? (
-                  <div className="eyebrow">{heroCatalogState.eyebrow}</div>
-                ) : null}
-                <h2>{heroCatalogState?.title || "Catalog"}</h2>
-              </div>
-              {heroCatalogState?.count != null && (
-                <span className="class-badge">{heroCatalogState.count}</span>
-              )}
-            </div>
-
-            {heroCatalogState?.items?.length ? (
-              <div className="hero-catalog-list">
-                {heroCatalogState.items.map((item) => (
-                  <HeroCatalogRow key={item.key} item={item} />
-                ))}
-              </div>
-            ) : (
-              <p className="helper-text helper-text--small">
-                {heroCatalogState?.emptyNote || "No results available."}
-              </p>
-            )}
-          </aside>
-        )}
-      </div>
-
+  const fretboardSection = (
       <div className="control-grid">
         {!showComplement && (
           <ControlSection
@@ -838,6 +544,305 @@ export default function GenericSetControlsPanel({
           </ControlSection>
         )}
       </div>
+  );
+
+  return (
+    <div className="set-panel set-panel--hero">
+      {selectionSection}
+      {readingSection}
+
+      <div className={shouldShowHeroCatalog ? "set-hero" : "set-hero set-hero--full"}>
+        <div className="set-hero__main">
+          <div className="hero-fretboard-card">
+            {((heroFretboardState?.badge && heroFretboardState.badge !== "Prime form" && heroFretboardState.badge !== heroSummaryState?.badge) || heroSummaryState?.badge) && (
+              <div className="hero-fretboard-card__head hero-fretboard-card__head--spread">
+                {heroFretboardState?.badge && heroFretboardState.badge !== "Prime form" && heroFretboardState.badge !== heroSummaryState?.badge ? (
+                  <span className="class-badge">{heroFretboardState.badge}</span>
+                ) : (
+                  <span />
+                )}
+                {heroSummaryState?.badge && (
+                  <span className="class-badge">{heroSummaryState.badge}</span>
+                )}
+              </div>
+            )}
+
+            {heroSummaryState?.items?.length ? (
+              <div className="hero-fretboard-card__summary">
+                <div className="hero-summary-grid hero-summary-grid--hero">
+                  {heroSummaryState.items.map((item) => (
+                    <div
+                      key={`${item.label}-${item.value}`}
+                      className="hero-summary-item hero-summary-item--hero"
+                    >
+                      <span>{item.label}</span>
+                      <strong>{item.value}</strong>
+                    </div>
+                  ))}
+                </div>
+
+                {heroSummaryState?.note && (
+                  <p className="hero-summary-note hero-summary-note--hero">
+                    {heroSummaryState.note}
+                  </p>
+                )}
+              </div>
+            ) : heroSummaryState?.note ? (
+              <p className="hero-summary-note hero-summary-note--hero">
+                {heroSummaryState.note}
+              </p>
+            ) : null}
+
+            {shouldShowHeroAnalysisControls && (
+              <div className="hero-analysis-controls">
+                <div className="picker-head">
+                  <label className="section-title">Concrete occurrence</label>
+                  <span className="class-badge">
+                    {activeSelectedAnalysisMemberIndex + 1} / {analysisMembers.length}
+                  </span>
+                </div>
+
+                <div className="picker-row">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onAnalysisMemberIndexChange(
+                        Math.max(0, activeSelectedAnalysisMemberIndex - 1)
+                      )
+                    }
+                    disabled={activeSelectedAnalysisMemberIndex === 0}
+                    className="nav-button"
+                  >
+                    ←
+                  </button>
+
+                  <select
+                    aria-label="Concrete occurrence"
+                    value={activeSelectedAnalysisMemberIndex}
+                    onChange={(event) =>
+                      onAnalysisMemberIndexChange(Number(event.target.value))
+                    }
+                    className="control-select"
+                  >
+                    {analysisMembers.map((member, index) => (
+                      <option key={`hero-occurrence-${index}`} value={index}>
+                        Occurrence {index + 1} · [{member.join(",")}]
+                      </option>
+                    ))}
+                  </select>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onAnalysisMemberIndexChange(
+                        Math.min(analysisMembers.length - 1, activeSelectedAnalysisMemberIndex + 1)
+                      )
+                    }
+                    disabled={activeSelectedAnalysisMemberIndex === analysisMembers.length - 1}
+                    className="nav-button"
+                  >
+                    →
+                  </button>
+                </div>
+
+                {!showingPrimaryForm && (
+                  <div className="toggle-stack">
+                    <label className="toggle-row">
+                      <input
+                        type="checkbox"
+                        checked={analysisShowAllMembers}
+                        onChange={(event) =>
+                          onAnalysisShowAllMembersChange(event.target.checked)
+                        }
+                      />
+                      Show all class instances on the fretboard
+                    </label>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {fretboardSection}
+
+            {heroFretboardState?.props ? (
+              <Fretboard {...heroFretboardState.props} />
+            ) : (
+              <p className="helper-text">
+                Select a class or occurrence to display the fretboard above.
+              </p>
+            )}
+
+            {shouldShowHeroIntervalFilters && (
+              <div className="hero-interval-filters">
+                <div className="picker-head">
+                  <div className="section-title">Ic</div>
+                  {selectedIntervalClasses.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={onClearIntervalClassFilter}
+                      className="interval-filter-reset"
+                    >
+                      Show all
+                    </button>
+                  )}
+                </div>
+
+                <div className="interval-breakdown interval-breakdown--compact">
+                  {activeSet.intervalClassBreakdown.map((item) => (
+                    <button
+                      key={`hero-ic-${item.ic}`}
+                      type="button"
+                      onClick={() => onToggleIntervalClass(item.ic)}
+                      disabled={item.count === 0}
+                      className={
+                        selectedIntervalClasses.includes(item.ic)
+                          ? "interval-breakdown__chip interval-breakdown__chip--active"
+                          : "interval-breakdown__chip"
+                      }
+                    >
+                      <span>{`ic${item.ic}`}</span>
+                      <strong>{item.count}</strong>
+                    </button>
+                  ))}
+                </div>
+
+                {shouldShowHeroIntervalFamily && (
+                  <details className="disclosure-card hero-interval-family" open>
+                    <summary className="disclosure-card__summary">
+                      <span>{`IV family · ${intervalVectorFamilyClasses.length}`}</span>
+                    </summary>
+
+                    <div className="disclosure-card__body">
+                      <div className="hero-interval-family__grid">
+                        {intervalVectorFamilyClasses.map((item) => (
+                          <button
+                            key={`hero-family-${item.forteName}`}
+                            type="button"
+                            onClick={() => onSelectFamilyClass(item.forteName)}
+                            className={
+                              item.forteName === activeSet?.forteName
+                                ? "hero-interval-family__card hero-interval-family__card--active"
+                                : "hero-interval-family__card"
+                            }
+                          >
+                            <strong>{item.forteName}</strong>
+                            <span>{`PF [${item.primeForm.join(",")}]`}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </details>
+                )}
+              </div>
+            )}
+
+            {!showComplement && (
+              <div className="hero-embedded-controls">
+                <div className="hero-embedded-controls__grid">
+                  <div className="control-card control-card--wide">
+                    <div className="control-card__stack">
+                      <SectionTitle>Analysis</SectionTitle>
+                      <div className="segmented-row">
+                        <PillButton
+                          active={analysisMode === "subsets"}
+                          onClick={() => onAnalysisModeChange("subsets")}
+                        >
+                          Subset-class
+                        </PillButton>
+                        <PillButton
+                          active={analysisMode === "supersets"}
+                          onClick={() => onAnalysisModeChange("supersets")}
+                        >
+                          Superset-class
+                        </PillButton>
+                      </div>
+
+                      {analysisMode === "subsets" && subsetCardinalityOptions.length > 0 && (
+                        <div>
+                          <label className="control-label">Subset type</label>
+                          <select
+                            aria-label="Subset type"
+                            value={subsetTargetCardinality}
+                            onChange={(event) =>
+                              onSubsetTargetCardinalityChange(Number(event.target.value))
+                            }
+                            className="control-select"
+                          >
+                            {subsetCardinalityOptions.map((cardinality) => (
+                              <option key={cardinality} value={cardinality}>
+                                {getCardinalityLabel(cardinality)}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+
+                      {analysisMode === "supersets" &&
+                        supersetCardinalityOptions.length > 0 && (
+                          <div>
+                            <label className="control-label">Superset type</label>
+                            <select
+                              aria-label="Superset type"
+                              value={supersetTargetCardinality}
+                              onChange={(event) =>
+                                onSupersetTargetCardinalityChange(Number(event.target.value))
+                              }
+                              className="control-select"
+                            >
+                              {supersetCardinalityOptions.map((cardinality) => (
+                                <option key={cardinality} value={cardinality}>
+                                  {getCardinalityLabel(cardinality)}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
+                    </div>
+                  </div>
+
+                  <div className="control-card control-card--wide">
+                    <TransformButtons
+                      mode={transformMode}
+                      setMode={onTransformModeChange}
+                      amount={transformAmount}
+                      setAmount={onTransformAmountChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {shouldShowHeroCatalog && (
+          <aside className="hero-summary-card hero-summary-card--catalog">
+            <div className="panel-header panel-header--compact">
+              <div className="panel-header__copy">
+                {heroCatalogState?.eyebrow ? (
+                  <div className="eyebrow">{heroCatalogState.eyebrow}</div>
+                ) : null}
+                <h2>{heroCatalogState?.title || "Catalog"}</h2>
+              </div>
+              {heroCatalogState?.count != null && (
+                <span className="class-badge">{heroCatalogState.count}</span>
+              )}
+            </div>
+
+            {heroCatalogState?.items?.length ? (
+              <div className="hero-catalog-list">
+                {heroCatalogState.items.map((item) => (
+                  <HeroCatalogRow key={item.key} item={item} />
+                ))}
+              </div>
+            ) : (
+              <p className="helper-text helper-text--small">
+                {heroCatalogState?.emptyNote || "No results available."}
+              </p>
+            )}
+          </aside>
+        )}
+      </div>
+
     </div>
   );
 }
