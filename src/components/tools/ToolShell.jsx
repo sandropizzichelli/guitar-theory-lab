@@ -24,10 +24,11 @@ export function ToolShell({ tool }) {
   const isSetExplorer = tool.id === "set-class-explorer";
   const isHarmonic = tool.id === "harmonic-intersections";
   const isGoodrick = tool.id === "goodrick-voice-leading-visualization";
-  const compactHeader = isSetExplorer || isHarmonic || isGoodrick;
+  const isVoicing = tool.id === "voicing-lab";
+  const compactHeader = isSetExplorer || isHarmonic || isGoodrick || isVoicing;
 
   return (
-    <main className={`platform-tool-shell${isSetExplorer ? " platform-tool-shell--sets" : isHarmonic ? " platform-tool-shell--harmonic" : isGoodrick ? " platform-tool-shell--goodrick" : ""}`}>
+    <main className={`platform-tool-shell${isSetExplorer ? " platform-tool-shell--sets" : isHarmonic ? " platform-tool-shell--harmonic" : isGoodrick ? " platform-tool-shell--goodrick" : isVoicing ? " platform-tool-shell--voicing" : ""}`}>
       <section className="platform-tool-header">
         <div>
           {!compactHeader && <p className="platform-eyebrow">{tool.category}</p>}
