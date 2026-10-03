@@ -69,3 +69,7 @@ Se una candidata occupa la corda del basso, o scende sotto di esso, la disposizi
 4. Integrazione con snapshot e candidate Greene; verifiche UI e responsive.
 
 Verificabile subito: altezze, invarianti, ordine reale, omissioni, ricerca su corde mute e classificazione V della posizione. Da approfondire: diteggiature fisiche a cinque note e ampiezza del dizionario armonico, senza trasformare la stima in certificazione di suonabilità. Questa è una nostra estensione software, non un procedimento del V-System attribuito a Greene.
+
+## Esito della fase approvata
+
+Implementazione locale completata secondo la specifica aggiornata in `VOICING_LAB_SPEC.md`. Cmaj7/A distingue la formula completa del voicing dal basso aggiunto esterno; Am9 resta disponibile. Verifiche 19 musicali/27 browser passate, inclusi esempi, collisioni, registro e ripristino del basso. Nessuna implementazione delle fasi successive, commit o pubblicazione.

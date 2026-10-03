@@ -156,7 +156,7 @@ export function interpret(pitches,root) {
           ? 'Terza e settima maggiore sostengono questa lettura.'
           : ''
     : '';
-  return { root,symbol:`${ROOTS[root]}${formula.label}${slash}`,degrees,omissions,complete:missing.length===0,contextual:missing.includes(0),score:best.score,formulaId:formula.id,reason };
+  return { root,symbol:`${ROOTS[root]}${formula.label}${slash}`,degrees,omissions,complete:missing.length===0,contextual:missing.includes(0),score:best.score,formulaId:formula.id,formulaIntervals:[...formula.intervals],reason };
 }
 export function analyze(pitches,root) {
   const selected=interpret(pitches,root);

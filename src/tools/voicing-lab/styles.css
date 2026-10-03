@@ -153,3 +153,9 @@
   .vl-movements td,.vl-movements th { white-space:normal; border:0; padding:5px; }
   .vl-movements td::before { content:attr(data-label); display:block; color:var(--gtl-muted); font-size:10px; margin-bottom:3px; }
 }
+.vl-bass-fields { display:grid; grid-template-columns:1fr 1fr 2fr; gap:12px; margin-top:16px; }
+.vl-bass-sound { border:1px dashed var(--gtl-accent); border-radius:6px; padding:14px; margin:12px 0; font-size:12px; line-height:1.6; }
+.vl-bass-description { font-size:12px; color:var(--gtl-accent); }
+.vl-app .vl-fret.vl-bass-dot span { border:2px dashed white; border-radius:4px; }
+.vl-app .vl-fret:disabled,.vl-app .vl-mute:disabled { cursor:default; opacity:1; }
+@media(max-width:700px) { .vl-bass-fields { grid-template-columns:1fr 1fr; } .vl-bass-fields>label:last-child { grid-column:1/-1; } }

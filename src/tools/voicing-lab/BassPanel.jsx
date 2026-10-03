@@ -1,0 +1,19 @@
+import {useState} from 'react';
+import {BASS_NOTES,bassNote,validateBass,findBassPositions} from './bass.js';
+export default function BassPanel({frets,bass,onApply,onRemove}) {
+ const [name,setName]=useState('A');const [octave,setOctave]=useState('');const [mode,setMode]=useState('separate');const [search,setSearch]=useState(null);const [selected,setSelected]=useState(null);
+ const draft=octave===''?null:bassNote(name,Number(octave),mode);
+ const validation=draft?validateBass(frets,{...draft,mode:'separate'}):{valid:false,reason:'Scegli esplicitamente nota e ottava.'};
+ const key=JSON.stringify({frets,name,octave,mode});const stale=search?.key!==key;
+ const ready=validation.valid&&(mode==='separate'||(!stale&&selected));
+ function searchBass(){setSearch({key,results:findBassPositions(frets,draft)});setSelected(null);}
+ return <details className="vl-explore vl-bass" data-testid="bass-panel"><summary>Basso esterno{bass&&` · ${bass.name}${bass.octave} · ${bass.mode==='separate'?'accompagnamento separato':`corda ${bass.stringNumber}, tasto ${bass.fret}`}`}</summary>
+  <div className="vl-bass-fields"><label className="vl-field"><span>Nota del basso</span><select value={name} onChange={e=>setName(e.target.value)}>{BASS_NOTES.map(([n])=><option key={n}>{n}</option>)}</select></label><label className="vl-field"><span>Ottava del basso</span><select value={octave} onChange={e=>setOctave(e.target.value)}><option value="">Scegli ottava</option>{Array.from({length:9},(_,i)=><option key={i}>{i}</option>)}</select></label><label className="vl-field"><span>Realizzazione del basso</span><select value={mode} onChange={e=>setMode(e.target.value)}><option value="separate">Accompagnamento separato</option><option value="guitar">Corda inutilizzata</option></select></label></div>
+  <p className="vl-help">Nota aggiunta sotto le quattro voci. Nessuna nota originale viene spostata. C4 = MIDI 60.</p>
+  {!validation.valid&&<p role="status">{validation.reason}</p>}
+  {mode==='guitar'&&<><button disabled={!validation.valid} onClick={searchBass}>Cerca basso sulle corde inutilizzate</button>{search&&!stale&&<><p role="status">{search.results.length} realizzazioni del basso{search.results.length===0?' · Nessuna corda inutilizzata raggiunge questa altezza.':''}</p><div className="vl-results">{search.results.map(result=><button key={result.stringNumber} data-bass-string={result.stringNumber} aria-pressed={selected?.stringNumber===result.stringNumber} onClick={()=>setSelected(result)}><strong>Corda {result.stringNumber} · tasto {result.fret}</strong><small>{result.name}{result.octave} · stima {result.difficulty.label.toLowerCase()}, apertura {result.difficulty.span}</small><span>Seleziona realizzazione del basso</span></button>)}</div></>}{search&&stale&&<p role="status">Controlli cambiati: cerca di nuovo.</p>}</>}
+  {validation.valid&&<p data-testid="bass-draft">Anteprima: {name}{octave} · {mode==='separate'?'accompagnamento separato':selected&&!stale?`corda ${selected.stringNumber}, tasto ${selected.fret}`:'realizzazione da scegliere'}</p>}
+  <div className="vl-comparison-actions"><button className="vl-primary" disabled={!ready} onClick={()=>onApply(mode==='separate'?draft:(({difficulty,...value})=>value)(selected))}>Aggiungi questo basso</button>{bass&&<button onClick={onRemove}>Rimuovi basso</button>}</div>
+  <details className="vl-procedure-details"><summary>Regole e limiti del basso</summary><p>Il basso è indipendente dalla fondamentale. Accompagnamento separato senza assegnazione alla chitarra e senza audio. Su chitarra: accordatura standard, 0–24 tasti, solo corde mute, altezze esatte. La difficoltà è geometrica; diteggiatura non verificata. Il gruppo V descrive soltanto le quattro voci originali. Funzione software di Guitar Theory Lab.</p></details>
+ </details>;
+}

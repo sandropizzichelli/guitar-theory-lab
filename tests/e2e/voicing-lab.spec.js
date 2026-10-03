@@ -272,3 +272,54 @@ test('Greene filters, direction, inactive procedures, locked position and manual
  await expect(page.getByTestId('greene-candidate-pitches')).toHaveCount(0);
  await expect(panel.getByRole('button',{name:'Ripristina originale'})).toHaveCount(0);
 });
+
+async function openBass(page,name,octave,mode='separate') {
+ const bass=page.getByTestId('bass-panel');await bass.locator(':scope>summary').click();
+ await bass.getByRole('combobox',{name:'Nota del basso',exact:true}).selectOption(name);
+ await bass.getByRole('combobox',{name:'Ottava del basso',exact:true}).selectOption(String(octave));
+ await bass.getByRole('combobox',{name:'Realizzazione del basso',exact:true}).selectOption(mode);return bass;
+}
+for(const width of [1440,390])for(const example of ['A','D','unavailable','duplicate'])test(`external bass ${example} exact lifecycle at ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:1000});await page.goto('/tools/voicing-lab');
+ if(example==='D')for(const [i,f] of ['x','3','4','3','4','x'].entries())await page.getByRole('combobox',{name:`Corda ${6-i}`,exact:true}).selectOption(f);
+ const originalFrets=await frets(page).textContent(),originalPitches=await pitches(page).getAttribute('data-pitches'),originalStrings=await pitches(page).getAttribute('data-strings');
+ const bass=await openBass(page,example==='A'?'A':example==='duplicate'?'C':'D',2,example==='A'||example==='unavailable'?'guitar':'separate');
+ await expect(page.getByTestId('bass-sound')).toHaveCount(0);await expect(frets(page)).toHaveText(originalFrets);
+ if(example==='A'||example==='unavailable') {
+  await bass.getByRole('button',{name:'Cerca basso sulle corde inutilizzate'}).click();
+  if(example==='unavailable') {await expect(bass.getByRole('button',{name:'Aggiungi questo basso'})).toBeDisabled();await expect(bass).toContainText('Nessuna corda inutilizzata');await bass.getByRole('combobox',{name:'Realizzazione del basso'}).selectOption('separate');}
+  else {await expect(bass.getByRole('button',{name:'Aggiungi questo basso'})).toBeDisabled();await bass.locator('[data-bass-string="6"]').click();}
+ }
+ await expect(frets(page)).toHaveText(originalFrets);await bass.getByRole('button',{name:'Aggiungi questo basso'}).click();
+ await expect(frets(page)).toHaveText(originalFrets);await expect(pitches(page)).toHaveAttribute('data-pitches',originalPitches);await expect(pitches(page)).toHaveAttribute('data-strings',originalStrings);
+ await expect(page.getByTestId('v-group')).toContainText('V-2');
+ const selected=page.locator('.vl-analysis>.vl-reading');
+ if(example==='A'){await expect(selected.locator('h3')).toHaveText('Cmaj7/A');await expect(selected).toContainText('Cmaj7 completo sopra un basso A, esterno alla formula');await expect(selected).not.toContainText('incompatibile');await root(page).selectOption('9');await expect(selected.locator('h3')).toHaveText('Am9');await expect(selected).toContainText('Formula completa');await root(page).selectOption('0');await expect(page.getByTestId('bass-sound')).toContainText('5 · 3 · 5 · 4 · 5 · ×');}
+ if(example==='D'){await root(page).selectOption('2');await expect(selected.locator('h3')).toHaveText('D7(♭9,♭13)');await expect(selected.locator('.vl-omissions')).toHaveText('Omesse: quinta');await expect(pitches(page)).toContainText('F♯3');}
+ if(example==='duplicate'){await expect(selected.locator('h3')).toHaveText('Cmaj7');await expect(page.getByTestId('bass-sound')).toContainText('5 note, 4 classi');}
+ await expect(frets(page)).toHaveText(originalFrets);
+ await page.screenshot({path:`${previewDir}/bass-${example}-${width}.png`,fullPage:true});
+ if(example==='A')await page.locator('.vl-workspace').screenshot({path:`${previewDir}/bass-preview-${width}.png`,style:'.platform-nav { visibility:hidden !important; }'});
+ await bass.getByRole('combobox',{name:'Ottava del basso'}).selectOption('3');await bass.getByRole('combobox',{name:'Nota del basso'}).selectOption('C');await expect(bass.getByRole('button',{name:'Aggiungi questo basso'})).toBeDisabled();
+ await expect(page.getByTestId('bass-sound')).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await bass.getByRole('button',{name:'Rimuovi basso'}).click();await expect(page.getByTestId('bass-sound')).toHaveCount(0);await expect(frets(page)).toHaveText(originalFrets);await expect(pitches(page)).toHaveAttribute('data-pitches',originalPitches);
+});
+for(const mode of ['separate','guitar'])test(`Greene snapshots include external bass ${mode}, collision and register independently`,async({page})=>{
+ await page.goto('/tools/voicing-lab');const bass=await openBass(page,'A',2,mode);
+ if(mode==='guitar'){await bass.getByRole('button',{name:'Cerca basso sulle corde inutilizzate'}).click();await bass.locator('[data-bass-string="6"]').click();}
+ await bass.getByRole('button',{name:'Aggiungi questo basso'}).click();
+ const originalBass=await page.getByTestId('bass-sound').getAttribute('data-bass'),beforePitches=await pitches(page).getAttribute('data-pitches');
+ await page.getByRole('combobox',{name:'Approccio',exact:true}).selectOption('greene');const panel=page.getByTestId('greene-panel');await panel.locator(':scope>summary').click();await panel.getByRole('tab',{name:'Conversioni',exact:true}).click();
+ await panel.locator('[data-procedure="v2-v7-b-down"]').click();await expect(page.getByTestId('greene-bass-check')).toContainText('deve essere sotto');await expect(panel.getByRole('button',{name:'Usa questa posizione'})).toBeDisabled();
+ await panel.locator('[data-procedure="v2-v3-a-down"]').click();await panel.getByRole('combobox',{name:'Corde della candidata'}).selectOption('all');await panel.getByRole('button',{name:'Cerca posizioni della candidata'}).click();await panel.locator('[data-realization="7-3-5-x-5-x"]').click();
+ if(mode==='guitar'){
+  await expect(page.getByTestId('greene-bass-check')).toContainText('Collisione');await expect(panel.getByRole('button',{name:'Usa questa posizione'})).toBeDisabled();
+  await panel.getByRole('tab',{name:'Disposizioni sistematiche',exact:true}).click();await panel.getByRole('button',{name:/Disposizione 1/}).click();await panel.getByRole('button',{name:'Cerca posizioni della candidata'}).click();await panel.locator('[data-realization="x-3-5-x-0-0"]').click();
+ }
+ await root(page).selectOption('9');await expect(page.getByTestId('bass-sound')).toHaveAttribute('data-bass',originalBass);await expect(pitches(page)).toHaveAttribute('data-pitches',beforePitches);
+ await panel.getByRole('button',{name:'Usa questa posizione'}).click();await expect(frets(page)).toHaveText(mode==='guitar'?'× · 3 · 5 · × · 0 · 0':'7 · 3 · 5 · × · 5 · ×');await expect(page.getByTestId('bass-sound')).toHaveAttribute('data-bass',originalBass);
+ await panel.getByRole('button',{name:'Ripristina originale'}).click();await expect(frets(page)).toHaveText('× · 3 · 5 · 4 · 5 · ×');await expect(pitches(page)).toHaveAttribute('data-pitches',beforePitches);await expect(page.getByTestId('bass-sound')).toHaveAttribute('data-bass',originalBass);
+ if(mode==='guitar'){await page.getByRole('combobox',{name:'Corda 6',exact:true}).selectOption('7');await expect(page.getByRole('alert')).toContainText('Collisione');await expect(frets(page)).toHaveText('× · 3 · 5 · 4 · 5 · ×');}
+ await bass.getByRole('button',{name:'Rimuovi basso'}).click();await expect(page.getByTestId('bass-sound')).toHaveCount(0);await expect(frets(page)).toHaveText('× · 3 · 5 · 4 · 5 · ×');
+});
