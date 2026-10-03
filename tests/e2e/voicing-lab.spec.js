@@ -181,7 +181,7 @@ const greeneCases=[
  {name:'C',frets:['x','3','5','4','5','x'],candidate:'48,55,59,76',result:'8-10-9-x-x-12',group:'V-9',procedure:'v2-v9-s-up'},
  {name:'D',frets:['x','7','5','5','x','7'],candidate:'40,55,60,71',result:'0-x-5-5-x-7',group:'V-12',procedure:'v3-v12-b-down'}
 ];
-for(const width of [1440,390])for(const c of greeneCases) {
+for(const width of [1440,390,320])for(const c of greeneCases) {
  test(`Greene ${c.name} comparison, explicit application and exact restore at ${width}px`,async({page})=> {
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.setViewportSize({width,height:1000});await page.goto('/tools/voicing-lab');
@@ -209,7 +209,7 @@ for(const width of [1440,390])for(const c of greeneCases) {
   if(c.name==='B')await expect(panel.locator('[data-voice="A"]')).toContainText('B · Basso');
   if(c.name==='C'){await panel.getByText('Dettagli del confronto',{exact:true}).click();await expect(panel.locator('.vl-comparison')).toContainText('Metodo 1');}
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-  if(width===390) {
+  if(width<=390) {
    expect(await panel.locator('.vl-movements-scroll').evaluate(el=>el.scrollWidth<=el.clientWidth)).toBe(true);
    await expect(panel.locator('[data-voice="A"] [data-label="Ruolo risultante"]')).toBeVisible();
   }
@@ -279,7 +279,7 @@ async function openBass(page,name,octave,mode='separate') {
  await bass.getByRole('combobox',{name:'Ottava del basso',exact:true}).selectOption(String(octave));
  await bass.getByRole('combobox',{name:'Realizzazione del basso',exact:true}).selectOption(mode);return bass;
 }
-for(const width of [1440,390])for(const example of ['A','D','unavailable','duplicate'])test(`external bass ${example} exact lifecycle at ${width}px`,async({page})=>{
+for(const width of [1440,390,320])for(const example of ['A','D','unavailable','duplicate'])test(`external bass ${example} exact lifecycle at ${width}px`,async({page})=>{
  await page.setViewportSize({width,height:1000});await page.goto('/tools/voicing-lab');
  if(example==='D')for(const [i,f] of ['x','3','4','3','4','x'].entries())await page.getByRole('combobox',{name:`Corda ${6-i}`,exact:true}).selectOption(f);
  const originalFrets=await frets(page).textContent(),originalPitches=await pitches(page).getAttribute('data-pitches'),originalStrings=await pitches(page).getAttribute('data-strings');
@@ -322,4 +322,92 @@ for(const mode of ['separate','guitar'])test(`Greene snapshots include external 
  await panel.getByRole('button',{name:'Ripristina originale'}).click();await expect(frets(page)).toHaveText('× · 3 · 5 · 4 · 5 · ×');await expect(pitches(page)).toHaveAttribute('data-pitches',beforePitches);await expect(page.getByTestId('bass-sound')).toHaveAttribute('data-bass',originalBass);
  if(mode==='guitar'){await page.getByRole('combobox',{name:'Corda 6',exact:true}).selectOption('7');await expect(page.getByRole('alert')).toContainText('Collisione');await expect(frets(page)).toHaveText('× · 3 · 5 · 4 · 5 · ×');}
  await bass.getByRole('button',{name:'Rimuovi basso'}).click();await expect(page.getByTestId('bass-sound')).toHaveCount(0);await expect(frets(page)).toHaveText('× · 3 · 5 · 4 · 5 · ×');
+});
+
+for(const width of [1440,390,320])test(`modal panel and Greene invariance ${width}`,async({page})=>{
+ await page.setViewportSize({width,height:1000});await page.goto('/tools/voicing-lab');
+ const modal=page.getByTestId('modal-panel');await modal.locator(':scope>summary').click();
+ await expect(modal).toContainText('Scegli esplicitamente un centro');
+ const center=modal.getByRole('combobox',{name:'Centro modale',exact:true});await center.selectOption('C');
+ const results=page.getByTestId('modal-results');await expect(results).toHaveAttribute('data-complete','MAJ-I,MAJ-IV,HM-VI');
+ await results.locator('[data-mode="MAJ-IV"]>summary').click();await expect(results).toContainText('F♯');
+ await page.getByRole('button',{name:'Am7 / C6'}).click();await center.selectOption('A');await expect(results).toHaveAttribute('data-complete','MAJ-II,MAJ-III,MAJ-VI,MM-II,HM-IV');
+ await page.getByRole('button',{name:'Cø7 / A♭9'}).click();await center.selectOption('C');await expect(results).toHaveAttribute('data-complete','MAJ-VII,MM-VI,MM-VII,HM-II,HM-IV');
+ await results.locator('[data-mode="HM-IV"]>summary').click();await expect(results).toContainText('G♭ e F♯ sono la stessa altezza');
+ await expect(pitches(page)).toContainText('G♭3');
+ const original=await frets(page).textContent();
+ for(const c of ['A','F♯','G♭','C']){await center.selectOption(c);await expect(frets(page)).toHaveText(original);await expect(pitches(page)).toHaveAttribute('data-pitches','48,54,58,63');}
+ await root(page).selectOption('2');await expect(results).toHaveAttribute('data-complete','MAJ-VII,MM-VI,MM-VII,HM-II,HM-IV');
+ await root(page).selectOption('0');
+ await results.getByRole('button',{name:/Affinità parziali/}).click();await expect(results.locator('[data-mode]')).toHaveCount(16);await expect(results.locator('[data-mode]').first()).toContainText('Fuori scala:');
+ await results.getByRole('button',{name:/^Compatibili/}).click();
+ await modal.getByLabel('Maggiore',{exact:true}).uncheck();await expect(results).toHaveAttribute('data-complete','MM-VI,MM-VII,HM-II,HM-IV');await modal.getByLabel('Maggiore',{exact:true}).check();
+ await mkdir(previewDir,{recursive:true});await results.locator('[data-mode="HM-IV"]>summary').click();
+ await modal.screenshot({path:`${previewDir}/modal-final-${width}.png`,style:'.platform-nav{visibility:hidden}'});
+ await results.locator('[data-mode="HM-IV"]>summary').click();
+ await page.locator('.vl-workspace').screenshot({path:`${previewDir}/modal-workspace-${width}.png`,style:'.platform-nav{visibility:hidden}'});
+ await page.getByRole('button',{name:'Cmaj7 / Am9'}).click();await center.selectOption('C');
+ await page.getByRole('combobox',{name:'Approccio',exact:true}).selectOption('greene');
+ const greene=page.getByTestId('greene-panel');await greene.locator(':scope>summary').click();await greene.getByRole('button',{name:/Disposizione 2/}).click();
+ const candidate=await page.getByTestId('greene-candidate-pitches').getAttribute('data-pitches');
+ await center.selectOption('A');await center.selectOption('C');await expect(page.getByTestId('greene-candidate-pitches')).toHaveAttribute('data-pitches',candidate);
+ const comparison=page.getByTestId('modal-comparison');await comparison.locator(':scope>summary').click();await expect(comparison).toContainText('Compatibilità identiche');
+ await comparison.getByText('Originale · 3 compatibili',{exact:true}).click();await comparison.getByText('Candidata teorica · 3 compatibili',{exact:true}).click();
+ await expect(page.getByTestId('modal-original-results')).toHaveAttribute('data-complete','MAJ-I,MAJ-IV,HM-VI');await expect(page.getByTestId('modal-candidate-results')).toHaveAttribute('data-complete','MAJ-I,MAJ-IV,HM-VI');
+ await comparison.screenshot({path:`${previewDir}/modal-greene-${width}.png`,style:'.platform-nav{visibility:hidden}'});
+ await greene.getByRole('button',{name:'Cerca posizioni della candidata'}).click();await greene.locator('[data-realization]').first().click();await expect(frets(page)).toHaveText('× · 3 · 5 · 4 · 5 · ×');
+ await greene.getByRole('button',{name:'Usa questa posizione',exact:true}).click();await expect(page.getByTestId('modal-results')).toHaveAttribute('data-complete','MAJ-I,MAJ-IV,HM-VI');await greene.getByRole('button',{name:'Ripristina originale'}).click();await expect(pitches(page)).toHaveAttribute('data-pitches','48,55,59,64');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+});
+
+test('modal bass additions, zero results and preserved physical state',async({page})=>{
+ await page.goto('/tools/voicing-lab');const modal=page.getByTestId('modal-panel');await modal.locator(':scope>summary').click();await modal.getByRole('combobox',{name:'Centro modale'}).selectOption('C');
+ const bass=page.getByTestId('bass-panel');await bass.locator(':scope>summary').click();await bass.getByRole('combobox',{name:'Nota del basso',exact:true}).selectOption('B♭');await bass.getByRole('combobox',{name:'Ottava del basso',exact:true}).selectOption('2');await bass.getByRole('button',{name:'Aggiungi questo basso'}).click();
+ await expect(page.getByTestId('modal-results')).toHaveAttribute('data-complete','');await expect(modal).toContainText('Nessuna compatibilità completa');
+ const state=await page.getByTestId('bass-sound').getAttribute('data-bass');
+ await modal.getByRole('combobox',{name:'Centro modale'}).selectOption('A');await expect(page.getByTestId('bass-sound')).toHaveAttribute('data-bass',state);await expect(pitches(page)).toHaveAttribute('data-pitches','48,55,59,64');
+ await bass.getByRole('button',{name:'Rimuovi basso'}).click();await modal.getByRole('combobox',{name:'Centro modale'}).selectOption('C');await expect(page.getByTestId('modal-results')).toHaveAttribute('data-complete','MAJ-I,MAJ-IV,HM-VI');
+});
+
+for(const width of [1440,390,320])test(`final integrated journey, keyboard focus and scrolling ${width}`,async({page})=>{
+ await page.setViewportSize({width,height:1000});await page.goto('/tools/voicing-lab');
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const noOverflow=async()=>expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ const modal=page.getByTestId('modal-panel');await modal.locator(':scope>summary').click();const center=modal.getByRole('combobox',{name:'Centro modale'});await center.selectOption('C');
+ await page.getByRole('combobox',{name:'Corda 6',exact:true}).selectOption('0');await page.getByTestId('modal-results').locator('[data-mode="MAJ-I"]>summary').click();
+ await expect(modal).toContainText('nota 5');await expect(modal).not.toContainText('undefined');await expect(page.getByTestId('v-group')).toContainText('V non assegnato');
+ for(const [i,f] of ['x','3','5','4','5','x'].entries())await page.getByRole('combobox',{name:`Corda ${6-i}`,exact:true}).selectOption(f);
+ const initialFrets=await frets(page).textContent(),initialPitches=await pitches(page).getAttribute('data-pitches');
+ await root(page).selectOption('2');await expect(frets(page)).toHaveText(initialFrets);await expect(pitches(page)).toHaveAttribute('data-pitches',initialPitches);await expect(center).toHaveValue('C');await noOverflow();
+ const board=page.locator('.vl-board-scroll');await board.focus();await board.press('ArrowRight');await expect.poll(()=>board.evaluate(el=>el.scrollLeft)).toBeGreaterThan(0);
+ await expect(board).toBeFocused();expect(await board.evaluate(el=>getComputedStyle(el).outlineStyle)).toBe('solid');
+ const highFret=page.getByRole('button',{name:'Corda 1, tasto 24, E6',exact:true});await highFret.focus();await expect(highFret).toBeFocused();
+ expect(await highFret.evaluate(el=>{const r=el.getBoundingClientRect(),b=el.closest('.vl-board-scroll').getBoundingClientRect();return r.left>=b.left&&r.right<=b.right;})).toBe(true);
+ await highFret.press('Enter');await expect(pitches(page)).toHaveAttribute('data-pitches','48,55,59,64,88');await highFret.press('Enter');await expect(pitches(page)).toHaveAttribute('data-pitches',initialPitches);await noOverflow();
+ await page.getByRole('button',{name:'Conserva nelle ricerche'}).click();await page.getByRole('tab',{name:'Costruisci',exact:true}).click();await page.getByRole('combobox',{name:'Close iniziale'}).selectOption('0');await page.getByRole('combobox',{name:'Ottava della fondamentale'}).selectOption('4');await page.getByRole('combobox',{name:'Trasformazione'}).selectOption('close');await expect(page.getByTestId('theory-pitches')).toHaveText('D4 — F♯4 — A4 — C♯5');
+ await page.getByRole('combobox',{name:'Trasformazione'}).selectOption('drop23');await expect(page.getByTestId('theory-pitches')).toHaveText('F♯3 — A3 — D4 — C♯5');await page.getByRole('button',{name:'Cerca queste altezze'}).click();await expect(frets(page)).toHaveText(initialFrets);await noOverflow();
+ await page.getByRole('tab',{name:'Analizza una posizione',exact:true}).click();await root(page).selectOption('0');
+ const bass=await openBass(page,'A',2,'guitar');await bass.getByRole('button',{name:'Cerca basso sulle corde inutilizzate'}).click();await bass.locator('[data-bass-string="6"]').click();await bass.getByRole('button',{name:'Aggiungi questo basso'}).click();const bassState=await page.getByTestId('bass-sound').getAttribute('data-bass');
+ await expect(page.locator('.vl-analysis>.vl-reading')).toContainText('Cmaj7 completo sopra un basso A, esterno alla formula');await expect(page.getByTestId('v-group')).toHaveText('V-2 · 1 / 0 / 1');
+ await page.getByRole('combobox',{name:'Corda 6',exact:true}).selectOption('7');await expect(page.getByRole('alert')).toContainText('Collisione');await expect(frets(page)).toHaveText(initialFrets);
+ await page.getByRole('combobox',{name:'Approccio',exact:true}).selectOption('greene');const greene=page.getByTestId('greene-panel');await greene.locator(':scope>summary').click();await greene.getByRole('tab',{name:'Conversioni',exact:true}).click();await greene.locator('[data-procedure="v2-v3-a-down"]').click();await greene.getByRole('combobox',{name:'Corde della candidata'}).selectOption('all');await greene.getByRole('button',{name:'Cerca posizioni della candidata'}).click();await greene.locator('[data-realization="7-3-5-x-5-x"]').click();await expect(greene.getByRole('button',{name:'Usa questa posizione'})).toBeDisabled();await expect(page.getByTestId('greene-bass-check')).toContainText('Collisione');
+ const comparison=page.getByTestId('modal-comparison');await comparison.locator(':scope>summary').click();await comparison.getByText('Originale · 3 compatibili',{exact:true}).click();await comparison.getByText('Candidata teorica · 3 compatibili',{exact:true}).click();
+ for(const testId of ['modal-original-results','modal-candidate-results']){const result=page.getByTestId(testId);await expect(result).toHaveAttribute('data-complete','MAJ-I,MAJ-IV,HM-VI');await result.getByRole('button',{name:/Affinità parziali/}).click();await expect(result.locator('[data-mode]').first()).toContainText('Fuori scala:');await result.getByRole('button',{name:/^Compatibili/}).click();}
+ await center.selectOption('A');await root(page).selectOption('9');await expect(page.getByTestId('greene-candidate-pitches')).toHaveAttribute('data-pitches','47,48,55,64');await expect(frets(page)).toHaveText(initialFrets);await expect(page.getByTestId('bass-sound')).toHaveAttribute('data-bass',bassState);await center.selectOption('C');await root(page).selectOption('0');await noOverflow();
+ await greene.locator('.vl-comparison-columns').screenshot({path:`${previewDir}/review-comparison-${width}.png`,style:'.platform-nav{visibility:hidden}'});
+ await greene.getByRole('tab',{name:'Disposizioni sistematiche',exact:true}).click();await greene.getByRole('button',{name:/Disposizione 1/}).click();await comparison.locator(':scope>summary').click();await expect(comparison).toContainText('Compatibilità identiche; stesse altezze');
+ await greene.getByRole('button',{name:'Cerca posizioni della candidata'}).click();await greene.locator('[data-realization="x-3-5-x-0-0"]').click();await greene.getByRole('button',{name:'Usa questa posizione'}).click();await expect(frets(page)).toHaveText('× · 3 · 5 · × · 0 · 0');await expect(greene.getByRole('button',{name:'Ripristina originale'})).toBeFocused();await greene.getByRole('button',{name:'Ripristina originale'}).press('Enter');await expect(frets(page)).toBeFocused();await expect(frets(page)).toHaveText(initialFrets);await expect(pitches(page)).toHaveAttribute('data-pitches',initialPitches);await expect(page.getByTestId('bass-sound')).toHaveAttribute('data-bass',bassState);await expect(center).toHaveValue('C');
+ await board.evaluate(el=>{el.scrollLeft=0;});
+ const restoredClip=await page.locator('.vl-workspace').evaluate(el=>{const a=el.querySelector('.vl-position-head').getBoundingClientRect(),b=el.querySelector('[data-testid="bass-sound"]').getBoundingClientRect();return {x:a.x+scrollX,y:a.y+scrollY,width:a.width,height:b.bottom-a.top+15};});await page.screenshot({path:`${previewDir}/review-restored-with-bass-${width}.png`,fullPage:true,clip:restoredClip,style:'.platform-nav{visibility:hidden}'});
+ await bass.getByRole('button',{name:'Rimuovi basso'}).click();await expect(bass.getByRole('combobox',{name:'Nota del basso',exact:true})).toBeFocused();await expect(page.getByTestId('bass-sound')).toHaveCount(0);await bass.getByRole('combobox',{name:'Ottava del basso'}).selectOption('4');await expect(bass.getByRole('button',{name:'Aggiungi questo basso'})).toBeDisabled();await expect(bass).toContainText('deve essere sotto');
+ await bass.locator(':scope>summary').click();await greene.locator(':scope>summary').click();await page.getByTestId('modal-results').locator('[data-mode="MAJ-I"]>summary').click();await page.getByTestId('modal-results').locator('[data-mode="MAJ-I"]>summary').press('Tab');expect(await page.evaluate(()=>document.activeElement.tagName)).toBe('A');await noOverflow();
+ await modal.screenshot({path:`${previewDir}/review-modal-${width}.png`,style:'.platform-nav{visibility:hidden}'});
+ await page.getByTestId('modal-results').locator('[data-mode="MAJ-I"]>summary').click();
+ await page.evaluate(()=>{const el=document.querySelector('.vl-board-scroll');el.scrollLeft=0;window.scrollTo(0,0);});
+ const clip=await page.locator('.vl-workspace').evaluate(el=>{const a=el.querySelector('.vl-position-head').getBoundingClientRect(),b=el.querySelector('.vl-position-meta').getBoundingClientRect();return {x:a.x+scrollX,y:a.y+scrollY,width:a.width,height:b.bottom-a.top+15};});await page.screenshot({path:`${previewDir}/review-restored-${width}.png`,fullPage:true,clip,style:'.platform-nav{visibility:hidden}'});
+ expect(errors).toEqual([]);
+});
+test('enharmonic half-diminished explanation is not assigned to unrelated positions',async({page})=>{
+ await page.goto('/tools/voicing-lab');for(const [i,f]of ['x','3','0','x','7','5'].entries())await page.getByRole('combobox',{name:`Corda ${6-i}`,exact:true}).selectOption(f);
+ const modal=page.getByTestId('modal-panel');await modal.locator(':scope>summary').click();await modal.getByRole('combobox',{name:'Centro modale'}).selectOption('C');await page.getByTestId('modal-results').locator('[data-mode="HM-IV"]>summary').click();await expect(modal).not.toContainText('lettura armonica Cø7');await expect(pitches(page)).toHaveAttribute('data-pitches','48,50,66,69');
 });

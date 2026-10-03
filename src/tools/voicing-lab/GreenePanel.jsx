@@ -3,6 +3,8 @@ import { positionsFromFrets, orderedNotes, noteName, analyze, findExactPositions
 import {validateBass,bassCompatibility,physicalFrets} from './bass.js';
 import { CONVERSIONS, INACTIVE_PROCEDURES, ROLE_NAMES, systematicDispositions, applyConversion, SYSTEMATIC_SOURCE } from './greene.js';
 
+import {ModalComparison} from './ModalPanel.jsx';
+
 const fretLabel=frets=>frets.map(f=>f??'×').join(' · ');
 function namesFor(pitches,root) {
  const degrees=analyze(pitches,root).selected.degrees;
@@ -28,7 +30,7 @@ function ProcedureDetails({procedure}) {
   <p>{procedure.condition}</p><a href={procedure.source.url} target="_blank" rel="noreferrer">{procedure.source.title} · {procedure.source.location}</a>
  </details>;
 }
-export default function GreenePanel({frets,root,bass=null,onApply}) {
+export default function GreenePanel({frets,root,bass=null,center='',families,onRestoreFocus,onApply}) {
  const [tab,setTab]=useState('systematic');
  const [direction,setDirection]=useState(1);
  const [sopranoFilter,setSopranoFilter]=useState('all');
@@ -39,6 +41,10 @@ export default function GreenePanel({frets,root,bass=null,onApply}) {
  const [maxFret,setMaxFret]=useState(24);
  const [maxSpan,setMaxSpan]=useState(5);
  const ownedChange=useRef(null);
+ const restoreButton=useRef(null);
+ const focusRestored=useRef(false);
+ useEffect(()=>{if(session?.applied)restoreButton.current?.focus();},[session?.applied]);
+ useEffect(()=>{if(!session&&focusRestored.current){focusRestored.current=false;onRestoreFocus?.();}},[session,onRestoreFocus]);
  const originalKey=JSON.stringify({frets,bass});
  useEffect(()=>{
   const owned=ownedChange.current===originalKey;
@@ -68,7 +74,7 @@ export default function GreenePanel({frets,root,bass=null,onApply}) {
  function restoreOriginal() {
   if(!restore)return;
   const previous=[...restore.frets];ownedChange.current=JSON.stringify({frets:previous,bass:restore.bass});
-  setSession(null);setRestore(null);onApply(previous,restore.bass);
+  focusRestored.current=true;setSession(null);setRestore(null);onApply(previous,restore.bass);
  }
  const candidate=session?.candidate;
  const bassCheck=candidate?bassCompatibility(session.realization?.frets??session.originFrets,session.originBass,candidate.pitches):{valid:true};
@@ -90,7 +96,7 @@ export default function GreenePanel({frets,root,bass=null,onApply}) {
   </>}
   {candidate&&<section className="vl-comparison" aria-label="Confronto originale e candidata">
    <div className="vl-section-title"><h3>{candidate.description}</h3><span>{candidate.sopranoFixed?'Soprano conservato':'Soprano cambiato'}</span></div>
-   {session.originBass&&<p className="vl-bass-sound" data-testid="greene-bass-check">Basso conservato: {session.originBass.name}{session.originBass.octave} · {session.originBass.mode==='separate'?'accompagnamento separato':`corda ${session.originBass.stringNumber}, tasto ${session.originBass.fret}`} · Registro: {bassCheck.registerValid?'compatibile':'non valido'}. Corda: {session.originBass.mode==='separate'?'non richiesta':!session.realization?'da verificare':bassCheck.stringValid?'disponibile':'occupata o non valida'}. {!bassCheck.valid&&bassCheck.reason}{!session.realization&&' · disponibilità finale da verificare sulla realizzazione'}</p>}
+   {session.originBass&&<p className="vl-bass-sound" data-testid="greene-bass-check">Basso conservato: {session.originBass.name}{session.originBass.octave} · {session.originBass.mode==='separate'?'accompagnamento separato':`corda ${session.originBass.stringNumber}, tasto ${session.originBass.fret}`} · Registro: {bassCheck.registerValid?'compatibile':'non valido'}. Corda: {session.originBass.mode==='separate'?'non richiesta':!session.realization?'da verificare':bassCheck.stringValid?'disponibile':'occupata o non valida'}. {!bassCheck.valid&&bassCheck.reason}</p>}
    {session.originBass?.mode==='guitar'&&session.realization&&bassCheck.valid&&<p className="vl-help">Insieme candidato sulla chitarra, basso incluso: {fretLabel(physicalFrets(session.realization.frets,session.originBass))}. Gruppo V riferito alle sole quattro voci.</p>}
    <div className="vl-comparison-columns">
     <article><p className="vl-eyebrow">{session.applied?'ORIGINALE PRECEDENTE':'ORIGINALE'}</p><h4 data-testid="compare-original-frets">{fretLabel(session.originFrets)}</h4><PositionDiagram frets={session.originFrets} root={root} label="Originale"/><p data-testid="compare-original-pitches">{originalPositions.map(p=>originalNames.get(p.midi)).join(' · ')}</p><small>{classifyV(originalPositions.map(p=>p.midi)).group}</small></article>
@@ -98,11 +104,12 @@ export default function GreenePanel({frets,root,bass=null,onApply}) {
    </div>
    <div className="vl-movements-scroll"><table className="vl-movements"><caption>Identità originali → ruoli risultanti, dopo il riordino</caption><thead><tr><th>Voce originale</th><th>Nota iniziale</th><th>Nota finale</th><th>Semitoni</th><th>Ruolo risultante</th><th>Corde</th></tr></thead><tbody>{['B','T','A','S'].map(id=>{const voice=candidate.voices.find(v=>v.id===id);const resultString=session.realization?.positions.find(p=>p.midi===voice.midi)?.stringNumber;return <tr key={id} data-voice={id}><th>{id} · {ROLE_NAMES[id]}</th><td data-label="Nota iniziale">{originalNames.get(voice.sourceMidi)}</td><td data-label="Nota finale">{candidateNames.get(voice.midi)}</td><td data-label="Semitoni">{voice.delta>0?'+':''}{voice.delta}</td><td data-label="Ruolo risultante">{voice.resultRole} · {ROLE_NAMES[voice.resultRole]}</td><td data-label="Corde">{voice.sourceString??'—'} → {resultString??'—'}</td></tr>;})}</tbody></table></div>
    <details className="vl-procedure-details"><summary>Dettagli del confronto</summary><p>Originale e candidata sono indipendenti. Il soprano viene confrontato per altezza effettiva. Le voci mantengono l’identità iniziale, anche quando cambia il ruolo dopo il riordino.</p><a href={candidate.source.url} target="_blank" rel="noreferrer">{candidate.source.title} · {candidate.source.location}</a>{candidate.procedure&&<><p>Provenienza: {candidate.procedure.provenance}. Teoria: {candidate.procedure.theoryVerification}.</p><p>Condizione della fonte: {candidate.procedure.condition}</p><p>{candidate.procedure.guitarVerification}. Le posizioni cercate sono realizzazioni software, non percorsi sulle corde attribuiti a Greene.</p></>}</details>
+   <ModalComparison original={originalPositions} candidate={candidate.voices} bass={session.originBass} center={center} families={families}/>
    <fieldset className="vl-greene-search"><legend>Ricerca delle altezze esatte</legend><label className="vl-field"><span>Corde della candidata</span><select value={scope} onChange={e=>setScope(e.target.value)}><option value="original">Solo corde originali</option><option value="all">Tutte le corde · ricerca software</option></select></label><div className="vl-pair"><label className="vl-field"><span>Tasto minimo candidata</span><input type="number" min="0" max="24" value={minFret} onChange={e=>setMinFret(Number(e.target.value))}/></label><label className="vl-field"><span>Tasto massimo candidata</span><input type="number" min="0" max="24" value={maxFret} onChange={e=>setMaxFret(Number(e.target.value))}/></label></div><label className="vl-field"><span>Apertura massima candidata</span><input type="number" min="0" max="24" value={maxSpan} onChange={e=>setMaxSpan(Number(e.target.value))}/></label><button disabled={minFret>maxFret||minFret<0||maxFret>24||maxSpan<0||maxSpan>24||![minFret,maxFret,maxSpan].every(Number.isInteger)} onClick={searchPositions}>Cerca posizioni della candidata</button></fieldset>
    {session.search&&<><p role="status">{session.search.results.length} posizioni trovate{stale?' · Filtri cambiati: cerca di nuovo.':''}</p>{session.search.results.length===0?<p className="vl-help">{session.search.scope==='original'?'Nessuna sulle corde originali entro i filtri. Puoi scegliere esplicitamente tutte le corde.':'Nessuna posizione nei filtri. La candidata resta teorica.'}</p>:<div className="vl-results vl-greene-results">{session.search.results.map(result=><button key={result.id} data-realization={result.id} disabled={Boolean(stale)} aria-pressed={session.realization?.id===result.id} onClick={()=>setSession({...session,realization:result})}><strong>{fretLabel(result.frets)}</strong><small>Stima {result.difficulty.label.toLowerCase()} · apertura {result.difficulty.span}</small><span>Seleziona realizzazione</span></button>)}</div>}</>}
-   <div className="vl-comparison-actions"><button className="vl-primary" disabled={!session.realization||Boolean(stale)||session.applied||!bassCheck.valid} onClick={apply}>Usa questa posizione</button>{restore&&<button onClick={restoreOriginal}>Ripristina originale</button>}</div>
+   <div className="vl-comparison-actions"><button className="vl-primary" disabled={!session.realization||Boolean(stale)||session.applied||!bassCheck.valid} onClick={apply}>Usa questa posizione</button>{restore&&<button ref={restoreButton} onClick={restoreOriginal}>Ripristina originale</button>}</div>
    {session.applied&&<p role="status">Posizione applicata tramite comando esplicito.</p>}
   </section>}
-  {!candidate&&restore&&<button onClick={restoreOriginal}>Ripristina originale</button>}
+  {!candidate&&restore&&<button ref={restoreButton} onClick={restoreOriginal}>Ripristina originale</button>}
  </details>;
 }

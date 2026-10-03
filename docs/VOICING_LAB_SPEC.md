@@ -1,5 +1,7 @@
 # Voicing Lab — specifica musicale e interfaccia
 
+Stato attuale: Greene, basso esterno e compatibilità modali sono implementati localmente. Le sezioni iniziali conservano la specifica della prima versione; gli aggiornamenti di fase in fondo descrivono il comportamento corrente.
+
 Riferimento grafico: commit approvato e pubblicato `3cf7f86`. La prima versione è locale, senza modifiche agli altri strumenti e senza pubblicazione. Questa specifica conserva anche le fasi successive approvate.
 
 ## Principi e precisazioni approvate
@@ -202,3 +204,25 @@ Greene: verifiche distinte di registro del basso e disponibilità/assegnazione e
 Verifiche: 19 test musicali e 27 test browser passano. Inclusi i quattro esempi della proposta su desktop 1440 e mobile 390, aggiunta/rimozione esplicite, Cmaj7/A e Am9, D alterato con quinta omessa, D2 non raggiungibile sulle corde, C2 raddoppiato, bassi uguali/superiori e input non validi, ricerca su corde mute e corde aperte, collisioni Greene, registro incompatibile e ripristino di entrambi i tipi di basso. Passano le precedenti verifiche esaustive di drop e V-System. Controllo diretto nell'anteprima: A2 sulla corda 6, C→A→C, collisione V-2→V-3, applicazione della disposizione V-2 su corde compatibili e ripristino esatto di posizione e basso.
 
 Limiti: quattro note originali, accordatura standard, una nota per corda, tasti 0–24; basso separato con ottave 0–8. Dizionario armonico circoscritto; struttura intervallare dove manca una sigla utile. Difficoltà geometrica, con penalizzazione di cinque note premute, senza certificazione di diteggiatura. I percorsi originali sulle corde di Greene, +24 e scambi restano non attivati; compatibilità modali, monetizzazione e assistente AI non implementati. Nessun nuovo commit né pubblicazione, nessun sorgente degli altri strumenti modificato.
+
+## Compatibilità modali — implementazione locale, 3 ottobre 2026
+
+Pannello richiudibile, inizialmente chiuso; centro esplicito inizialmente assente, indipendente dalla fondamentale. Le tre famiglie sono selezionate inizialmente: 21 formule in ordine famiglia/grado, senza graduatoria o selezione automatica. Minore melodica ascendente invariata anche nell'esplorazione discendente (convenzione jazz dichiarata). Catalogo, nomenclatura e fonti: `VOICING_LAB_MODAL_PROPOSAL.md`.
+
+Il motore legge tutte le classi sonore delle quattro voci e del basso applicato; conserva registro, corde/tasti e provenienza nei record fisici. Compatibilità complete solo quando ogni classe è inclusa nella scala; non implica sette gradi suonati, funzione o modo unico. Affinità in vista separata, con almeno una classe condivisa e una esterna, nominate esplicitamente; esclusi risultati senza intersezione.
+
+Grafia modale autonoma: sette lettere consecutive, alterazioni anche doppie e ottava corretta per C♭/B♯. La grafia armonica non cambia. Cø7 sul centro C è compatibile con il dorico ♯4: G♭/F♯ identici come altezza, diversi come ruolo. Formula, scala madre, gradi reali, provenienze, caratteristiche, discriminanti assenti e fonte sono nei dettagli. Discriminanti: note non suonate della scala selezionata assenti da almeno una delle altre scale completamente compatibili; non sono una graduatoria o note da aggiungere.
+
+Confronto Greene: centro/famiglie comuni, due analisi dei record separati, originale snapshot (basso incluso) e candidata teorica. La candidata senza realizzazione o con basso fisicamente non valido è comunque analizzabile, con verifica fisica separata. Cambio del centro/famiglie/dettagli non invalida candidata o ricerca; applicazione/ripristino continuano a essere espliciti. Ottave differenti a classi e basso costanti restituiscono gli stessi ID.
+
+Limiti: dodici classi temperate, tre famiglie; esclusi contesto temporale, funzione, altri cataloghi, audio e valutazione stilistica. La legenda della maggiore segue la fonte didattica; le caratteristiche delle due famiglie minori sono una scelta editoriale dichiarata sulle formule documentate.
+
+## Revisione finale prima del salvataggio modale
+
+Percorsi integrati su desktop 1440, mobile 390 e 320: inserimento manuale, reinterpretazione, close/drop e ricerca conservata; Greene con selezione, ricerca, collisione del basso, confronto modale separato, applicazione e ripristino di corde/tasti/altezze/basso; aggiunta/rimozione e basso fuori registro; viste complete/parziali, famiglie e dettagli. Tastiera scorre internamente, focus evidente, tasto 24 raggiungibile da tastiera e attivabile con Enter, nessun overflow orizzontale della pagina. Catture `review-{comparison,modal,restored}-{1440,390,320}.png` in `/tmp/voicing-lab-preview`.
+
+Correzioni concrete: in analisi modale di cardinalità diversa da quattro, etichette «nota N» senza forzare B/T/A/S; nessuna voce undefined. Confronto con identiche altezze dichiarato come tale, senza dire «disposizione diversa»; nessun basso dichiarato incluso quando assente. Descrizione della compatibilità come criterio, non come affermazione di appartenenza quando non ci sono risultati. Rimossa la doppia spiegazione della disponibilità del basso da verificare e la ripetizione del motivo V non assegnato nell'approccio Greene. Dopo «Usa questa posizione», focus su «Ripristina originale»; dopo ripristino, focus sulla posizione aggiornata; dopo rimozione del basso, focus sul suo selettore di nota.
+
+Non ampliate famiglie, registri, conversioni o funzionalità degli altri strumenti. Conservate le priorità della roadmap; proposta separata per tastiera di Set-class Explorer, non implementata.
+
+La spiegazione G♭/F♯ per Cø7 e dorico ♯4 è condizionata alle quattro classi originali di Cø7, non alla sola presenza di F♯ nel suono.

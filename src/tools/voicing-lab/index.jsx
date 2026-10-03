@@ -1,8 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { STANDARD_TUNING, ROOTS, DROP_TYPES, QUALITIES, V_GROUPS, SOURCES, EXAMPLES, positionsFromFrets, orderedNotes, noteName, constructionNoteName, buildCloseDispositions, applyDrop, classifyV, findExactPositions, estimateDifficulty, parseStructure, analyze } from './music.js';
 import './styles.css';
 import GreenePanel from './GreenePanel.jsx';
 import BassPanel from './BassPanel.jsx';
+import ModalPanel from './ModalPanel.jsx';
+import {FAMILIES} from './modal.js';
 import {validateBass,physicalFrets,soundingPitches,analyzeWithBass} from './bass.js';
 
 function Field({label,children}) { return <label className="vl-field"><span>{label}</span>{children}</label>; }
@@ -40,11 +42,14 @@ function Fretboard({frets,onChange,root,degrees,showDegrees,bass}) {
   </div>;
 }
 export default function VoicingLab() {
+  const positionHeading=useRef(null);
   const [mode,setMode]=useState('analyze');
   const [approach,setApproach]=useState('general');
   const [frets,setFrets]=useState([...EXAMPLES[0].frets]);
   const [root,setRoot]=useState(0);
   const [bass,setBass]=useState(null);
+  const [modalCenter,setModalCenter]=useState('');
+  const [modalFamilies,setModalFamilies]=useState(FAMILIES.map(f=>f.id));
   const [physicalError,setPhysicalError]=useState('');
   const [locked,setLocked]=useState(false);
   const [showDegrees,setShowDegrees]=useState(false);
@@ -116,7 +121,7 @@ export default function VoicingLab() {
         </>}
       </aside>
       <section className="vl-workspace" aria-label="Posizione e analisi">
-        <div className="vl-position-head"><div><p className="vl-eyebrow">{bass?'POSIZIONE ORIGINALE · QUATTRO VOCI':'POSIZIONE SULLA CHITARRA'}</p><h2 data-testid="position-frets">{frets.map(f=>f??'×').join(' · ')}</h2></div><button className={locked?'vl-lock active':'vl-lock'} aria-pressed={locked} onClick={()=>setLocked(!locked)}>{locked?'Posizione conservata':'Conserva nelle ricerche'}</button></div>
+        <div className="vl-position-head"><div><p className="vl-eyebrow">{bass?'POSIZIONE ORIGINALE · QUATTRO VOCI':'POSIZIONE SULLA CHITARRA'}</p><h2 ref={positionHeading} tabIndex={-1} data-testid="position-frets">{frets.map(f=>f??'×').join(' · ')}</h2></div><button className={locked?'vl-lock active':'vl-lock'} aria-pressed={locked} onClick={()=>setLocked(!locked)}>{locked?'Posizione conservata':'Conserva nelle ricerche'}</button></div>
         <div className="vl-board-options"><label><input type="checkbox" checked={showDegrees} onChange={e=>setShowDegrees(e.target.checked)}/> Mostra gradi</label><span>Una nota per corda · 0–24 tasti</span></div>
         <Fretboard bass={bass} frets={frets} onChange={edit} root={root} degrees={baseReading.degrees} showDegrees={showDegrees}/>
         <p className="vl-help vl-scroll-hint">Scorri la tastiera per raggiungere i tasti più alti.</p>
@@ -125,14 +130,15 @@ export default function VoicingLab() {
         <p className="vl-help">{difficulty.explanation}</p>
         {physicalError&&<p role="alert">{physicalError}</p>}
         {bass&&<div className="vl-bass-sound" data-testid="bass-sound" data-pitches={sound.join(',')} data-bass={JSON.stringify(bass)}><strong>＋ Basso aggiunto {bass.name}{bass.octave}</strong><p>{bass.mode==='separate'?'Accompagnamento separato':`Corda ${bass.stringNumber} · tasto ${bass.fret}`}</p><p>Posizione: {v.group??'V non assegnato'} · quattro voci originali. Insieme sonoro: {sound.length} note, {new Set(sound.map(p=>((p%12)+12)%12)).size} classi · basso reale {bass.name}{bass.octave}. Nessun gruppo V assegnato all’insieme completo.</p>{bass.mode==='guitar'&&<p>Insieme sulla chitarra: {physicalFrets(frets,bass).map(f=>f??'×').join(' · ')} · stima {estimateDifficulty(positionsFromFrets(physicalFrets(frets,bass))).label.toLowerCase()}; diteggiatura non verificata.</p>}</div>}
-        {v.reason&&<p className="vl-help">{v.reason}</p>}
+        {v.reason&&approach!=='greene'&&<p className="vl-help">{v.reason}</p>}
         {approach==='greene'&&<div className="vl-greene"><h3>Ted Greene — spaziatura delle voci</h3><p>{v.group?`${v.group}: i gap ${v.gaps.join(' / ')} contano le occorrenze delle quattro classi presenti fra basso–tenore, tenore–alto e alto–soprano.`:v.reason} La fondamentale interpretativa non entra nel calcolo.</p><p className="vl-help">Classificazione tramite il Metodo 2 di James Hober. Le disposizioni e le conversioni d’ottava sono disponibili in «Esplora il gruppo». I percorsi originali sulle corde restano da verificare.</p><details><summary>I quattordici gruppi</summary><div className="vl-vtable">{V_GROUPS.map(g=><span key={g.id}><strong>{g.id}</strong> {g.gaps.join(' / ')}</span>)}</div></details></div>}
         {mode==='build'&&<section className="vl-theory" aria-label="Costruzione teorica"><p className="vl-eyebrow">DISPOSIZIONE TEORICA · {DROP_TYPES.find(d=>d.id===drop).label.toUpperCase()}</p><h3 data-testid="theory-pitches">{theoretical.map(constructionName).join(' — ')||'Struttura da correggere'}</h3><p>{theoryV.group??'—'} · {theoryV.gaps?.join(' / ')}. Queste altezze vengono cercate senza trasposizioni o adattamenti.</p>{search&&<><div role="status"><strong>{search.candidates.length} posizioni trovate</strong>{locked?' · La posizione conservata non è stata sostituita.':''}{searchStale?' · Risultati di una costruzione precedente: cerca di nuovo.':''}</div><p className="vl-help">Risultati per {search.pitches.map(p=>constructionNoteName(p,search.root,search.formula)).join(' — ')}. Sono assegnazioni a corde e tasti; la diteggiatura non è verificata.</p>{search.candidates.length===0?<p>Nessuna posizione nei filtri. Prova un altro registro, altre corde o un intervallo di tasti più ampio.</p>:<div className="vl-results">{search.candidates.map((candidate,i)=><button key={candidate.id} onClick={()=>setPosition([...candidate.frets])} aria-label={`Usa posizione ${candidate.id}`}><strong>{candidate.frets.map(f=>f??'×').join(' · ')}</strong><small className="vl-result-notes">{candidate.positions.map(p=>constructionNoteName(p.midi,search.root,search.formula)).join(' · ')}</small><small>Stima {candidate.difficulty.label.toLowerCase()} · apertura {candidate.difficulty.span}</small><span>Usa posizione {i+1}</span></button>)}</div>}</>}</section>}
         <BassPanel frets={frets} bass={bass} onApply={value=>setPosition(frets,value)} onRemove={()=>setPosition(frets,null)}/>
         <section className="vl-analysis" aria-label="Interpretazioni armoniche"><div className="vl-section-title"><h2>Lettura su {ROOTS[root]}</h2><span>Gradi dal grave all’acuto</span></div><Reading reading={readings.selected} ambiguous={readings.ambiguous}/>{readings.alternatives.length>0&&<><h3 className="vl-alternatives-title">Altre letture delle stesse note</h3><div className="vl-alternatives">{readings.alternatives.map(reading=><Reading key={reading.root} reading={reading} ambiguous onChoose={()=>setRoot(reading.root)}/>)}</div></>}</section>
-        {approach==='greene'&&<GreenePanel frets={frets} root={root} bass={bass} onApply={setPosition}/>}
+        <ModalPanel notes={positions} bass={bass} center={modalCenter} onCenter={setModalCenter} families={modalFamilies} onFamilies={setModalFamilies}/>
+        {approach==='greene'&&<GreenePanel frets={frets} root={root} bass={bass} center={modalCenter} families={modalFamilies} onRestoreFocus={()=>positionHeading.current?.focus()} onApply={setPosition}/>}
       </section>
     </div>
-    <details className="vl-sources"><summary>Fonti e metodo</summary><p>V-System di Ted Greene. Metodo 2 e spiegazioni di James Hober, su tedgreene.com. Quattro voci senza raddoppi; le note omesse non vengono contate nei gap. Le altezze effettive definiscono basso, tenore, alto e soprano, indipendentemente dalle corde.</p><nav aria-label="Fonti musicali"><a href={SOURCES.index} target="_blank" rel="noreferrer">Archivio V-System</a><a href={SOURCES.method1} target="_blank" rel="noreferrer">Metodo 1 · tabella di Greene</a><a href={SOURCES.method2} target="_blank" rel="noreferrer">Metodo 2 · James Hober</a><a href={SOURCES.conversions} target="_blank" rel="noreferrer">Conversioni · note originali</a></nav><p>Ricerca delle altezze esatte, stima geometrica e selezione delle sigle sono estensioni di Guitar Theory Lab. Il numero di un gruppo V non identifica il numero di un drop. Una formula completa può avere più interpretazioni.</p><p>Versione locale: disposizioni sistematiche e conversioni d’ottava verificate sono disponibili. Scambi di voci e percorsi sulle corde non definiti restano inattivi; basso esterno disponibile come estensione software; compatibilità modali, monetizzazione e assistente AI restano successivi. L’inversione intervallare è distinta dal rivolto armonico e non è implementata qui.</p></details>
+    <details className="vl-sources"><summary>Fonti e metodo</summary><p>V-System di Ted Greene. Metodo 2 e spiegazioni di James Hober, su tedgreene.com. Quattro voci senza raddoppi; le note omesse non vengono contate nei gap. Le altezze effettive definiscono basso, tenore, alto e soprano, indipendentemente dalle corde.</p><nav aria-label="Fonti musicali"><a href={SOURCES.index} target="_blank" rel="noreferrer">Archivio V-System</a><a href={SOURCES.method1} target="_blank" rel="noreferrer">Metodo 1 · tabella di Greene</a><a href={SOURCES.method2} target="_blank" rel="noreferrer">Metodo 2 · James Hober</a><a href={SOURCES.conversions} target="_blank" rel="noreferrer">Conversioni · note originali</a></nav><p>Ricerca delle altezze esatte, stima geometrica e selezione delle sigle sono estensioni di Guitar Theory Lab. Il numero di un gruppo V non identifica il numero di un drop. Una formula completa può avere più interpretazioni.</p><p>Versione locale: disposizioni sistematiche e conversioni d’ottava verificate sono disponibili. Scambi di voci e percorsi sulle corde non definiti restano inattivi; basso esterno disponibile come estensione software; compatibilità modali disponibili per 21 formule; monetizzazione e assistente AI restano successivi. L’inversione intervallare è distinta dal rivolto armonico e non è implementata qui.</p></details>
   </div>;
 }
