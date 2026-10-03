@@ -1,3 +1,4 @@
+.harmonic-explorer {
 .app-shell {
   width: min(1500px, calc(100% - 32px));
   margin: 0 auto;
@@ -479,3 +480,82 @@
     grid-template-columns: 1fr;
   }
 }
+
+}
+
+/* Compact platform presentation, independent of the historical standalone app. */
+.platform-tool-shell--harmonic { gap: 14px; }
+.platform-tool-shell--harmonic .platform-tool-header { min-height: auto; padding: 22px 28px; }
+.platform-tool-shell--harmonic .platform-tool-header h1 { font-size: clamp(1.85rem, 3vw, 2.6rem); }
+.platform-tool-shell--harmonic .platform-tool-header p { margin-top: 8px; font-size: 1rem; }
+.platform-tool-shell--harmonic .platform-tool-host { border: 0; box-shadow: none; background: transparent; overflow: visible; }
+.harmonic-explorer {
+  --surface: var(--gtl-surface);
+  --surface-strong: var(--gtl-surface-strong);
+  --border: var(--gtl-border);
+  --text-muted: var(--gtl-muted);
+  --ink: var(--gtl-ink);
+  --accent: var(--gtl-accent);
+  --accent-soft: var(--gtl-accent-soft);
+  width: min(1100px, 100%);
+  padding: 0 8px 16px;
+  font: 15px/1.5 var(--gtl-sans);
+  color: var(--gtl-text);
+  background: transparent;
+  min-width: 0;
+}
+.harmonic-explorer .top-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.harmonic-explorer .panel { border: 0; box-shadow: none; padding: 0; background: transparent; min-width: 0; }
+.harmonic-explorer .panel-title-row { margin-bottom: 10px; gap: 10px; }
+.harmonic-explorer .system-selector { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; align-content: start; }
+.harmonic-explorer .system-selector > :is(.panel-title-row, .material-toggle, .note-chip-group) { grid-column: 1 / -1; }
+.harmonic-explorer .system-selector .panel-title-row { margin-bottom: 0; }
+.harmonic-explorer .system-selector .material-field { margin: 0; }
+.harmonic-explorer .system-selector .material-toggle { margin: 0; }
+.harmonic-explorer .field { margin: 0; gap: 5px; font-size: 0.74rem; }
+.harmonic-explorer .field select { max-width: 100%; min-width: 0; font-size: 0.85rem; }
+.harmonic-explorer .small-field { min-width: 0; }
+.harmonic-explorer :is(.segmented-control button, .mode-button, .reset-button) { min-height: 40px; border-radius: 7px; padding: 6px 10px; font-size: 0.85rem; }
+.harmonic-explorer :is(.segmented-control button.active, .mode-button.active) { background: var(--gtl-accent); color: #fffefa; border-color: var(--gtl-accent); }
+.harmonic-explorer :is(button, select):focus-visible { outline: 3px solid var(--gtl-accent-2); outline-offset: 3px; }
+.harmonic-explorer button:not(:disabled):hover { border-color: var(--gtl-accent); }
+.harmonic-explorer .note-chip { min-height: 26px; padding: 2px 8px; font-size: 0.85rem; border-radius: 7px; }
+.harmonic-explorer .interval-data-panel { margin: 18px 0; padding: 10px 14px; border-radius: 7px; background: var(--gtl-accent-soft); gap: 12px; }
+.harmonic-explorer .interval-data-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.harmonic-explorer .visualization-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 18px 28px; }
+.harmonic-explorer .visualization-controls h2 { font-size: 0.8rem; color: var(--gtl-muted); }
+.harmonic-explorer .preset-panel { margin-top: 12px; }
+.harmonic-explorer .preset-panel .reset-button { width: auto; background: transparent; color: var(--gtl-accent); }
+.harmonic-explorer .string-selector { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.harmonic-explorer .fret-range-presets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.harmonic-explorer .range-control-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 8px; }
+.harmonic-explorer .fretboard-block { margin: 20px 0; }
+.harmonic-explorer .analysis-panel { margin-top: 20px; }
+.harmonic-explorer .comparison-header { padding-bottom: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.harmonic-explorer .comparison-header h2 { font-family: var(--gtl-heading); font-size: 1.6rem; }
+.harmonic-explorer .comparison-materials { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.harmonic-explorer .comparison-breakdown { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 14px; margin-top: 14px; }
+.harmonic-explorer .comparison-result { padding: 0 14px; border-bottom: 0; }
+.harmonic-explorer .comparison-result:first-child { padding-left: 0; }
+.harmonic-explorer .comparison-result:last-child { padding-right: 0; }
+@media (max-width: 600px) {
+  .platform-tool-shell--harmonic .platform-tool-header { padding: 18px; }
+  .harmonic-explorer .top-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .harmonic-explorer .visualization-controls { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .harmonic-explorer .segmented-control { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .harmonic-explorer :is(.segmented-control.three-materials, .mode-grid.three-buttons) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .harmonic-explorer .interval-data-panel { align-items: flex-start; }
+  .harmonic-explorer :is(.comparison-materials, .comparison-breakdown) { grid-template-columns: minmax(0, 1fr); }
+  .harmonic-explorer :is(.comparison-result, .comparison-result:first-child, .comparison-result:last-child) { padding: 10px 0; border-right: 0; }
+  .harmonic-explorer .overlap-summary { flex-wrap: wrap; }
+}
+.harmonic-explorer { margin-inline: auto; }
+.platform-tool-shell--harmonic { min-width: 0; }
+.harmonic-explorer .fretboard-panel > h2 { margin: 0 0 10px; font-family: var(--gtl-heading); font-size: 1.5rem; }
+.harmonic-explorer .fretboard-panel { min-width: 0; }
+.harmonic-explorer .fretboard-scroll { width: 100%; max-width: 100%; }
+.harmonic-explorer .fretboard-display { min-width: 980px; }
+.harmonic-explorer .fretboard { min-width: 0; }
+.platform-tool-shell--harmonic { grid-template-columns: minmax(0, 1fr); }
+.platform-tool-shell--harmonic .platform-tool-host { min-width: 0; }
+.harmonic-explorer .fretboard-block { min-width: 0; }

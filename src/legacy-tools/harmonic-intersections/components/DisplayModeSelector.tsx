@@ -12,10 +12,10 @@ export function DisplayModeSelector({ mode, onChange }: Props) {
         <h2>Display</h2>
       </div>
       <div className="segmented-control">
-        <button className={mode === "notes" ? "active" : ""} onClick={() => onChange("notes")}>
+        <button aria-pressed={mode === "notes"} className={mode === "notes" ? "active" : ""} onClick={() => onChange("notes")}>
           Notes
         </button>
-        <button className={mode === "degrees" ? "active" : ""} onClick={() => onChange("degrees")}>
+        <button aria-pressed={mode === "degrees"} className={mode === "degrees" ? "active" : ""} onClick={() => onChange("degrees")}>
           Degrees
         </button>
       </div>

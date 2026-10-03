@@ -1,3 +1,4 @@
+.harmonic-explorer {
 .fretboard-legend {
   display: flex;
   flex-wrap: wrap;
@@ -234,4 +235,6 @@
 
 .fret-note.dual-degree-label {
   font-size: 0.68rem;
+}
+
 }

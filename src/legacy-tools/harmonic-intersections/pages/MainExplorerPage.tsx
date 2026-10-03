@@ -238,7 +238,7 @@ export function MainExplorerPage() {
   }, [activeComparison, materialA.root, materialB.root, visualizationLayers]);
 
   return (
-    <main className="app-shell">
+    <div className="harmonic-explorer app-shell">
       <div className="top-grid">
         <SystemSelector
           title="System A"
@@ -262,42 +262,43 @@ export function MainExplorerPage() {
           onPentatonicTypeChange={setPentatonicTypeA}
           onSelectedPentatonicChange={setSelectedPentatonicA}
         />
-        <div className="stack">
-          <SystemSelector
-            title="System B"
-            root={rootB}
-            scaleId={scaleBId}
-            scale={scaleB}
-            materialMode={materialModeB}
-            arpeggioType={arpeggioTypeB}
-            arpeggios={arpeggiosB}
-            selectedArpeggio={selectedArpeggioB}
-            pentatonicType={pentatonicTypeB}
-            pentatonics={pentatonicsB}
-            selectedPentatonic={selectedPentatonicB}
-            displayMode={displayMode}
-            degreeLabels={degreeLabelsB}
-            onRootChange={setRootB}
-            onScaleChange={setScaleBId}
-            onMaterialModeChange={setMaterialModeB}
-            onArpeggioTypeChange={setArpeggioTypeB}
-            onSelectedArpeggioChange={setSelectedArpeggioB}
-            onPentatonicTypeChange={setPentatonicTypeB}
-            onSelectedPentatonicChange={setSelectedPentatonicB}
-          />
-        </div>
-        <div className="stack">
-          <DisplayModeSelector mode={displayMode} onChange={setDisplayMode} />
-          <VisualizationSelector layers={visualizationLayers} onToggle={toggleVisualizationLayer} />
-          <FretRangeSelector range={fretRange} onChange={setFretRange} />
-          <StringSelector
-            activeStrings={activeStrings}
-            onToggle={toggleString}
-            onSelectAll={() => setActiveStrings(allStrings())}
-          />
-          <PresetResetPanel onReset={resetPreset} />
-        </div>
+        <SystemSelector
+          title="System B"
+          root={rootB}
+          scaleId={scaleBId}
+          scale={scaleB}
+          materialMode={materialModeB}
+          arpeggioType={arpeggioTypeB}
+          arpeggios={arpeggiosB}
+          selectedArpeggio={selectedArpeggioB}
+          pentatonicType={pentatonicTypeB}
+          pentatonics={pentatonicsB}
+          selectedPentatonic={selectedPentatonicB}
+          displayMode={displayMode}
+          degreeLabels={degreeLabelsB}
+          onRootChange={setRootB}
+          onScaleChange={setScaleBId}
+          onMaterialModeChange={setMaterialModeB}
+          onArpeggioTypeChange={setArpeggioTypeB}
+          onSelectedArpeggioChange={setSelectedArpeggioB}
+          onPentatonicTypeChange={setPentatonicTypeB}
+          onSelectedPentatonicChange={setSelectedPentatonicB}
+        />
       </div>
+
+      <IntervalSelector interval={intervalToB} />
+
+      <div className="visualization-controls">
+        <DisplayModeSelector mode={displayMode} onChange={setDisplayMode} />
+        <VisualizationSelector layers={visualizationLayers} onToggle={toggleVisualizationLayer} />
+        <FretRangeSelector range={fretRange} onChange={setFretRange} />
+        <StringSelector
+          activeStrings={activeStrings}
+          onToggle={toggleString}
+          onSelectAll={() => setActiveStrings(allStrings())}
+        />
+      </div>
+      <PresetResetPanel onReset={resetPreset} />
 
       <div className="fretboard-block">
         <FretboardLegend />
@@ -312,8 +313,6 @@ export function MainExplorerPage() {
         />
       </div>
 
-      <IntervalSelector interval={intervalToB} />
-
       <MaterialComparisonPanel
         materialA={materialA}
         materialB={materialB}
@@ -323,6 +322,6 @@ export function MainExplorerPage() {
         degreeLabelsA={degreeLabelsA}
         degreeLabelsB={degreeLabelsB}
       />
-    </main>
+    </div>
   );
 }

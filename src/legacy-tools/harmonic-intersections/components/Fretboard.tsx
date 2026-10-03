@@ -65,15 +65,16 @@ export function Fretboard({
 
   return (
     <section className="panel fretboard-panel">
+      <h2>Fretboard</h2>
+      <div className="fretboard-scroll">
+        <div className="fretboard-display">
       <div className="fretboard-header">
-        <h2>Fretboard</h2>
         <div className="fret-numbers" style={{ "--fret-count": fretCount + 1 } as CSSProperties}>
           {Array.from({ length: fretCount + 1 }, (_, fret) => (
             <span key={fret}>{fret}</span>
           ))}
         </div>
       </div>
-      <div className="fretboard-scroll">
         <div className="fretboard" style={{ "--fret-count": fretCount + 1 } as CSSProperties}>
           <div className="fret-markers" aria-hidden="true">
             {Array.from({ length: fretCount + 1 }, (_, fret) => {
@@ -136,6 +137,7 @@ export function Fretboard({
             </div>
             );
           })}
+        </div>
         </div>
       </div>
     </section>

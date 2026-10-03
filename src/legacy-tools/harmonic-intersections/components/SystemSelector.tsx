@@ -85,7 +85,7 @@ export function SystemSelector({
         : scale.noteNames;
 
   return (
-    <section className="panel">
+    <section className="panel system-selector">
       <div className="panel-title-row">
         <h2>{title}</h2>
       </div>
@@ -118,13 +118,13 @@ export function SystemSelector({
         </select>
       </label>
       <div className="segmented-control material-toggle three-materials">
-        <button className={materialMode === "scales" ? "active" : ""} onClick={() => onMaterialModeChange("scales")}>
+        <button aria-pressed={materialMode === "scales"} className={materialMode === "scales" ? "active" : ""} onClick={() => onMaterialModeChange("scales")}>
           Full scale
         </button>
-        <button className={materialMode === "arpeggios" ? "active" : ""} onClick={() => onMaterialModeChange("arpeggios")}>
+        <button aria-pressed={materialMode === "arpeggios"} className={materialMode === "arpeggios" ? "active" : ""} onClick={() => onMaterialModeChange("arpeggios")}>
           Arpeggio
         </button>
-        <button className={materialMode === "pentatonics" ? "active" : ""} onClick={() => onMaterialModeChange("pentatonics")}>
+        <button aria-pressed={materialMode === "pentatonics"} className={materialMode === "pentatonics" ? "active" : ""} onClick={() => onMaterialModeChange("pentatonics")}>
           Pentatonic
         </button>
       </div>
