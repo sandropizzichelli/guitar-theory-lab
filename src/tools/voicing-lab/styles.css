@@ -102,3 +102,54 @@
   .vl-fret span { width:28px; min-height:28px; }
   .vl-string-label { font-size:11px; }
 }
+.vl-explore { border:1px solid var(--gtl-border); border-radius:7px; padding:16px; margin-top:8px; background:var(--gtl-surface-strong); }
+.vl-explore>summary { font-size:16px; }
+.vl-explore>p { margin-top:12px; }
+.vl-greene-tabs { display:flex; flex-wrap:wrap; gap:6px; margin:16px 0; }
+.vl-greene-tabs button[aria-selected=true],.vl-explore button[aria-pressed=true] { background:var(--gtl-accent-soft); border-color:var(--gtl-accent); }
+.vl-explore section>.vl-field { max-width:340px; }
+.vl-dispositions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:12px 0; }
+.vl-dispositions button,.vl-conversions button { display:grid; gap:6px; text-align:left; width:100%; }
+.vl-dispositions small,.vl-conversions small,.vl-comparison small { color:var(--gtl-muted); font-size:11px; }
+.vl-conversions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:12px 0; }
+.vl-conversions>article { border:1px solid var(--gtl-border); border-radius:6px; padding:10px; }
+.vl-procedure-details { font-size:12px; line-height:1.6; margin-top:12px; }
+.vl-procedure-details p { margin:10px 0; }
+.vl-procedure-details dl { display:grid; grid-template-columns:120px 1fr; gap:8px; }
+.vl-procedure-details dd { margin:0; }
+.vl-procedure-details dt { color:var(--gtl-muted); }
+.vl-inactive { margin:14px 0; font-size:12px; }
+.vl-inactive article { margin:14px 0; }
+.vl-inactive h4 { margin:0; }
+.vl-comparison { border-top:1px solid var(--gtl-border); margin-top:18px; padding-top:14px; }
+.vl-comparison-columns { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+.vl-comparison-columns>article { border:1px solid var(--gtl-border); border-radius:7px; background:var(--gtl-bg-soft); padding:16px; display:grid; align-content:start; gap:10px; }
+.vl-comparison-columns h4 { margin:0; font-size:15px; }
+.vl-comparison-columns p { font-size:12px; }
+.vl-comparison-diagram { display:block; width:100%; max-width:300px; margin:auto; }
+.vl-comparison-diagram line { stroke:#a8b2a8; stroke-width:1; }
+.vl-comparison-diagram text { fill:var(--gtl-muted); font-family:var(--gtl-sans); font-size:11px; }
+.vl-comparison-diagram circle { fill:var(--gtl-accent); }
+.vl-comparison-diagram .vl-dot-name { fill:white; font-size:9px; }
+.vl-theory-only { margin:28px 0!important; }
+.vl-movements-scroll { overflow-x:auto; }
+.vl-movements { width:100%; border-collapse:collapse; font-size:11px; }
+.vl-movements caption { text-align:left; font-size:12px; color:var(--gtl-muted); margin:8px 0; }
+.vl-movements td,.vl-movements th { border-bottom:1px solid var(--gtl-border); padding:9px 6px; text-align:left; white-space:nowrap; }
+.vl-greene-search { display:grid; grid-template-columns:1.5fr 1.5fr 1fr; align-items:end; gap:12px; margin:18px 0; padding:14px; border:1px solid var(--gtl-border); border-radius:7px; }
+.vl-greene-search legend { font-size:12px; color:var(--gtl-muted); }
+.vl-greene-search>button { grid-column:1/-1; justify-self:start; }
+.vl-comparison-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.vl-greene-results { margin-top:12px; }
+@media(max-width:1000px) { .vl-conversions,.vl-greene-search { grid-template-columns:1fr; } }
+@media(max-width:700px) { .vl-comparison-columns,.vl-dispositions { grid-template-columns:1fr; } .vl-explore { padding:12px; } .vl-procedure-details dl { grid-template-columns:1fr; gap:4px; } .vl-procedure-details dd { margin-bottom:8px; } }
+@media(max-width:700px) {
+  .vl-movements-scroll { overflow:visible; }
+  .vl-movements,.vl-movements tbody { display:block; }
+  .vl-movements thead { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+  .vl-movements caption { display:block; }
+  .vl-movements tr { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--gtl-border); border-radius:6px; margin:8px 0; padding:8px; }
+  .vl-movements th { grid-column:1/-1; }
+  .vl-movements td,.vl-movements th { white-space:normal; border:0; padding:5px; }
+  .vl-movements td::before { content:attr(data-label); display:block; color:var(--gtl-muted); font-size:10px; margin-bottom:3px; }
+}

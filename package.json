@@ -22,7 +22,7 @@
     "set:test": "npm --prefix \"Set Visualizer\" run test",
     "build:legacy": "npm run goodrick:build && npm run harmonic:build && npm run set:build",
     "test:legacy": "npm run goodrick:test && npm run harmonic:test && npm run set:test",
-    "test:voicing": "node --test tests/music/voicing-lab.test.js && playwright test tests/e2e/voicing-lab.spec.js",
+    "test:voicing": "node --test tests/music/voicing-lab*.test.js && playwright test tests/e2e/voicing-lab.spec.js",
     "e2e": "playwright test",
     "build:all": "npm run build && npm run build:legacy",
     "test:all": "npm run test:legacy && npm run e2e"

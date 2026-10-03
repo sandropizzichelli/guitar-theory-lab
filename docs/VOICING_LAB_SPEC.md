@@ -166,3 +166,25 @@ Per strutture libere, convenzione esplicita di nomi cromatici con bemolli, senza
 Ogni scheda di lettura presenta una sola riga di gradi, una sola riga di omissioni quando presenti, e indicatori distinti di completezza e contesto/ambiguità. Eliminati gli elenchi duplicati e la frase sulla completezza già rappresentata dall'indicatore. Una breve motivazione rimane per letture implicite quando spiega il ruolo della terza/settima o del tritono.
 
 Verifiche aggiornate: 11 test musicali e 8 verifiche browser superati; build locale comprensiva del nuovo strumento riuscita. Dmaj7 verificato in tutte le quattro close e otto operazioni; G♭ → F♯ della posizione semidiminuita verificato con e senza blocco, conservando MIDI, corde, tasti e V-2. Le precedenti verifiche esaustive di close/drop e dei quattordici gruppi V passano invariate. Nessuna aggiunta di conversioni, basso esterno o modi; nessuna modifica agli altri strumenti, commit o pubblicazione.
+
+## Fase Greene implementata localmente — 3 ottobre 2026
+
+Pannello «Esplora il gruppo» richiudibile nell'approccio Ted Greene, con quattro disposizioni sistematiche ascendenti o discendenti, 31 conversioni d'ottava, filtro del soprano e dettagli di provenienza, verifica teorica e condizioni chitarristiche separate.
+
+Originale e candidata restano indipendenti durante selezione, ricerca e cambio della fondamentale. La ricerca usa altezze esatte, prima le corde originali e solo con scelta esplicita tutte le corde. La scelta di una realizzazione non applica la posizione. «Usa questa posizione» applica; «Ripristina originale» restituisce esattamente corde e tasti precedenti. L'applicazione è esplicita anche con blocco attivo. Una modifica manuale dell'originale invalida il confronto. La fondamentale interpretativa resta indipendente dal ripristino fisico.
+
+Le voci portano identità B/T/A/S originali, nota e corda iniziali, delta e ruolo risultante dopo il riordino. Il soprano viene controllato per altezza massima effettiva. Disposizione teorica, realizzazione trovata e stima geometrica rimangono distinte. Nessuna ottava adattata ai filtri.
+
+Il catalogo distingue provenienza documentata, verifica teorica e verifica del percorso sulle corde: quest'ultima rimane non certificata. Le conversioni d'ottava attive sono esplorazioni teoriche documentate, con posizioni software; nessun percorso originale sulle corde è attivato. V-2→V-9 +12 è attribuito al Metodo 1; +24 rimane documentato e da chiarire, inattivo, senza definirlo errore dell'autore. Scambi di voci e percorsi non precisati restano inattivi.
+
+Verifica esaustiva: 27.720 originali teorici (495 insiemi × 14 gruppi × 4 disposizioni), 221.760 risultati sistematici nei due versi e 61.380 conversioni (31 × 495 × 4). Controlli del gruppo tramite tabella indipendente, classi, identità originali, ruoli finali e soprano effettivo. Fixture indipendenti: Emaj7 del Metodo 1, Dm7 del Metodo 2 e tabelle dei quattordici gruppi; esempi A–D con realizzazioni esatte. Suite musicale: 16 test superati. Verifiche browser dedicate: 17 test superati, inclusi A–D desktop/mobile, applicazione/ripristino, blocco, filtri, mancati risultati e invalidazione manuale.
+
+Limiti rimasti: accordatura standard, una nota per corda, 0–24 tasti, difficoltà geometrica senza diteggiatura verificata; condizioni chitarristiche delle fonti da approfondire; scambi e +24 inattivi. Basso esterno e modi non aggiunti. Nessun altro strumento modificato, nessun nuovo commit e nessuna pubblicazione.
+
+Build locale di sviluppo riuscita. Nella suite browser completa: 28 test superati e un timeout del test preesistente Set Explorer a 390px; quest'ultimo supera la riesecuzione isolata con un worker. Nessuna modifica a Set Explorer. Anteprima locale confermata con risposta HTTP 200.
+
+## Controllo diretto prima del salvataggio Greene
+
+A–D verificati anche nell'anteprima locale aperta nel browser in-app, a 1440×1000 e 390×1000: selezione teorica, ricerca senza risultati, filtri cambiati, scelta della realizzazione, fondamentale C→A→C, applicazione e ripristino. Confrontati corde, tasti e MIDI, inclusa l'assegnazione delle voci alle corde. Fonti e condizioni del +12 consultate nel dettaglio; candidata senza realizzazione consultabile con applicazione disabilitata.
+
+Corretta la leggibilità mobile della tabella dei movimenti: schede per voce con etichette, senza scorrimento orizzontale; tabella desktop conservata. Aggiunte verifiche browser di assenza di overflow della tabella e catture dopo il ripristino. La proposta del basso esterno è in `VOICING_LAB_EXTERNAL_BASS_PROPOSAL.md`, senza implementazione.
