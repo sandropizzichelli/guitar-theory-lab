@@ -1,6 +1,6 @@
 # Set-class Explorer — proposta di tastiera interattiva
 
-Proposta da approvare prima dell'implementazione. Nessuna modifica al tool durante la revisione finale di Voicing Lab. Riferimento grafico: revisione approvata `3cf7f86`; riuso del comportamento di tastiera verificato in Voicing Lab, con adattamento alla teoria degli insiemi.
+Proposta approvata e implementata localmente il 3 ottobre 2026. La revisione iniziale non aveva modificato il tool. Riferimento grafico: revisione approvata `3cf7f86`; riuso del comportamento di tastiera verificato in Voicing Lab, con adattamento alla teoria degli insiemi.
 
 ## Due modalità con stati distinti
 
@@ -42,7 +42,7 @@ Il catalogo principale esaminato contiene famiglie a 3, 4, 5 e 6 classi. La disp
 | × 3 4 3 4 × | C3 G♭3 B♭3 E♭4 | {0,3,6,10} | 4-27, prime form (0258), vettore <0 1 2 1 1 1> |
 | 0 × × × × 0 | E2 E4 | {4} | 2 note / 1 classe; raddoppio d'ottava, prime form (0), vettore nullo, fuori catalogo |
 
-Fixture astratte separate: (0146) 4-Z15 e (0137) 4-Z29 hanno entrambe <1 1 1 1 1 1>, ma non la stessa set class. Per le altezze incrociate: posizione × 11 0 0 0 × produce D3 G3 G♯3 B3, basso sulla corda 4; conservare i tasti ed evitare ordinamento per corda. Un cambio di grafia G♭/F♯ non modifica il riconoscimento.
+Fixture astratte separate: (0146) 4-Z15 e (0137) 4-Z29 hanno entrambe <1 1 1 1 1 1>, ma non la stessa set class. Per le altezze incrociate: posizione × 10 0 1 0 × produce D3 G3 G♯3 B3, basso sulla corda 4; conservare i tasti ed evitare ordinamento per corda. Un cambio di grafia G♭/F♯ non modifica il riconoscimento.
 
 Gli esempi musicali denominano soltanto le note: l'appartenenza a una set class non conferma una lettura armonica.
 
@@ -52,7 +52,7 @@ Esaminati `src/legacy-tools/set-visualizer/{Fretboard.jsx,setUtils.js,setData.js
 
 Il primo passo tecnico sarà estrarre la tastiera di Voicing Lab in un componente di presentazione condiviso, mantenendo per default il suo rendering e i callback attuali. Contratto proposto: accordatura con MIDI, limiti dei tasti, selezioni per corda, modalità read-only/inspect/edit, etichette, decorazioni, corde riservate/disabilitate e callback `onInspect`/`onChange`. Geometria configurabile per rispettare le dimensioni dei due strumenti; gli strati visuali dei collegamenti intervallari restano gestiti dall'adattatore Set-class. Nessuna analisi armonica, modale, Forte o Greene dentro il componente.
 
-Due adattatori separati: Voicing Lab conserva fondamentale, basso, centro, firme di ricerca e snapshot; Set-class conserva target di esplorazione, posizione immessa e riduzione alle classi. Nessuno stato musicale condiviso fra strumenti. Il componente non deduplica note e non decide se una posizione è suonabile. Inizialmente conservare 0–12 tasti di Set-class, coerenti con la ricerca esistente; il componente continua a supportare 0–24 per Voicing Lab. Estensioni del registro di Set-class richiedono una fase dedicata, senza ricerca che sembri coprire tasti non previsti.
+Due adattatori separati: Voicing Lab conserva fondamentale, basso, centro, firme di ricerca e snapshot; Set-class conserva target di esplorazione, posizione immessa e riduzione alle classi. Nessuno stato musicale condiviso fra strumenti. Il componente non deduplica note e non decide se una posizione è suonabile. La revisione finale estende soltanto l’input manuale di Set-class a 0–24; Esplora mantiene mappe e ricerca 0–12. Il componente supporta 0–24 anche per Voicing Lab. Una posizione manuale sopra il tasto 12 può aprire la sua set class nel catalogo, senza trasferimento fisico né adattamento.
 
 ## Accessibilità e verifiche prima del rilascio
 
@@ -70,3 +70,31 @@ Browser: inserimento/sostituzione/muting, corde aperte, raddoppi, altezze incroc
 - [Open Music Theory · interval-class vectors](https://viva.pressbooks.pub/openmusictheory/chapter/interval-class-vectors/).
 
 Fonti consultate il 3 ottobre 2026. Classi, Tn/TnI e vettori sono concetti teorici; doppio stato, controlli, comandi di trasferimento e architettura sono nostre scelte software. Nomi e prime form degli esempi confrontati con il catalogo del progetto; l'audit esaustivo è previsto, non già eseguito su Set-class in questa revisione. Nessuna nuova fondamentale o interpretazione armonica, ricerca ergonomica, microtonalità, accordatura alternativa o generazione AI. Monetizzazione e assistente AI restano successivi.
+
+
+## Esito dell’implementazione locale — 3 ottobre 2026
+
+Due modalità montate separatamente: il cambio di modalità conserva il catalogo (trasformazioni, filtri e mappe) e l’input fisico. I due comandi di trasferimento sono espliciti. L’apertura dal manuale seleziona il rappresentante astratto della classe; la copia da Esplora è disponibile solo per una realizzazione concreta e valida, con una nota per corda, senza complementi o strati mancanti. Il trasferimento conserva esattamente i tasti visibili e non genera una posizione alternativa.
+
+Componente condiviso `src/components/guitar/GuitarFretboard.jsx`: presentazione della tastiera, controlli nativi, selezioni e corde riservate; nessuna teoria interna. Voicing Lab e input Set-class lo usano con adattatori musicali separati. L’adattatore Esplora mantiene la sua geometria e i collegamenti esistenti, riutilizzando la stessa casella interattiva nativa. L’osservazione evidenzia tutte le occorrenze della classe scelta, senza mutare catalogo o input.
+
+Audit esaustivo: tutti i 2.431 insiemi distinti a cardinalità 3–6 appartengono a una delle 129 orbite catalogate. Nessun conflitto di riconoscimento e nessuna divergenza di packing della prime form rispetto al catalogo. Le dodici trasposizioni e le dodici inversioni dei rappresentanti sono verificate tramite orbite indipendenti dall’algoritmo di prime form.
+
+Il controllo delle coppie ha individuato tre vettori errati nella tabella integrata: 5-13: 222131 → 221311, 6-2: 444321 → 443211, 6-Z43: 233331 → 322332. Sono corretti nella sola copia integrata; le versioni autonome rimangono intatte. Il vettore dell’input viene comunque calcolato dalle classi effettive. La fixture di voci incrociate della proposta aveva tasti incoerenti con i nomi: corretto l’esempio in × 10 0 1 0 ×, che produce D3 G3 G♯3 B3.
+
+Verifiche riproducibili: `npm run test:set-input`, `npm run test:voicing`, `npm run test:legacy`, `npm run e2e`, `npm run build`. Test musicali: cinque posizioni indipendenti, insieme vuoto, una/due/sette classi, raddoppi, equivalenze modulo 12, coppia Z, tutte le orbite, vettori di tabella, trasferimenti validi e rifiuto di collisioni/altezze incoerenti. Browser: input e sostituzione, mute, Enter, scorrimento interno e focus, due stati conservati, filtri separati, apertura dei cataloghi e copia dei tasti effettivi, catalogo che non sovrascrive il manuale, cardinalità 2/5/6, dettagli e altezze incrociate. Layout a 1440, 390 e 320 px.
+
+Limiti effettivi: accordatura standard, sei corde, input 0–24, Esplora 0–12; riconoscimento Forte 3–6 classi; classi 1–2 analizzate senza numero nel catalogo attuale. L’input non può contenere più di sei classi. Grafie cromatiche convenzionali, nessuna funzione armonica o certificazione ergonomica. Posizione manuale e modalità vengono salvate nel browser e recuperate dopo il ricaricamento, separatamente dallo stato URL di Esplora. I cambi di famiglia dentro Esplora mantengono il comportamento preesistente di quel catalogo. Commit locale autorizzato dopo le verifiche; nessuna pubblicazione.
+
+Esito finale: build di produzione e build locale inclusiva riuscite; 64 verifiche browser della piattaforma superate, 54 test autonomi superati, 25 test musicali Voicing Lab e 7 test musicali Set-class e persistenza superati. La suite Set-class comprende nove verifiche browser. Catture locali per Esplora e input a 1440, 390 e 320 px, oltre al registro esteso a 1920/390/320 px.
+
+
+## Completamento prima del commit
+
+- Input fisico e validazione: sei corde, ogni tasto intero 0–24 oppure muto. Altezze effettive e raddoppi conservati. L’analisi non dipende dal registro della ricerca. Il comando di apertura del catalogo lavora sulla classe astratta anche sopra il tasto 12; non copia né trasporta la posizione. Copie fisiche da Esplora restano limitate alle realizzazioni verificate 0–12.
+- Persistenza locale: chiavi dedicate `gtl.set-class.position.v1` (schema versione 1, sei tasti) e `gtl.set-class.mode.v1`. Nessun account o trasmissione. Recupero separato e validato; JSON, versione, lunghezza, tipo, range e modalità non validi hanno fallback sicuro. Storage bloccato non impedisce l’uso, ma non conserva lo stato. «Svuota posizione» rimuove la chiave della posizione, conserva la modalità e non tocca Esplora. Un ricaricamento dopo lo svuotamento recupera sei corde mute.
+- Contenitore manuale dimensionato sul diagramma; la larghezza massima rimane quella disponibile. Caselle 60 px su desktop, 36/30 px sui layout mobili, con scorrimento interno e focus visibile. Nessun cambiamento alla geometria Voicing Lab.
+
+Verifiche aggiuntive: tutti i tasti 13–24, raddoppi d’ottava, registro superiore equivalente a una classe nota, rifiuto di tasti fuori 0–24, recupero di note e modalità dopo ricaricamento, apertura del catalogo senza alterare il registro, svuotamento persistente, JSON/schema/tasti/modalità corrotti e storage bloccato. Browser a 1920/390/320 px, controllo della larghezza reale del diagramma su desktop e assenza di overflow della pagina. Le correzioni dei tre vettori sono verificate dal conteggio delle coppie e documentate sopra nella forma prima → dopo.
+
+Esito del completamento: 64/64 regressioni browser, 7/7 test musicali e persistenza Set-class, 25/25 test musicali Voicing Lab e 54/54 test autonomi; build produzione e locale inclusiva riuscite. Nessuna modifica alle copie autonome, a Harmonic Intersections o a Goodrick. Il commit comprende l’intera tastiera interattiva e questa revisione finale. Il salvataggio è limitato al browser e all’origine corrente; non si sincronizza fra dispositivi e richiede storage disponibile.

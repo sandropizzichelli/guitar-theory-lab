@@ -81,6 +81,7 @@ function getVoicingFinderByCardinality(cardinality) {
 }
 
 export default function GenericSetPage({
+  catalogRequest,onCatalogApplied,
   keyLabel,
   keys,
   dataMap,
@@ -954,6 +955,11 @@ export default function GenericSetPage({
       setSelectedIntervalVector(nextState.selectedIntervalVector);
     }
   };
+
+  useEffect(()=>{if(catalogRequest&&keys.includes(catalogRequest.forte)){
+    setBrowseMode('forte');setTransformMode('base');setTransformAmount(0);
+    handleSelectedForteChange(catalogRequest.forte);onCatalogApplied?.();
+  }},[catalogRequest?.sequence]);
 
   const handleSelectedIntervalVectorChange = (intervalVector) => {
     const nextState = buildIntervalVectorSelectionState(

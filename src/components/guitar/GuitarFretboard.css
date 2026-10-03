@@ -1,0 +1,40 @@
+.guitar-board.vl-board-scroll { overflow-x:auto; border:1px solid var(--gtl-border); border-radius:7px; background:linear-gradient(180deg,#f9f5eb,#f2ecdf); padding-bottom:8px; }
+.vl-board { width:calc(117px + var(--guitar-fret-count) * 60px); min-width:max-content; padding:12px; }
+.vl-fret-numbers,.vl-string { display:grid; grid-template-columns:55px 38px repeat(var(--guitar-fret-count),60px); align-items:center; }
+.vl-fret-numbers { height:26px; color:var(--gtl-muted); font-size:11px; text-align:center; }
+.vl-string { height:50px; }
+.vl-string-label { font-weight:700; }
+.vl-string-label { position:sticky; left:0; z-index:2; background:#f6f1e6; height:100%; display:flex; align-items:center; }
+.vl-string-label small { margin-left:3px; font-weight:400; color:var(--gtl-muted); }
+.guitar-board .vl-mute { padding:4px; width:27px; height:30px; background:transparent; border-color:transparent; }
+.guitar-board .vl-mute.active { color:var(--gtl-muted); background:rgba(127,167,157,.15); }
+.guitar-board .vl-fret { position:relative; height:50px; padding:0; border:0; border-right:1px solid #c7c5b8; border-radius:0; background:linear-gradient(transparent 48%,#a5aa9f 49%,#a5aa9f 51%,transparent 52%); }
+.vl-fret:nth-child(3) { border-right:3px solid #8a9284; }
+.vl-fret span { position:relative; z-index:1; display:grid; align-items:center; justify-content:center; width:40px; min-height:34px; margin:auto; font-size:12px; }
+.vl-fret.selected span { background:var(--gtl-accent); color:white; border-radius:50%; box-shadow:0 2px 5px #1b6d6320; }
+.vl-fret.vl-marker::before { content:''; position:absolute; width:5px; height:5px; border-radius:50%; background:#89968a55; left:50%; top:12%; }
+
+@media(max-width:700px) {
+ .guitar-board .vl-board { width:calc(92px + var(--guitar-fret-count) * 36px); }
+ .guitar-board .vl-fret-numbers,.guitar-board .vl-string { grid-template-columns:42px 26px repeat(var(--guitar-fret-count),36px); }
+ .guitar-board .vl-string,.guitar-board .vl-fret { height:44px; }
+ .guitar-board .vl-fret span { width:32px; min-height:32px; font-size:10px; }
+}
+@media(max-width:360px) {
+ .guitar-board .vl-board { width:calc(82px + var(--guitar-fret-count) * 30px); }
+ .guitar-board .vl-fret-numbers,.guitar-board .vl-string { grid-template-columns:36px 22px repeat(var(--guitar-fret-count),30px); }
+ .guitar-board .vl-fret span { width:28px; min-height:28px; }
+ .guitar-board .vl-string-label { font-size:11px; }
+}
+.guitar-board button { cursor:pointer; font:inherit; color:var(--gtl-ink); }
+.guitar-board .vl-fret.vl-bass-dot span { border:2px dashed white; border-radius:4px; }
+.guitar-board .vl-fret:disabled,.guitar-board .vl-mute:disabled { cursor:default; opacity:1; }
+.guitar-board:focus-visible,.guitar-board button:focus-visible { outline:3px solid var(--gtl-accent); outline-offset:2px; }
+.guitar-board { scroll-padding-inline-start:60px; }
+.guitar-board { min-width:0; }
+.guitar-board * { min-width:0; }
+.guitar-board button { border:1px solid var(--gtl-border); border-radius:6px; background:var(--gtl-surface-strong); padding:9px 12px; }
+.guitar-board .vl-fret { border:0; border-right:1px solid #c7c5b8; border-radius:0; padding:0; background:linear-gradient(transparent 48%,#a5aa9f 49%,#a5aa9f 51%,transparent 52%); }
+.guitar-board .vl-fret:nth-child(3) { border-right:3px solid #8a9284; }
+.guitar-board .vl-mute { padding:4px; background:transparent; border-color:transparent; }
+.guitar-board .vl-mute.active { background:rgba(127,167,157,.15); }

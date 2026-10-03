@@ -9,7 +9,7 @@ import {
   ALL_5_STRING_GROUPS,
   ALL_6_STRING_GROUPS,
   FORTE_REFERENCE,
-} from "./setData";
+} from "./setData.js";
 
 const TRICHORD_REFERENCE = {
   "3-1": { pf: "012", iv: "210000" },

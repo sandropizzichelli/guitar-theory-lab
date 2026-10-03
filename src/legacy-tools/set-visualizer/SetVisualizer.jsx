@@ -36,9 +36,10 @@ function getInitialPage() {
   return LEGACY_PAGE_OPTIONS[page] || readEnumParam(params, "page", PAGE_OPTIONS, "trichords");
 }
 
-function TetrachordPage() {
+function TetrachordPage({catalogRequest,onCatalogApplied}) {
   return (
     <GenericSetPage
+      catalogRequest={catalogRequest} onCatalogApplied={onCatalogApplied}
       title="Guitar tetrachord visualizer"
       description="Work directly with Allen Forte four-note set classes and playable guitar realizations."
       keyLabel="Forte tetrachord"
@@ -53,9 +54,10 @@ function TetrachordPage() {
   );
 }
 
-function PentachordPage() {
+function PentachordPage({catalogRequest,onCatalogApplied}) {
   return (
     <GenericSetPage
+      catalogRequest={catalogRequest} onCatalogApplied={onCatalogApplied}
       title="Guitar pentachord visualizer"
       description="Work directly with Allen Forte five-note set classes and playable guitar realizations."
       keyLabel="Forte pentachord"
@@ -70,9 +72,10 @@ function PentachordPage() {
   );
 }
 
-function HexachordPage() {
+function HexachordPage({catalogRequest,onCatalogApplied}) {
   return (
     <GenericSetPage
+      catalogRequest={catalogRequest} onCatalogApplied={onCatalogApplied}
       title="Guitar hexachord visualizer"
       description="Work directly with Allen Forte six-note set classes and playable guitar realizations."
       keyLabel="Forte hexachord"
@@ -116,7 +119,7 @@ function PageSwitcher({ page, setPage }) {
   );
 }
 
-export default function SetVisualizer() {
+export default function SetVisualizer({catalogRequest,onCatalogApplied}) {
   const [page, setPage] = useState(getInitialPage);
 
   useEffect(() => {
@@ -125,13 +128,14 @@ export default function SetVisualizer() {
     });
   }, [page]);
 
+  useEffect(()=>{if(catalogRequest){const cardinality=Number(catalogRequest.forte.split('-')[0]);setPage(PAGE_OPTIONS[cardinality-3]);}},[catalogRequest?.sequence]);
   return (
     <div className="set-explorer">
       <PageSwitcher page={page} setPage={setPage} />
-      {page === "trichords" && <TricordPage />}
-      {page === "tetrachords" && <TetrachordPage />}
-      {page === "pentachords" && <PentachordPage />}
-      {page === "hexachords" && <HexachordPage />}
+      {page === "trichords" && <TricordPage catalogRequest={catalogRequest} onCatalogApplied={onCatalogApplied} />}
+      {page === "tetrachords" && <TetrachordPage catalogRequest={catalogRequest} onCatalogApplied={onCatalogApplied} />}
+      {page === "pentachords" && <PentachordPage catalogRequest={catalogRequest} onCatalogApplied={onCatalogApplied} />}
+      {page === "hexachords" && <HexachordPage catalogRequest={catalogRequest} onCatalogApplied={onCatalogApplied} />}
     </div>
   );
 }

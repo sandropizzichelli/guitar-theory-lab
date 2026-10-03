@@ -1,0 +1,39 @@
+.sce-app { color:var(--gtl-text); }
+.sce-app * { min-width:0; }
+.sce-app [hidden] { display:none!important; }
+.sce-mode-tabs { display:flex; flex-wrap:wrap; gap:8px; padding:18px 24px; border-bottom:1px solid var(--gtl-border); }
+.sce-action { border:1px solid var(--gtl-border); border-radius:6px; padding:10px 14px; background:var(--gtl-surface-strong); color:var(--gtl-ink); cursor:pointer; font:inherit; }
+.sce-action:disabled { opacity:.5; cursor:not-allowed; }
+.sce-mode-tabs [aria-selected=true] { background:var(--gtl-accent-soft); color:var(--gtl-accent); border-color:var(--gtl-accent); }
+.sce-primary { background:var(--gtl-accent); color:white; justify-self:start; }
+.sce-manual { padding:24px; display:grid; grid-template-columns:minmax(0,1fr); gap:16px; font-size:14px; }
+.sce-manual :is(h2,p) { margin:0; }
+.sce-position-header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.sce-eyebrow { font-size:10px; letter-spacing:.12em; color:var(--gtl-accent); font-weight:800; }
+.sce-position-header h2 { font-family:var(--gtl-heading); font-size:28px; }
+.sce-fret-inputs { display:grid; grid-template-columns:repeat(6,minmax(0,65px)); gap:8px; }
+.sce-fret-inputs label { display:grid; gap:6px; font-size:12px; }
+.sce-fret-inputs select { min-height:40px; width:100%; padding:6px; border:1px solid var(--gtl-border); border-radius:5px; background:var(--gtl-surface-strong); font:inherit; }
+.sce-help { font-size:12px; color:var(--gtl-muted); }
+.sce-notes { display:flex; flex-wrap:wrap; gap:12px; }
+.sce-notes>span { border-left:2px solid var(--gtl-accent-2); padding-left:10px; }
+.sce-notes strong { font-size:18px; }
+.sce-notes small { display:block; font-size:11px; color:var(--gtl-muted); }
+.sce-result { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; padding:16px; border:1px solid var(--gtl-border); border-radius:7px; background:var(--gtl-bg-soft); }
+.sce-result span { display:block; font-size:11px; color:var(--gtl-muted); }
+.sce-result strong { display:block; margin-top:6px; font-size:18px; overflow-wrap:anywhere; }
+.sce-details { border-top:1px solid var(--gtl-border); padding-top:14px; font-size:12px; line-height:1.7; }
+.sce-details summary { font-weight:700; color:var(--gtl-accent); cursor:pointer; }
+.sce-details p { margin:12px 0; }
+.sce-app :is(button,select,summary):focus-visible,.sce-app h2[tabindex]:focus { outline:3px solid var(--gtl-accent); outline-offset:2px; }
+.sce-app .set-explorer button.fretboard__cell { padding:0; margin:0; border:0; border-radius:0; background:transparent; color:inherit; cursor:pointer; }
+.sce-app .fretboard__cell.is-observed::after { content:''; position:absolute; inset:5px 16px; border:2px dashed var(--gtl-accent); border-radius:50%; pointer-events:none; }
+.sce-app .fretboard-scroll:focus-visible { outline:3px solid var(--gtl-accent); outline-offset:2px; }
+.sce-inspection { font-size:12px; padding:10px 0; line-height:1.6; }
+@media(max-width:700px){.sce-manual { padding:18px; }.sce-mode-tabs{padding:16px;}.sce-fret-inputs{grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;}.sce-fret-inputs label{font-size:10px;}.sce-fret-inputs select{padding:5px;}.sce-result{grid-template-columns:1fr 1fr;}.sce-result strong{font-size:16px;}}
+
+.sce-manual .guitar-board { max-width:100%; }
+.sce-explore-limit { margin:12px 24px; color:var(--gtl-muted); font-size:12px; line-height:1.6; }
+.sce-manual .guitar-board { width:calc(119px + var(--guitar-fret-count) * 60px); }
+@media(max-width:700px){.sce-manual .guitar-board{width:calc(94px + var(--guitar-fret-count) * 36px);}}
+@media(max-width:360px){.sce-manual .guitar-board{width:calc(84px + var(--guitar-fret-count) * 30px);}}

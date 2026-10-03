@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react';
 import { STANDARD_TUNING, ROOTS, DROP_TYPES, QUALITIES, V_GROUPS, SOURCES, EXAMPLES, positionsFromFrets, orderedNotes, noteName, constructionNoteName, buildCloseDispositions, applyDrop, classifyV, findExactPositions, estimateDifficulty, parseStructure, analyze } from './music.js';
 import './styles.css';
+import GuitarFretboard from '../../components/guitar/GuitarFretboard.jsx';
 import GreenePanel from './GreenePanel.jsx';
 import BassPanel from './BassPanel.jsx';
 import ModalPanel from './ModalPanel.jsx';
@@ -21,25 +22,10 @@ function Reading({reading,ambiguous=false,onChoose}) {
 function Fretboard({frets,onChange,root,degrees,showDegrees,bass}) {
   const selected=orderedNotes(positionsFromFrets(frets));
   const degreeByString=new Map(selected.map((p,i)=>[p.stringNumber,degrees[i]]));
-  return <div className="vl-board-scroll" tabIndex={0} aria-label="Tastiera scorrevole, corde dalla prima alla sesta">
-    <div className="vl-board">
-      <div className="vl-fret-numbers"><span>Corda</span><span>Muta</span>{Array.from({length:25},(_,f)=><span key={f}>{f}</span>)}</div>
-      {STANDARD_TUNING.map(string=> {
-        const added=bass?.mode==='guitar'&&bass.stringNumber===string.stringNumber;
-        const selectedFret=added?bass.fret:frets[6-string.stringNumber];
-        return <div className="vl-string" key={string.stringNumber}>
-          <span className="vl-string-label">{string.stringNumber} <small>{noteName(string.midi)}</small></span>
-          <button className={`vl-mute ${selectedFret===null?'active':''}`} aria-label={`Corda ${string.stringNumber} muta`} aria-pressed={selectedFret===null} disabled={added} onClick={()=>onChange(string.stringNumber,null)}>×</button>
-          {Array.from({length:25},(_,fret)=> {
-            const active=selectedFret===fret;
-            const degree=degreeByString.get(string.stringNumber);
-            const name=noteName(string.midi+fret,root,active?degree:null);
-            return <button key={fret} className={`vl-fret ${active?'selected':''} ${added&&active?'vl-bass-dot':''} ${[3,5,7,9,12,15,17,19,21,24].includes(fret)?'vl-marker':''}`} aria-label={`Corda ${string.stringNumber}, tasto ${fret}, ${name}`} aria-pressed={active} disabled={added} onClick={()=>onChange(string.stringNumber,active?null:fret)}><span>{active?(added?`＋${bass.name}${bass.octave}`:showDegrees?degree:name):fret===0?'○':''}</span></button>;
-          })}
-        </div>;
-      })}
-    </div>
-  </div>;
+  return <GuitarFretboard tuning={STANDARD_TUNING} frets={frets} onChange={onChange}
+    noteLabel={(midi,stringNumber,fret,active)=>noteName(midi,root,active?degreeByString.get(stringNumber):null)}
+    selectedLabel={(midi,stringNumber)=>showDegrees?degreeByString.get(stringNumber):noteName(midi,root,degreeByString.get(stringNumber))}
+    reserved={bass?.mode==='guitar'?{...bass,label:`＋${bass.name}${bass.octave}`}:null}/>;
 }
 export default function VoicingLab() {
   const positionHeading=useRef(null);

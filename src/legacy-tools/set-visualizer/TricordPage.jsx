@@ -39,11 +39,12 @@ function buildTrichordData() {
   return { keys, dataMap };
 }
 
-export default function TricordPage() {
+export default function TricordPage({catalogRequest,onCatalogApplied}) {
   const { keys, dataMap } = useMemo(() => buildTrichordData(), []);
 
   return (
     <GenericSetPage
+      catalogRequest={catalogRequest} onCatalogApplied={onCatalogApplied}
       title="Guitar trichord visualizer"
       description="Select an Allen Forte trichord directly and inspect its playable forms on the fretboard."
       keyLabel="Forte trichord"

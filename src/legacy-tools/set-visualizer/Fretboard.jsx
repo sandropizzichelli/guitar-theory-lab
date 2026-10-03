@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useContext,useState} from "react";
+import {FretboardCell} from "../../components/guitar/GuitarFretboard.jsx";
+import {SetInteractionContext} from "../../tools/set-class-explorer/InteractionContext.jsx";
+import {fretsFromVoicing,pitchName} from "../../tools/set-class-explorer/positionAnalysis.js";
 import { STRINGS, DISPLAY_STRINGS, FRET_COUNT, PC_TO_NAME } from "./setData";
 import { pcAt } from "./setUtils";
 import {
@@ -42,6 +45,9 @@ export default function Fretboard({
   pcRoleMap = null,
   expandOccurrencesInShowAll = false,
 }) {
+  const interaction=useContext(SetInteractionContext);
+  const [observed,setObserved]=useState(null);
+  const transferable=interaction&&!showAll&&!highlightAllAsActive&&voicing?.positions?.every(p=>allTargetPcs.includes(p.pc))&&fretsFromVoicing(voicing);
   const selectedMap = new Map();
   const isIntervalMode = displayMode === "intervals" && intervalMap;
   const targetPitchClassSet = new Set([...allTargetPcs, ...extraTargetPcs]);
@@ -187,7 +193,7 @@ export default function Fretboard({
   ];
 
   return (
-    <div className="fretboard-scroll">
+    <><div className="fretboard-scroll" tabIndex={interaction?0:undefined} aria-label="Tastiera di esplorazione scorrevole">
       <div className="fretboard-board">
         <div
           className="fretboard-grid"
@@ -350,9 +356,12 @@ export default function Fretboard({
                   }
 
                   return (
-                    <div
+                    <FretboardCell
                       key={cellKey}
-                      className={className.join(" ")}
+                      className={`${className.join(" ")} ${observed?.pc===pc?'is-observed':''}`}
+                      aria-label={`Osserva corda ${displayString.name}, tasto ${fret}, ${pitchName(STRINGS[stringIndex].openAbs+fret)}, classe ${pc}`}
+                      aria-pressed={observed?.stringIndex===stringIndex&&observed?.fret===fret}
+                      onClick={()=>setObserved({stringIndex,fret,pc,midi:STRINGS[stringIndex].openAbs+fret})}
                     >
                       {hasMarker ? (
                         <div
@@ -367,7 +376,7 @@ export default function Fretboard({
                           {text}
                         </div>
                       ) : null}
-                    </div>
+                    </FretboardCell>
                   );
                 })}
               </React.Fragment>
@@ -376,5 +385,8 @@ export default function Fretboard({
         </div>
       </div>
     </div>
+    {observed&&<p className="sce-inspection" role="status">Osservata {pitchName(observed.midi)} · classe {observed.pc} · corda {STRINGS[observed.stringIndex].name}, tasto {observed.fret}. Riferimento di esplorazione, non una nota aggiunta.</p>}
+    {transferable&&<button className="sce-action" onClick={()=>interaction.onTransfer(voicing)}>Usa questa posizione come input</button>}
+    </>
   );
 }

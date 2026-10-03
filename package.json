@@ -25,7 +25,8 @@
     "test:voicing": "node --test tests/music/voicing-lab*.test.js && playwright test tests/e2e/voicing-lab.spec.js",
     "e2e": "playwright test",
     "build:all": "npm run build && npm run build:legacy",
-    "test:all": "npm run test:legacy && npm run e2e"
+    "test:all": "npm run test:legacy && npm run e2e",
+    "test:set-input": "node --test tests/music/set-position.test.js tests/music/set-local-state.test.js && playwright test tests/e2e/set-input.spec.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^6.0.2",
