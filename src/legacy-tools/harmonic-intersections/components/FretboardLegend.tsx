@@ -1,7 +1,7 @@
 const LEGEND_ITEMS = [
-  { className: "common", label: "Common" },
-  { className: "only-a", label: "A only" },
-  { className: "only-b", label: "B only" },
+  { className: "common", label: "A∩B · Common · double border" },
+  { className: "only-a", label: "A only · square" },
+  { className: "only-b", label: "B only · dashed border" },
   { className: "root-a", label: "Tonic/Root A" },
   { className: "root-b", label: "Tonic/Root B" }
 ];

@@ -1,0 +1,95 @@
+.harmonic-explorer.hi-interactive{width:100%;max-width:1200px;padding:0;min-width:0}
+.harmonic-explorer.hi-interactive :is(.hi-system,.hi-editor,.hi-result,.hi-map,.hi-matches){background:var(--gtl-surface);border:1px solid var(--gtl-border);border-radius:8px;padding:16px;box-shadow:none}
+.harmonic-explorer.hi-interactive :is(.hi-system,.hi-editor){border-top:3px solid var(--hi-tone)}
+.hi-interactive .hi-systems,.hi-interactive .hi-editors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.hi-interactive .hi-system,.hi-interactive .hi-editor{min-width:0;--hi-tone:var(--only-a);border-top:3px solid var(--hi-tone)}
+.hi-interactive .hi-b{--hi-tone:var(--only-b)}
+.hi-system-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.hi-system-heading small,.hi-card-foot small{font-size:11px;color:var(--text-muted)}
+.hi-letter{display:inline-block;background:var(--hi-tone);color:white;border-radius:4px;padding:3px 7px;font-size:12px;margin-right:7px}
+.hi-interactive .hi-source{display:flex;gap:4px;background:var(--surface-strong);padding:3px;border-radius:7px;margin-bottom:14px}
+.hi-interactive button{cursor:pointer}
+.hi-interactive .hi-source button{flex:1;border:1px solid transparent;border-radius:5px;padding:9px 5px;background:transparent;font:inherit;font-size:12px;min-height:38px}
+.hi-interactive .hi-source button[aria-pressed=true]{border-color:var(--border);background:var(--surface);box-shadow:0 1px 3px #23211d0b}
+.hi-interactive .system-selector{background:none;border:0;padding:0;box-shadow:none}
+.hi-interactive .system-selector>.panel-title-row{display:none}
+.hi-interactive .hi-catalog-title{font-size:14px;margin:0 0 12px}
+.hi-interactive .hi-frets{letter-spacing:2px;font-variant-numeric:tabular-nums;font-size:14px;margin:10px 0 7px}
+.hi-interactive .hi-note-summary{font-size:13px;color:var(--text-muted);line-height:1.5;margin:0}
+.hi-card-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px}
+.hi-interactive :is(.hi-card-foot button,.hi-editor-actions button,.hi-matches button){font:inherit;font-size:12px;min-height:38px;padding:7px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px}
+.hi-interactive .hi-card-foot button{border-color:var(--hi-tone);color:var(--hi-tone)}
+.hi-result{margin:16px 0}
+.hi-interactive .hi-result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:13px}
+.hi-interactive .hi-result-grid .note-chip-label{font-size:11px;text-transform:none}
+.hi-interactive .hi-result-grid .note-chip{font-size:13px;border-radius:5px;font-weight:650;min-height:28px;padding:0 8px}
+.hi-hint,.hi-board-legend,.hi-status,.hi-storage-warning{font-size:12px;color:var(--text-muted);line-height:1.5}
+.hi-details{border-top:1px solid var(--border);margin-top:14px;padding-top:12px}
+.hi-interactive summary{cursor:pointer;font-size:12px;font-weight:650}
+.hi-details :is(p,li){font-size:12px;color:var(--text-muted);line-height:1.6}
+.hi-details .overlap-summary{margin-top:12px;font-weight:400;line-height:1.5}
+.hi-details .overlap-summary strong{font-size:16px}
+.hi-interactive .hi-single{grid-template-columns:minmax(0,1fr)}
+.hi-interactive .hi-editor-heading{background:none;border:0;color:var(--hi-tone);padding:0;font:inherit;font-size:13px;font-weight:700;min-height:28px;text-align:left}
+.hi-interactive .hi-editor .guitar-board{max-width:100%;width:min(100%,calc(117px + 25 * 42px))}
+.hi-interactive .hi-editor .vl-board{width:calc(117px + 25 * 42px)}
+.hi-interactive .hi-editor :is(.vl-string,.vl-fret-numbers){grid-template-columns:55px 38px repeat(25,42px)}
+.hi-interactive .hi-editor :is(.vl-string,.vl-fret){height:42px}
+.hi-interactive .hi-editor .vl-fret span{width:32px;min-height:30px;font-size:10px}
+.hi-interactive .hi-editor .vl-fret.selected span{background:var(--hi-tone)}
+.hi-interactive .hi-editor .vl-fret.selected.hi-common span{background:var(--common);border:3px double white;outline:1px solid #356947}
+.hi-fret-selectors{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:12px}
+.hi-fret-selectors label{font-size:10px;color:var(--text-muted)}
+.hi-interactive .hi-fret-selectors select{width:100%;min-width:0;font:inherit;font-size:12px;border:1px solid var(--border);border-radius:6px;background:var(--surface);min-height:36px;margin-top:4px;padding:5px 3px}
+.hi-editor-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hi-board-legend{font-size:11px;margin:10px 0 0}
+.hi-preview .guitar-board{opacity:.85}
+.hi-interactive .hi-map,.hi-interactive .hi-matches{margin-top:16px}
+.hi-interactive .hi-map .visualization-controls{margin-top:14px}
+.hi-map summary{font-size:13px}
+.hi-matches label{display:block;font-size:12px;color:var(--text-muted);margin:12px 0}
+.hi-matches select{display:block;width:100%;max-width:100%;font:inherit;font-size:12px;min-height:40px;padding:6px;border:1px solid var(--border);border-radius:6px;margin-top:5px}
+.hi-interactive button:disabled{cursor:default}
+.hi-interactive :is(button,select,summary):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.hi-interactive .fretboard-scroll:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.hi-interactive .hi-limits{margin-bottom:10px}
+.hi-interactive .fret-note.common{border-style:double;border-width:4px}
+.hi-interactive .fret-note.only-a{border-radius:5px}
+.hi-interactive .fret-note.only-b{border-style:dashed;border-color:white}
+@media(max-width:700px){
+ .hi-interactive .hi-systems{gap:9px}
+ .harmonic-explorer.hi-interactive .hi-system{padding:11px}
+ .hi-system-heading h2{font-size:13px}.hi-system-heading small{display:none}
+ .hi-letter{font-size:10px;padding:2px 5px;margin-right:4px}
+ .hi-interactive .hi-source{flex-direction:column;margin-bottom:10px}
+ .hi-interactive .hi-source button{min-height:33px;font-size:11px;padding:6px 3px}
+ .hi-interactive .hi-system h3{font-size:13px}
+ .hi-interactive .hi-frets{font-size:12px;letter-spacing:0}
+ .hi-interactive .hi-note-summary{font-size:11px}
+ .hi-card-foot{flex-direction:column;align-items:stretch;gap:7px}
+ .hi-interactive .hi-card-foot button{font-size:11px;padding:6px 3px}
+ .hi-interactive .hi-editors{display:block}
+ .hi-interactive .hi-preview{display:none}
+ .harmonic-explorer.hi-interactive .hi-editor{padding:12px}
+ .hi-interactive .hi-editor :is(.vl-string,.vl-fret-numbers){grid-template-columns:42px 26px repeat(25,34px)}
+ .hi-interactive .hi-editor .vl-board{width:calc(92px + 25 * 34px)}
+ .hi-interactive .hi-editor .vl-fret span{width:29px;min-height:29px}
+ .hi-interactive .hi-result-grid{gap:8px}.harmonic-explorer.hi-interactive .hi-result{padding:13px}
+ .hi-interactive .hi-result h2{font-size:15px}
+ .hi-interactive .hi-result-grid .note-chip{font-size:12px;padding:0 6px}
+ .hi-interactive .hi-hint{font-size:11px}
+ .hi-interactive .hi-system .field{font-size:10px;text-transform:none}
+ .hi-interactive .hi-system .field select{font-size:11px;padding:0 3px;min-width:0}
+ .hi-interactive .hi-system .three-materials{grid-template-columns:1fr;gap:4px}
+ .hi-interactive .hi-system .three-materials button{font-size:11px;min-height:30px}
+ .hi-interactive .hi-system .note-chip{font-size:11px;padding:0 6px}
+ .hi-interactive .hi-system .note-chip-label{font-size:10px}
+ .hi-fret-selectors{gap:4px}.hi-fret-selectors label{font-size:9px}
+}
+@media(max-width:360px){
+ .harmonic-explorer.hi-interactive .hi-system{padding:9px}
+ .hi-interactive .hi-editor :is(.vl-string,.vl-fret-numbers){grid-template-columns:36px 22px repeat(25,30px)}
+ .hi-interactive .hi-editor .vl-board{width:calc(82px + 25 * 30px)}
+ .hi-interactive .hi-editor .vl-fret span{width:27px;min-height:27px}
+ .hi-interactive .hi-result-grid{gap:6px}
+}

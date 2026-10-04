@@ -66,7 +66,7 @@ export function Fretboard({
   return (
     <section className="panel fretboard-panel">
       <h2>Fretboard</h2>
-      <div className="fretboard-scroll">
+      <div className="fretboard-scroll" tabIndex={0} aria-label="Mappa delle occorrenze 0–12, scorrimento orizzontale">
         <div className="fretboard-display">
       <div className="fretboard-header">
         <div className="fret-numbers" style={{ "--fret-count": fretCount + 1 } as CSSProperties}>
@@ -129,7 +129,7 @@ export function Fretboard({
                 return (
                   <div className={cellClasses} key={`${position.stringNumber}-${position.fret}`}>
                     {isStringActive && isInRange && activePitchClasses.has(position.pitchClass) ? (
-                    <span className={noteClasses}>{noteLabel}</span>
+                    <span role="img" className={noteClasses} aria-label={noteLabel + ", " + (belongsToA && belongsToB ? "A∩B, comune" : belongsToA ? "solo A" : "solo B")}>{noteLabel}</span>
                     ) : null}
                   </div>
                 );
