@@ -50,3 +50,6 @@ Progetto Cloudflare: guitar-theory-lab.
 Dettagli del deploy verificato:
 https://dash.cloudflare.com/?to=/08e07ecde5b14febeb88c8442e50c6be/pages/view/guitar-theory-lab/8fb604e8-83fc-4e6f-96df-1bae524bd6a9
 Il branch di produzione configurato nel pannello Cloudflare non è stato letto direttamente; verificare quel valore prima della prossima pubblicazione.
+
+CONFERMA CLOUDFlARE DEL 4 OTTOBRE 2026
+Letto direttamente nel pannello Settings: progetto guitar-theory-lab, repository sandropizzichelli/guitar-theory-lab, branch di produzione main, deploy automatici abilitati, build npm run build, output dist. La precedente nota sul branch non verificato è superata.

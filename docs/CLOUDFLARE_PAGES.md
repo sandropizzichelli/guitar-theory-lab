@@ -32,10 +32,9 @@ Cloudflare Pages should create the DNS records automatically because the domain 
 ```text
 /tools/voicing-lab /tools/voicing-explorer 301
 /tools/voicing-lab/ /tools/voicing-explorer 301
-/* /index.html 200
 ```
 
-This keeps direct reloads working for routes like:
+The old catch-all rewrite was rejected by Cloudflare as an infinite loop and is removed. With no top-level `404.html`, Cloudflare Pages supplies its native SPA fallback. This keeps direct reloads working for routes like:
 
 - `/tools`
 - `/tools/set-class-explorer`
@@ -79,3 +78,17 @@ Voicing Explorer is included in the production registry. Its former route uses C
 - Set-class production checks include input 0–24, browser persistence, clearing, invalid saved data, and separation from catalog state.
 - Fetch confirms five prior local commits and no remote-only commits before this release commit. No force push is needed.
 - Publication is pending verification of the actual Cloudflare production branch. The existing authenticated Chrome dashboard is inaccessible while the Mac is locked; no push has been performed. The GitHub check confirms the project identity, but does not by itself confirm its current production branch setting.
+
+
+## Cloudflare settings confirmed — 2026-10-04
+
+Read directly in the existing authenticated Cloudflare dashboard, Settings → Build → Branch control:
+
+- Project: `guitar-theory-lab`.
+- Repository: `sandropizzichelli/guitar-theory-lab`.
+- Production branch: `main`.
+- Automatic deployments: Enabled.
+- Build command: `npm run build`; output: `dist`; root directory empty (repository root).
+- Production domains: `guitartheorylab.com`, `www.guitartheorylab.com`, `guitar-theory-lab.pages.dev`.
+
+The Mac/browser blocker is resolved. The invalid `/* /index.html 200` rule found in the preceding deployment log has been removed. Only the two old-name redirects remain; SPA routes use the native Pages fallback. Prior statements about unverified settings or pending publication above describe the earlier preparation state and are superseded by this direct verification.
