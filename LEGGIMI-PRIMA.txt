@@ -1,5 +1,5 @@
 GUITAR THEORY LAB — DA DOVE RIPARTIRE
-Aggiornato il 3 ottobre 2026
+Aggiornato il 4 ottobre 2026
 
 PROGETTO PRINCIPALE
 Aprire in Codex il progetto Guitar Theory Lab, fissato nella barra laterale.
@@ -10,7 +10,8 @@ L'utente ha confermato che il sito corrisponde all'ultima versione sviluppata.
 
 FILE DA MODIFICARE
 src contiene la piattaforma.
-src/legacy-tools contiene i tre strumenti utilizzati dal sito.
+src/legacy-tools contiene i tre strumenti originari integrati.
+src/tools/voicing-lab contiene Voicing Explorer, quarto strumento, pubblicabile a /tools/voicing-explorer; /tools/voicing-lab resta un reindirizzamento.
 config/tools.ts registra i tool e permette di aggiungerne altri.
 Le cartelle Set Visualizer, Harmonic Intersections e Goodrick Voice Leading Visualizer sono le versioni autonome originali: conservarle come riferimento. Non modificare contemporaneamente la copia autonoma e quella integrata senza un motivo esplicito.
 

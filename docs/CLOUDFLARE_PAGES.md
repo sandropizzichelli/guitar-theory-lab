@@ -30,6 +30,8 @@ Cloudflare Pages should create the DNS records automatically because the domain 
 `/public/_redirects` contains:
 
 ```text
+/tools/voicing-lab /tools/voicing-explorer 301
+/tools/voicing-lab/ /tools/voicing-explorer 301
 /* /index.html 200
 ```
 
@@ -39,6 +41,7 @@ This keeps direct reloads working for routes like:
 - `/tools/set-class-explorer`
 - `/tools/harmonic-intersections`
 - `/tools/goodrick-voice-leading-visualization`
+- `/tools/voicing-explorer`
 
 ## First deploy checklist
 
@@ -48,7 +51,7 @@ This keeps direct reloads working for routes like:
 4. Add environment variables.
 5. Deploy.
 6. Add custom domains.
-7. Test direct page reloads on the three tool routes.
+7. Test direct page reloads on the four tool routes.
 
 ## Verified repository connection — 2026-10-03
 
@@ -62,3 +65,17 @@ This keeps direct reloads working for routes like:
 The production branch setting has not been read directly from the Cloudflare dashboard. Confirm it before the next publication; GitHub's default branch alone does not establish this setting. The build settings above remain the documented settings, rather than independently verified dashboard values.
 
 The local working branch is now `main`, tracking `origin/main`. The original pre-migration branch is preserved as `archive/pre-modular-platform` at `9864ed5`. No publication was triggered by this cleanup.
+
+## Release preparation — 2026-10-04
+
+Voicing Explorer is included in the production registry. Its former route uses Cloudflare Pages redirects before the SPA fallback, plus a client-side fallback that preserves the query string and fragment. The release browser tests support `GTL_TEST_BASE_URL=http://127.0.0.1:4173` to exercise the production build instead of the dev server. The actual Cloudflare production branch must still be confirmed before push; the latest successful remote check points to project `guitar-theory-lab`, deployment `4933bb65-7160-4819-9d91-bf4a34a7a3f5`, commit `3cf7f86`.
+
+
+### Pre-publication validation
+
+- Production build includes all four tools, including the Voicing Explorer chunk.
+- Production preview at port 4173: the 64 existing browser regressions passed; five release checks cover four homepage/catalog cards at 1440/390/320 px, the old route with query/fragment preservation, direct openings and reloads. A selector error in the new card test was corrected and all five release checks repeated successfully.
+- 32 musical/persistence tests passed (25 Voicing Explorer, seven Set-class); 54 standalone tests passed, with no standalone source changes.
+- Set-class production checks include input 0–24, browser persistence, clearing, invalid saved data, and separation from catalog state.
+- Fetch confirms five prior local commits and no remote-only commits before this release commit. No force push is needed.
+- Publication is pending verification of the actual Cloudflare production branch. The existing authenticated Chrome dashboard is inaccessible while the Mac is locked; no push has been performed. The GitHub check confirms the project identity, but does not by itself confirm its current production branch setting.

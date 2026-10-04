@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
 export function getCurrentPath() {
+  if (/^\/tools\/voicing-lab\/?$/.test(window.location.pathname)) {
+    window.history.replaceState(window.history.state, "", `/tools/voicing-explorer${window.location.search}${window.location.hash}`);
+  }
   return window.location.pathname || "/";
 }
 

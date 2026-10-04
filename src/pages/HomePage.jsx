@@ -14,7 +14,7 @@ const homeDescriptions = {
 export function HomePage() {
   const publicTools = getPublicTools();
   const freeBetaAccess = publicTools.length > 0 && publicTools.every(
-    (tool) => tool.status === "beta" && !tool.isPro && canAccessTool(null, tool)
+    (tool) => ["alpha", "beta"].includes(tool.status) && !tool.isPro && canAccessTool(null, tool)
   );
 
   usePageMeta({
@@ -32,7 +32,7 @@ export function HomePage() {
       <section className="platform-home-tools" aria-labelledby="home-tools-heading">
         <div className="platform-section-heading">
           <h2 id="home-tools-heading">Tools</h2>
-          {freeBetaAccess && <p className="platform-home-access">Beta · Free to use. No sign-in required.</p>}
+          {freeBetaAccess && <p className="platform-home-access">Free to use. No sign-in required.</p>}
         </div>
         <ToolGrid
           variant="home"

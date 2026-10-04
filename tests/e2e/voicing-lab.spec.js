@@ -8,7 +8,7 @@ const pitches=page=>page.getByTestId('position-pitches');
 test('all three examples, root changes without lock, exact D reading and contextual ambiguity',async({page})=> {
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/tools/voicing-lab');
- await expect(page.getByRole('heading',{name:'Voicing Lab',exact:true})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Voicing Explorer',exact:true})).toBeVisible();
  await expect(frets(page)).toHaveText('× · 3 · 5 · 4 · 5 · ×');
  await expect(pitches(page)).toHaveAttribute('data-pitches','48,55,59,64');
  for(let r=0;r<12;r++) {

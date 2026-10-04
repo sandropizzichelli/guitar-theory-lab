@@ -2,13 +2,14 @@
 
 Guitar Theory Lab is a modular web platform for advanced guitar-theory tools: set theory, harmonic intersections, voice leading, fretboard visualization and improvisational practice.
 
-The current platform contains the first three modules:
+The current platform contains the four modules:
 
 - Set-class Explorer
 - Harmonic Intersections
 - Goodrick Voice Leading Visualization
+- Voicing Explorer
 
-The original tools are preserved in their existing folders. The platform imports deployable source snapshots from `/src/legacy-tools` so GitHub and Cloudflare Pages builds are self-contained.
+The original tools are preserved in their existing folders. The platform imports deployable source snapshots from `/src/legacy-tools` so GitHub and Cloudflare Pages builds are self-contained. Voicing Explorer is implemented in `src/tools/voicing-lab` and is included in production at `/tools/voicing-explorer`; `/tools/voicing-lab` remains a redirect preserving query parameters.
 
 ## Local development
 

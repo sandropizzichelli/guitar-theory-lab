@@ -8,10 +8,10 @@ export default defineConfig({
   },
   fullyParallel: true,
   use: {
-    baseURL: "http://127.0.0.1:5180",
+    baseURL: process.env.GTL_TEST_BASE_URL || "http://127.0.0.1:5180",
     trace: "retain-on-failure"
   },
-  webServer: {
+  webServer: process.env.GTL_TEST_BASE_URL ? undefined : {
     command: "npm run dev",
     url: "http://127.0.0.1:5180",
     reuseExistingServer: !process.env.CI,

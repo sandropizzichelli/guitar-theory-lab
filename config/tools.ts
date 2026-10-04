@@ -83,16 +83,16 @@ export const tools = [
 ];
 
 
-// Local development preview only. Production catalog and the three existing tools stay unchanged.
-if (import.meta.env.DEV) tools.push({
-  id: "voicing-lab", slug: "voicing-lab", title: "Voicing Lab", shortTitle: "Voicing Lab",
-  description: "Esplora posizioni, drop e letture armoniche delle stesse note sulla chitarra.",
-  longDescription: "Laboratorio locale di altezze esatte, interpretazioni armoniche e V-System di Ted Greene.",
+// Public production tool, sharing the same registry as the other instruments.
+tools.push({
+  id: "voicing-explorer", slug: "voicing-explorer", title: "Voicing Explorer", shortTitle: "Voicing Explorer",
+  description: "Explore guitar voicings, drop structures, harmonic interpretations, and Ted Greene’s V-System.",
+  longDescription: "Explore exact guitar pitches, close and drop structures, harmonic interpretations, Ted Greene’s V-System, external basses, and modal compatibility.",
   category: "Harmony", usefulFor: ["Guitar harmony", "Voicing analysis"],
   keyFeatures: ["Exact pitches", "Close and drop", "Alternative readings", "V-System"],
-  status: "alpha", version: "0.1.0", route: "/tools/voicing-lab", icon: "voice-leading",
+  status: "alpha", version: "0.1.0", route: "/tools/voicing-explorer", icon: "voice-leading",
   isPublic: true, isPro: false, tags: ["voicing", "drop", "Ted Greene", "harmony"],
-  component: () => import("../src/tools/voicing-lab"), createdAt: "2026-10-03", updatedAt: "2026-10-03"
+  component: () => import("../src/tools/voicing-lab"), createdAt: "2026-10-03", updatedAt: "2026-10-04"
 });
 
 export function getToolBySlug(slug) {

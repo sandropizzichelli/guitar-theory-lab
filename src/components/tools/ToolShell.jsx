@@ -24,7 +24,7 @@ export function ToolShell({ tool }) {
   const isSetExplorer = tool.id === "set-class-explorer";
   const isHarmonic = tool.id === "harmonic-intersections";
   const isGoodrick = tool.id === "goodrick-voice-leading-visualization";
-  const isVoicing = tool.id === "voicing-lab";
+  const isVoicing = tool.id === "voicing-explorer";
   const compactHeader = isSetExplorer || isHarmonic || isGoodrick || isVoicing;
 
   return (

@@ -962,7 +962,7 @@ select:focus-visible {
 }
 
 .platform-home-tools .platform-tool-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
 }
 
@@ -1009,3 +1009,7 @@ select:focus-visible {
     font-size: 0.85rem;
   }
 }
+
+/* Four compact cards: two balanced columns, one on narrow screens. */
+.platform-page:not(.platform-page--home) .platform-tool-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+@media(max-width:780px){.platform-page:not(.platform-page--home) .platform-tool-grid{grid-template-columns:1fr;}}
